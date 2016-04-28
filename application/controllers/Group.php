@@ -9,7 +9,6 @@
 class Group extends CI_Controller{
     function __construct(){
         parent::__construct();
-<<<<<<< HEAD
         $this->load->session();        
     }
 
@@ -24,16 +23,11 @@ class Group extends CI_Controller{
     public function delete(){
         
     }
-<<<<<<< aa7d3417735ae555ecffb89860a96d8e7b5df738
 
-=======
->>>>>>> 	modified:   application/controllers/Group.php
-=======
         
     }
 
     public function index(){
-        sadf
+        echo 'liu';
     }
->>>>>>> 9091825176660e040a9b48121e7a52999adc3df9
 }
