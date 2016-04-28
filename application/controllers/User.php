@@ -12,7 +12,7 @@ class User extends CI_Controller{
     function __construct(){
         parent::__construct();
         $this->load->helper('url');
-        $this->load->model('user_model','user'); //引入
+        $this->load->model('User_Model','user'); //引入
         $this->load->library('session');
         $this->load->library('form_validation');
     }
@@ -22,6 +22,18 @@ class User extends CI_Controller{
         $bool=true;
         $this->user->login();
         return $bool;
+    }
+
+    public function register(){
+
+    }
+
+    public function logout(){
+
+    }
+
+    public function detail(){
+
     }
 
 }
