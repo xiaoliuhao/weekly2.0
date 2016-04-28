@@ -9,6 +9,7 @@
 class Group extends CI_Controller{
     function __construct(){
         parent::__construct();
+<<<<<<< HEAD
         $this->load->session();        
     }
 
@@ -27,4 +28,12 @@ class Group extends CI_Controller{
 
 =======
 >>>>>>> 	modified:   application/controllers/Group.php
+=======
+        
+    }
+
+    public function index(){
+        sadf
+    }
+>>>>>>> 9091825176660e040a9b48121e7a52999adc3df9
 }
