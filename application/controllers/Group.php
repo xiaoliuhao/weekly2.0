@@ -23,5 +23,8 @@ class Group extends CI_Controller{
     public function delete(){
         
     }
+<<<<<<< aa7d3417735ae555ecffb89860a96d8e7b5df738
 
+=======
+>>>>>>> 	modified:   application/controllers/Group.php
 }
