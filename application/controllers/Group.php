@@ -13,6 +13,6 @@ class Group extends CI_Controller{
     }
 
     public function index(){
-        
+        sadf
     }
 }
