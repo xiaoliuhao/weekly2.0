@@ -24,10 +24,9 @@ class Group extends CI_Controller{
         
     }
 
-        
-    }
 
-    public function index(){
+    public function test(){
         echo 'liu';
+        echo 'hao';
     }
 }
