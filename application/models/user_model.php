@@ -12,26 +12,11 @@ class User_Model extends CI_Model{
         $this->load->helper('url');
     }
 
-    public function register(){
-        $user['uid'] = $this->input->post('uid');
-        $data = $this->base->select('uid','user','uid',$user['uid']);
-        if($data){
-            return 3;
-        }
-        $user['name'] = $this->input->post('name');
-        $user['password'] = $this->input->post('password');
-        $password2 = $this->input->post('password2');
-        $user['register_tiem'] = date('Y-m-d H:i:s');
-        $user['last_time'] = date('Y-m-d H:i:s');
+    public function register($user){
         $user['ip'] = $_SERVER["REMOTE_ADDR"];
+        $user['register_time'] = date('Y-m-d H:i:s');
 
-        if($password2 != $user['password']){
-            //两次密码不相同
-            return 2;
-        }else{
-            $user['password'] = sha1(md5($password2));
-            $this->db->insert('user',$user);
-        }
+        $this->db->insert('user',$user);
     }
     
     public function info($uid){
@@ -48,10 +33,5 @@ class User_Model extends CI_Model{
 
     }
   
-    public function write_log($action){
-        $ip = $_SERVER["REMOTE_ADDR"];
-        $this->db->insert();
-        $this->db->insert('log',array('uid'=>$uid,'action'=>$action,'ip'=>$ip,'time'=>date('Y-m-d H:i:s')));
-        
-    }
+    
 }
