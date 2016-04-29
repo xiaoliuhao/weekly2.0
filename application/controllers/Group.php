@@ -9,11 +9,10 @@
 class Group extends CI_Controller{
     function __construct(){
         parent::__construct();
-        $this->load->session();        
     }
 
     public function index(){
-
+        
     }
 
     public function add(){

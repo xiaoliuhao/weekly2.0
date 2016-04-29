@@ -14,25 +14,12 @@ class User extends CI_Controller{
         parent::__construct();
         $this->load->helper('url');
         $this->load->model('User_Model','user'); //引入
-        $this->load->database();
-        $this->load->library('session');
     }
 
-    public function check_login(){
-        
-    }
-
-    public function register(){
-        
-
-
-    }
-
-    public function logout(){
-
-    }
+    
 
     public function detail(){
+        $detail = $this->user->detail();
 
     }
 
@@ -40,8 +27,19 @@ class User extends CI_Controller{
 
     }
 
+    /**
+     * update 修改个人信息
+     * @access public
+     */
     public function update(){
-
+        $uid = $this->input->post('uid');
+        //需要修改的种类
+        $type = $this->input->post('type');
+        $password = $this->input->psot('password');
+    }
+    
+    public function find_password(){
+        $this->user->find_password();
     }
 
 }

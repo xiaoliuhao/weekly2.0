@@ -8,12 +8,11 @@
 class User_Model extends CI_Model{
     function __construct(){
         parent::__construct();
-        $this->load->database();
         $this->load->model('Base_Model','base');
         $this->load->helper('url');
     }
 
-    public function reguster(){
+    public function register(){
         $user['uid'] = $this->input->post('uid');
         $data = $this->base->select('uid','user','uid',$user['uid']);
         if($data){
@@ -35,19 +34,24 @@ class User_Model extends CI_Model{
         }
     }
     
-    public function check_login(){
-        $uid = $this->input->post('uid');
-        $password = $this->inpit->post('password');
+    public function info($uid){
         $data = $this->base->select('*','user','uid',$uid);
-        if($data['password'] != $password){
-            //密码错误登陆失败
-            return 2;
-        }else{
-            //密码正缺 登陆成功返回1
-            return 1;
-        }
-
+        return $data;
     }
 
+    public function update($uid,$type,$value){
+        $bool = $this->db->update('user',array($type=>$value),array('uid'=>$uid));
+        return $bool;
+    }
+
+    public function find_password(){
+
+    }
   
+    public function write_log($action){
+        $ip = $_SERVER["REMOTE_ADDR"];
+        $this->db->insert();
+        $this->db->insert('log',array('uid'=>$uid,'action'=>$action,'ip'=>$ip,'time'=>date('Y-m-d H:i:s')));
+        
+    }
 }
