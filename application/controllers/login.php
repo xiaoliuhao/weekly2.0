@@ -14,10 +14,18 @@ class Login extends CI_Controller{
         $this->load->model('Log_Model','log');
     }
 
+    /**
+     * index    加载登陆界面
+     * @access public
+     */
     public function index(){
 
     }
 
+    /**
+     * check_login  登陆
+     * @access public
+     */
     public function check_login(){
         $uid = $this->input->post('uid');
         $password = $this->input->post('password');
@@ -52,8 +60,6 @@ class Login extends CI_Controller{
             $this->log->add('user_log',$user['uid'],'register');
             echo 1;
         }
-        
-
     }
 
     public function logout(){

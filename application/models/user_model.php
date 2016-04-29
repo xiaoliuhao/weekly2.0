@@ -12,25 +12,54 @@ class User_Model extends CI_Model{
         $this->load->helper('url');
     }
 
+    /**
+     * register 注册
+     * @access public
+     * @param $user
+     */
     public function register($user){
         $user['ip'] = $_SERVER["REMOTE_ADDR"];
         $user['register_time'] = date('Y-m-d H:i:s');
 
         $this->db->insert('user',$user);
     }
-    
+
+    /**
+     * info 查看用户详细信息
+     * @access public
+     * @param $uid
+     * @return mixed
+     */
     public function info($uid){
         $data = $this->base->select('*','user','uid',$uid);
         return $data;
     }
 
+    /**
+     * update  修改用户信息
+     * @access public
+     * @param $uid
+     * @param $type
+     * @param $value
+     * @return mixed
+     */
     public function update($uid,$type,$value){
         $bool = $this->db->update('user',array($type=>$value),array('uid'=>$uid));
         return $bool;
     }
 
-    public function find_password(){
+    public function find_password($uid,$email){
+        
+    }
 
+    /**
+     * change_password  修改密码
+     * @access public
+     * @param $uid
+     * @param $new_password
+     */
+    public function change_password($uid,$new_password){
+        $this->db->update('user',array('password'=>$new_password),array('uid'=>$uid));
     }
   
     

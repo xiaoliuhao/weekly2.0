@@ -2,30 +2,26 @@
 /**
  * Create by PhpStorm
  * Author: Liu  <470401911@qq.com>
- * Date: 2016/4/28
- * Time: 16:02
+ * Date: 2016/4/29
+ * Time: 18:16
  * Version: weekly
  */
-class Group extends CI_Controller{
+class Weekly extends CI_Controller{
     function __construct(){
         parent::__construct();
+        $this->load->model('Base_Model','base');
+        $this->load->model('Weekly_Mode','weekly');
     }
-
+    
     public function index(){
         
     }
-
+    
     public function add(){
-        $uid = $this->input->post('uid');
-    }
-
-    public function delete(){
         
     }
-
-
-    public function test(){
-        echo 'liu';
-        echo 'hao';
+    
+    public function delete(){
+        
     }
 }
