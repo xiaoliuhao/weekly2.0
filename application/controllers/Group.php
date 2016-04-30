@@ -16,7 +16,11 @@ class Group extends CI_Controller{
     }
 
     public function add(){
+        //小组的创建人就是超级管理员
         $uid = $this->input->post('uid');
+        $group['g_name'] = $this->input->post('uid');
+        $group['g_register_time'] = date('Y-m-d H:i:s');
+        $this->base->insert('');
     }
 
     public function delete(){

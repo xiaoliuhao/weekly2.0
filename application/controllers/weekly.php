@@ -18,10 +18,26 @@ class Weekly extends CI_Controller{
     }
     
     public function add(){
-        
+        $article['uid'] = $this->input->post('uid');
+        $article['title'] = $this->input->post('title');
+        $article['content'] = $this->input->post('content');
+        $article['update_time'] = date('Y-m-d H:i:s');
+        $this->base->insert('weekly',$article);
     }
     
     public function delete(){
-        
+        $id = $this->input->get('id');
+        $this->weekly->delete($id);
     }
+
+    public function update(){
+        $id = $this->input->get('id');
+        $article['title'] = $this->input->post('title');
+        $article['content'] = $this->input->post('content');
+        $article['update_time'] = date('Y-m-d H:i:s');
+
+        $this->base->update('weekly',$article,array('id'=>$id))
+    }
+
+
 }
