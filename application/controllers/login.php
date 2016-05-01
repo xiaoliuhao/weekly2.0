@@ -32,8 +32,9 @@ class Login extends CI_Controller{
         $user = $this->user->info($uid);
 
         if($password == $user['password']){
-            //验证成功密码正确
-            $this->log->add('user_log',$uid,'login');
+            //验证成功密码正确 修改最后一次登录时间 将行为写入日志
+            $this->log->login($uid);
+            $this->base->write_user_log($uid,'login');
             echo 1;
         }else{
             echo 2;
@@ -41,6 +42,10 @@ class Login extends CI_Controller{
 
     }
 
+    /**
+     * register  用户注册
+     * @access public
+     */
     public function register(){
         $user['uid'] = $this->input->post('uid');
         //先判断是否注册过
@@ -54,16 +59,21 @@ class Login extends CI_Controller{
         $user['password'] = $this->input->post('password');
         $user['email']    = $this->input->post('email');
 
-        $affect = $this->user->register($user);
+        $affect = $this->log->register($user);
         if($affect){
             //注册成功
-            $this->log->add('user_log',$user['uid'],'register');
+            $this->base->write_user_log($user['uid'],'register');
             echo 1;
         }
     }
 
+    /**
+     * logout   用户退出登录
+     * @access public
+     */
     public function logout(){
-
+        $uid = $this->input->post('uid');
+        $this->base->write_user_log->($uid,'logout');
     }
 
 }

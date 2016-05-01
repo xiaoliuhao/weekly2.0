@@ -12,15 +12,26 @@ class Ulog_Model extends CI_Model{
     }
 
     /**
-     * write_log 写入日志
+     * register 注册
      * @access public
-     * @param $table    用户日志还是小组日志
-     * @param $uid      用户账号
-     * @param $action   行为
+     * @param $user
      */
-    public function add($table,$uid,$action){
-        $ip = $_SERVER["REMOTE_ADDR"];
+    public function register($user){
+        $user['last_ip'] = $_SERVER["REMOTE_ADDR"];
+        $user['register_time'] = date('Y-m-d H:i:s');
+        $user['last_time'] = $user['register_time']
+
+        $this->db->insert('user',$user);
+    }
+
+    /**
+     * login    用户登录成功。更新数据库信息
+     * @access public
+     * @param $uid
+     */
+    public function login($uid){
         $time = date('Y-m-d H:i:s');
-        $this->db->insert($table,array('uid'=>$uid,'action'=>$action,'ip'=>$ip,'time'=>date('Y-m-d H:i:s')));
+        $ip   = $_SERVER["REMOTE_ADDR"];
+        $this->db->update('user',array('last_time'=>$time),array('last_ip'=>$ip));
     }
 }

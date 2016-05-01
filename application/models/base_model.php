@@ -50,7 +50,7 @@ class Base_Model extends CI_Model{
      * @return mixed    返回影响的行数 一般为1
      */
     public function insert($table,$data){
-        $this->db->insert($table,$data);
+        $this->db->insert($this->db->dbprefix($table),$data);
         return $this->db->affected_rows();
     }
 
@@ -86,11 +86,13 @@ class Base_Model extends CI_Model{
      * @param $action
      * @param $ip
      */
-    public function write_user_log($uid,$action,$ip){
+    public function write_user_log($uid,$action){
+        $ip = $_SERVER["REMOTE_ADDR"];
         $this->db->insert('log',array('uid'=>$uid,'action'=>$action,'ip'=>$ip,'time'=>date('Y-m-d H:i:s')));
     }
     
-    public function write_group_log($gid,$uid,$action,$ip){
+    public function write_group_log($gid,$uid,$action){
+        $ip = $_SERVER["REMOTE_ADDR"];
         $this->db->insert('group_log',array('g_id'=>$gid,'uid'=>$uid,'action'=>$action,'ip'=>$ip,'time'=>date('Y-m-d H:i:s')));
     }
 }

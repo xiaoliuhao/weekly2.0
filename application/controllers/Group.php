@@ -9,6 +9,7 @@
 class Group extends CI_Controller{
     function __construct(){
         parent::__construct();
+        $this->load->model('Group_Model','group');
     }
 
     public function index(){
@@ -17,10 +18,24 @@ class Group extends CI_Controller{
 
     public function add(){
         //小组的创建人就是超级管理员
+        $g_name = $this->input->post('uid');
+        $g_register_time = date('Y-m-d H:i:s');
+        $this->group->add($uid,$g_name,$g_register_time);
+
+
+        //先创建小组 然后再向祖管理员中和加小组的表中加入数据
+        $this->base->insert('group',$group);
+
+        //向管理员中加入数据
         $uid = $this->input->post('uid');
-        $group['g_name'] = $this->input->post('uid');
-        $group['g_register_time'] = date('Y-m-d H:i:s');
-        $this->base->insert('');
+
+    }
+
+    public function update(){
+        $g_id = $this->input->post('gid');
+        $uid  = $this->input->post('uid');
+        $name = $input('name');
+        
     }
 
     public function delete(){

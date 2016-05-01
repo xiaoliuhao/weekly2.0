@@ -12,17 +12,7 @@ class User_Model extends CI_Model{
         $this->load->helper('url');
     }
 
-    /**
-     * register 注册
-     * @access public
-     * @param $user
-     */
-    public function register($user){
-        $user['ip'] = $_SERVER["REMOTE_ADDR"];
-        $user['register_time'] = date('Y-m-d H:i:s');
-
-        $this->db->insert('user',$user);
-    }
+    
 
     /**
      * info 查看用户详细信息
