@@ -17,6 +17,20 @@ class Member extends class{
         $this->load->model('Member_Model','member');
     }
 
+    public function get_admin_list(){
+        $gid = $this->input->post('gid');
+        $uid = $this->input->post('uid');
+        $admins = $this->member->get_admin_list($gid);
+    }
+
+    public function delete(){
+        $admin_id  = $this->input->post('admin_id');
+        $member_id = $this->input->post('member_id');
+        $g_id      = $this->input->post('g_id');
+        $result = $this->admin->delete($g_id,$admin_id,$member_id);
+
+    }
+
     public function jion_group(){
         $uid = $this->input->post('uid');
         $gid = $this->input->post('gid');

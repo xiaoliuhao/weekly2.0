@@ -13,9 +13,14 @@ class Admin extends CI_Controller{
         $this->load->model('Base_Model','base');
     }
 
+    
+
     public function get_member_list(){
         $this->input->get('gid');
         $this->input->post('uid');
-        $this->admin->get_member_list($gid);
+        $members = $this->admin->get_member_list($gid);
     }
+
+    
+
 }
