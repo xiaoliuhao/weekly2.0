@@ -28,8 +28,28 @@ class Member_Model extends CI_Model{
         return $member;
     }
 
-    public function deletemember(){
-
+    public function delete_member($g_id,$admin_id,$member_id){
+        $admin_info = $this->base->select('level','group_admin','uid',$admin_id);
+        if($admin_info['level'] >= 2){
+            //权限不足 删除失败
+            return 2;
+        }else{
+            //判断需要删除的人是不是管理员
+            $is_admin = $this->base->select('*','group_admin','uid',$member_id);
+            if(!$is_admin){
+                //如果不是管理员 直接删除w_jion_group 小组中的用户id就好
+                $this->db->delete('jion_group',array('g_id'=>$g_id,'uid'=>$member_id));
+                return 1;
+            }elseif($is_admin['level'] > $admin_info['level']){
+                //如果是管理员  比较一下权限
+                $this->db->delete('jion_group',array('g_id'=>$g_id,'uid'=>$member_id));
+                $this->db->delete('group_admin',array('g_id'=>$g_id,'uid'=>$member_id));
+                return 1;
+            }else{
+                //权限不足 无法将与自己等级相同 以及 比自己权限高的管理员踢出小组
+                return 2;
+            }
+        }
     }
     
     public function jion_group($gid,$uid){
@@ -39,7 +59,7 @@ class Member_Model extends CI_Model{
 
     public function quit($gid,$uid){
 //        --------------------------是否要通知小组的管理员
-        $this->db->delete('jion_group',array('g_id'=$gid,'uid'=>$uid));
+        $this->db->delete('jion_group',array('g_id'=>$gid,'uid'=>$uid));
         return $this->db->affected_rows();
     }
 

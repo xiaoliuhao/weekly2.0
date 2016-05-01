@@ -10,25 +10,36 @@
 /**
  * Class Member 小组成员的类
  */
-class Member extends class{
+class Member extends CI_Controller{
     function __construct(){
         parent::__construct();
         $this->load->model('Base_Model','base');
         $this->load->model('Member_Model','member');
     }
 
-    public function get_admin_list(){
+    public function index(){
+        
+    }
+    
+    public function get_member_list(){
         $gid = $this->input->post('gid');
-        $uid = $this->input->post('uid');
-        $admins = $this->member->get_admin_list($gid);
+        $members = $this->member->get_member_list($gid);
+        var_dump($members);
     }
 
-    public function delete(){
+    public function delete_member(){
         $admin_id  = $this->input->post('admin_id');
         $member_id = $this->input->post('member_id');
         $g_id      = $this->input->post('g_id');
-        $result = $this->admin->delete($g_id,$admin_id,$member_id);
-
+        $result = $this->member->delete_member($g_id,$admin_id,$member_id);
+        switch ($result){
+            case 1:
+                //删除成功
+                break;
+            case 2:
+                //权限不足 删除失败
+                break;
+        }
     }
 
     public function jion_group(){

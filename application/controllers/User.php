@@ -21,7 +21,7 @@ class User extends CI_Controller{
      * @access public
      */
     public function index(){
-        $data = $this->input->info();
+//        $data = $this->input->info();
     }
 
     /**
@@ -30,7 +30,7 @@ class User extends CI_Controller{
      */
     public function detail(){
 //        ---------------------------------------session还是post传输
-        $uid = $this-.input->post('uid');
+        $uid = $this->input->post('uid');
         $detail = $this->user->info($uid);
 
     }
