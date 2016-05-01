@@ -18,33 +18,52 @@ class Group extends CI_Controller{
 
     public function add(){
         //小组的创建人就是超级管理员
-        $g_name = $this->input->post('uid');
-        $g_register_time = date('Y-m-d H:i:s');
-        $this->group->add($uid,$g_name,$g_register_time);
-
-
-        //先创建小组 然后再向祖管理员中和加小组的表中加入数据
-        $this->base->insert('group',$group);
-
-        //向管理员中加入数据
         $uid = $this->input->post('uid');
+        $g_info['g_name'] = $this->input->post('name');
+        $g_info['g_introduce'] = $this->input->post('introduce');
+        $g_info['g_register_time'] = date('Y-m-d H:i:s');
+        $g_id = $this->group->add($uid,$g_info);
 
+        //写入日志
+        $this->base->write_user_log($uid,'create a group');
+        $this->base->write_group_log($g_id,$uid,'create');
+
+        //创建小组成功
+        echo 1;
+    }
+    
+    public function invite(){
+        
     }
 
     public function update(){
-        $g_id = $this->input->post('gid');
-        $uid  = $this->input->post('uid');
-        $name = $input('name');
+        $uid = $this->input->post('uid');
+        $groupInfo['g_id']        = $this->input->post('gid');
+        $groupInfo['g_name']      = $this->input->post('name');
+        $groupInfo['g_introduce'] = $this->input->post('introduce');
         
+        $result = $this->group->update($uid,$groupInfo);
+        switch ($result){
+            case 1:
+                //删除成功
+                break;
+            case 2:
+                //权限不足，修改失败
+                break;
+        }
     }
 
     public function delete(){
-        
-    }
-
-
-    public function test(){
-        echo 'liu';
-        echo 'hao';
+        $uid    = $this->input->post('uid');
+        $gid    = $this->input->post('gid');
+        $result = $this->group->delete($uid,$gid);
+        switch ($result){
+            case 1:
+                //删除成功
+                break;
+            case 2:
+                //权限不足 删除失败
+                break;
+        }
     }
 }
