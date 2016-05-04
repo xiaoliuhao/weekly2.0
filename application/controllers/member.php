@@ -27,6 +27,15 @@ class Member extends CI_Controller{
         var_dump($members);
     }
 
+    public function member_detail(){
+        $gid = $this->input->get('gid');
+        $member_detail = $this->member->member_detail($gid);
+
+        var_dump($member_detail);
+    }
+    
+    
+
     public function delete_member(){
         $admin_id  = $this->input->post('admin_id');
         $member_id = $this->input->post('member_id');

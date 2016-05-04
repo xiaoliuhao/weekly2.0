@@ -28,6 +28,11 @@ class Member_Model extends CI_Model{
         return $member;
     }
 
+    public function member_detail($gid){
+        $member_detail = $this->base->select('*','user','uid',$gid);
+        return $member_detail;
+    }
+
     public function delete_member($g_id,$admin_id,$member_id){
         $admin_info = $this->base->select('level','group_admin','uid',$admin_id);
         if($admin_info['level'] >= 2){

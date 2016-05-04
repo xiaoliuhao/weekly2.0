@@ -9,7 +9,7 @@
 class Admin extends CI_Controller{
     function __construct(){
         parent::__construct();
-        $this->load->model('Amdin_Model','admin');
+        $this->load->model('Admin_Model','admin');
         $this->load->model('Base_Model','base');
     }
 
@@ -17,7 +17,7 @@ class Admin extends CI_Controller{
 
     public function get_admin_list(){
         $this->input->get('gid');
-        $admins = $this->admin->get_member_list($gid);
+        $admins = $this->admin->get_admin_list($gid);
         var_dump($admins);
     }
 

@@ -39,5 +39,9 @@ class Weekly extends CI_Controller{
         $this->base->update('weekly',$article,array('id'=>$id))
     }
 
+    public function list(){
+        $data = $this->weekly->list($uid);
+    }
+
 
 }
