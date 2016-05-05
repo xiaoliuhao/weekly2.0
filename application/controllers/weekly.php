@@ -43,5 +43,22 @@ class Weekly extends CI_Controller{
         $data = $this->weekly->list($uid);
     }
 
+    public function detail(){
+        $w_id = $this->input->get('wid');
+        $data = $this->weekly->detail($w_id);
+
+        var_dump($data);
+    }
+    
+    public function comment(){
+        $comment['uid']     = $this->input->post('w_id');
+        $comment['c_uid']   = $this->input->post('c_uid');
+        //这个可以通过 w_id 然后再数据库中查询得到
+        $comment['o_uid']   = $this->input->psot('o_uid');
+        $comment['content'] = $this->input->post('content');
+        $comment['time']    = date('Y-m-d H:i:s');
+        $this->base->insert('comment',$comment);
+    }
+
 
 }

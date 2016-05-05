@@ -13,7 +13,13 @@ class Weekly_Model extends CI_Model{
     }
 
     public function list($uid){
-        $datas = $this->base->select_array('*','weekly','uid',$uid);
+        if($uid) {
+            $datas = $this->base->select_array('*', 'weekly', 'uid', $uid);
+        }else{
+            //分页 按时间排序
+            $res   = $this->db->select('*')->from($this->db->dbprefix('weekly'))->limit(1,1)->order_by('time desc')->get();
+            $datas = $res->result_array();
+        }
         $i = 0;
         foreach ($datas as $data){
             $weekly[$i]['id']      = $data['id'];
@@ -23,13 +29,13 @@ class Weekly_Model extends CI_Model{
             $weekly[$i]['hits']    = $data['hits'];
             $weekly[$i]['agrees']  = $data['agrees'];
             $weekly[$i]['time']    = $data['update_time'];
-            $weekly[$i]['comment'] = $this->comment($data['w_id']);
+            $weekly[$i]['comment'] = $this->get_comment($data['w_id']);
                 $i++;
         }
         return $weekly;
     }
 
-    public function comment($w_id){
+    public function get_comment($w_id){
         $datas = $this->base->select_array('*','comment','w_id',$w_id);
         $i = 0;
         foreach($datas as $data){
@@ -43,4 +49,5 @@ class Weekly_Model extends CI_Model{
 
         return $comments;
     }
+    
 }
