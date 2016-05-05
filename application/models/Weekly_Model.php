@@ -31,8 +31,16 @@ class Weekly_Model extends CI_Model{
 
     public function comment($w_id){
         $datas = $this->base->select_array('*','comment','w_id',$w_id);
+        $i = 0;
         foreach($datas as $data){
-            comments['']
+            $comments[$i]['id']   = $data['id'];
+            $comments[$i]['commenter'] = $this->base->select('uid,name,photo','user','uid',$data['c_uid']);
+            $comments[$i]['originer']  = $this->base->select('uid,name,photo','user','uid',$data['o_uid']);
+            $comments[$i]['content']   = $data['content'];
+            $comments[$i]['time']      = $data['time'];
+            $i++;
         }
+
+        return $comments;
     }
 }
