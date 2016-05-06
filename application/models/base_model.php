@@ -27,6 +27,12 @@ class Base_Model extends CI_Model{
         return $data;
     }
 
+    public function select_any($needs,$table){
+        $res  = $this->db->select($needs)->from($table)->get();
+        $data = $res->result_array();
+        return $data;
+    }
+
     /**
      * select_array 多条查询 返回多条记录
      * @access public

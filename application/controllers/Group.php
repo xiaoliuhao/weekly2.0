@@ -33,7 +33,19 @@ class Group extends CI_Controller{
     }
     
     public function invite(){
+        //邀请别人应该产生一个随机
         
+    }
+
+    public function getlist(){
+        $data = $this->group->get_group_list();
+        var_dump($data);
+    }
+
+    public function detail(){
+        $gid  = $this->input->get('gid');
+        $data = $this->group->get_group_detail($gid);
+        var_dump($data);
     }
 
     public function update(){

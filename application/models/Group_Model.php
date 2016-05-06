@@ -11,11 +11,21 @@ class Group_Model extends CI_Model{
         parent::__construct();
         $this->load->model('Base_Model','base');
     }
+
+    public function get_group_list(){
+        $datas = $this->base->select_any('*','group');
+        return $datas;
+    }
+
+    public function get_group_detail($gid){
+        $data = $this->base->select('*','group','g_id',$gid);
+        return $data;
+    }
     
     public function add($uid,$g_info){
         $this->db->insert('group',$g_info);
         //先创建组，再获取自增的id
-        $groupdata = $this->base->select('g_id','g_name'=>$g_info['name']);
+        $groupdata = $this->base->select('g_id','g_name',$g_info['name']);
         //向组管理员中加入管理员信息，权限为超级管理员
         //再向选组(w_jion_group)中加入选组情况
         $this->db->insert('group_admin',array('g_id'=>$groupdata['g_id'],'uid'=>$uid,'level'=>0));
@@ -30,7 +40,7 @@ class Group_Model extends CI_Model{
             //权限不足删除失败
             return 2;
         }else{
-            $this->base->delete('')
+//            $this->base->delete('')
         }
     }
 
