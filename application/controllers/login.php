@@ -19,7 +19,12 @@ class Login extends CI_Controller{
      * @access public
      */
     public function index(){
+        //判断是否登录
+        if(){
 
+        }else{
+
+        }
     }
 
     /**
