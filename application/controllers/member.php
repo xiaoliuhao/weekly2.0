@@ -20,22 +20,32 @@ class Member extends CI_Controller{
     public function index(){
         
     }
-    
+
+    /**
+     * get_member_list 获取小组的成员列表
+     * @access public
+     */
     public function get_member_list(){
         $gid = $this->input->post('gid');
         $members = $this->member->get_member_list($gid);
         var_dump($members);
     }
 
+    /**
+     * member_detail 获取小组成员的详细信息
+     * @access public
+     */
     public function member_detail(){
         $gid = $this->input->get('gid');
         $member_detail = $this->member->member_detail($gid);
 
         var_dump($member_detail);
     }
-    
-    
 
+    /**
+     * delete_member 删除成员
+     * @access public
+     */
     public function delete_member(){
         $admin_id  = $this->input->post('admin_id');
         $member_id = $this->input->post('member_id');
@@ -63,6 +73,21 @@ class Member extends CI_Controller{
         }
     }
 
+    /**
+     * apply 申请加入小组
+     * @access public
+     */
+    public function apply(){
+        $uid = $this->input->post('uid');
+        $gid     = $this->input->post('gid');
+        $this->member->apply($uid,$gid);
+
+    }
+
+    /**
+     * quit 退出小组
+     * @access public
+     */
     public function quit(){
         $uid = $this->input->post('uid');
         $gid = $this->input->post('gid');

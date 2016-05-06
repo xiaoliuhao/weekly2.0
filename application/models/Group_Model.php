@@ -19,6 +19,7 @@ class Group_Model extends CI_Model{
 
     public function get_group_detail($gid){
         $data = $this->base->select('*','group','g_id',$gid);
+        $data['member'] = $this->base->select_array('uid','jion_group','g_id',$gid);
         return $data;
     }
     

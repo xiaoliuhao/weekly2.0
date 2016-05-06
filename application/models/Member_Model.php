@@ -28,6 +28,12 @@ class Member_Model extends CI_Model{
         return $member;
     }
 
+    /**
+     * member_detail 获取用户的详细信息
+     * @access public
+     * @param $gid
+     * @return mixed
+     */
     public function member_detail($gid){
         $member_detail = $this->base->select('*','user','uid',$gid);
         return $member_detail;
@@ -60,6 +66,10 @@ class Member_Model extends CI_Model{
     public function jion_group($gid,$uid){
         $this->db->insert('jion_group',array('g_id' => $gid,'uid'=>$uid));
         return $this->db->affected_rows();
+    }
+
+    public function apply($uid,$gid){
+
     }
 
     public function quit($gid,$uid){
