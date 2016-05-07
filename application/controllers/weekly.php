@@ -11,6 +11,7 @@ class Weekly extends CI_Controller{
         parent::__construct();
         $this->load->model('Base_Model','base');
         $this->load->model('Weekly_Mode','weekly');
+        $this->load->model('Comment_Model','comment');
     }
     
     public function index(){
@@ -41,6 +42,7 @@ class Weekly extends CI_Controller{
 
     public function list(){
         $data = $this->weekly->list($uid);
+        var_dump($data);
     }
 
     public function detail(){
@@ -57,7 +59,12 @@ class Weekly extends CI_Controller{
         $comment['o_uid']   = $this->input->psot('o_uid');
         $comment['content'] = $this->input->post('content');
         $comment['time']    = date('Y-m-d H:i:s');
-        $this->base->insert('comment',$comment);
+        $this->comment->add($comment);
+    }
+
+    public function delete_comment(){
+        $cid = $this->input->post('c_id');
+        $this->comment->delete($cid);
     }
 
 

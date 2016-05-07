@@ -39,6 +39,14 @@ class Member_Model extends CI_Model{
         return $member_detail;
     }
 
+    /**
+     * delete_member 移除成员
+     * @access public
+     * @param $g_id
+     * @param $admin_id
+     * @param $member_id
+     * @return int
+     */
     public function delete_member($g_id,$admin_id,$member_id){
         $admin_info = $this->base->select('level','group_admin','uid',$admin_id);
         if($admin_info['level'] >= 2){
@@ -62,16 +70,38 @@ class Member_Model extends CI_Model{
             }
         }
     }
-    
+
+    /**
+     * jion_group 加入小组
+     * @access public
+     * @param $gid
+     * @param $uid
+     * @return mixed
+     */
     public function jion_group($gid,$uid){
         $this->db->insert('jion_group',array('g_id' => $gid,'uid'=>$uid));
         return $this->db->affected_rows();
     }
 
+    /**
+     * apply    申请
+     * @access public
+     * @param $uid
+     * @param $gid
+     * @return mixed
+     */
     public function apply($uid,$gid){
-
+        $this->db->insert('jion_group',array('g_id'=>$gidm,'uid'=>$uid,'status'=>1));
+        return $this->db->affected_rows();
     }
 
+    /**
+     * quit 退出小组
+     * @access public
+     * @param $gid
+     * @param $uid
+     * @return mixed
+     */
     public function quit($gid,$uid){
 //        --------------------------是否要通知小组的管理员
         $this->db->delete('jion_group',array('g_id'=>$gid,'uid'=>$uid));

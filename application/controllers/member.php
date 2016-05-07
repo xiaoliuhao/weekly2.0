@@ -61,6 +61,10 @@ class Member extends CI_Controller{
         }
     }
 
+    /**
+     * jion_group 加入小组
+     * @access public
+     */
     public function jion_group(){
         $uid = $this->input->post('uid');
         $gid = $this->input->post('gid');
@@ -79,9 +83,8 @@ class Member extends CI_Controller{
      */
     public function apply(){
         $uid = $this->input->post('uid');
-        $gid     = $this->input->post('gid');
+        $gid = $this->input->post('gid');
         $this->member->apply($uid,$gid);
-
     }
 
     /**

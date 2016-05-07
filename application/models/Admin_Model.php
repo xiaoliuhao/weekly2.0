@@ -12,6 +12,12 @@ class Admin_Model extends CI_Model{
         $this->load->model('Base_Model','base');
     }
 
+    /**
+     * get_admin_list   获取管理员列表
+     * @access public
+     * @param $gid
+     * @return mixed
+     */
     public function get_admin_list($gid){
         $datas = $this->base->select_array('*','group_admin','g_id',$gid);
         $i = 0;
@@ -23,6 +29,14 @@ class Admin_Model extends CI_Model{
         return $admins;
     }
 
+    /**
+     * delete_admin 取消小组管理员的身份
+     * @access public
+     * @param $gid
+     * @param $admin_id
+     * @param $delete_id
+     * @return int
+     */
     public function delete_admin($gid,$admin_id,$delete_id){
         $admin_info = $this->db->select('*')->get_where($this->db->dbprefix('group_admin'),array('uid'=>$admin_id,'g_id'=>$gid));
         $delete_info = $this->db->select('*')->get_where($this->db->dbprefix('group_admin'),array('uid'=>$delete_id,'g_id'=>$gid));
@@ -35,7 +49,16 @@ class Admin_Model extends CI_Model{
             return 2;   //权限不足
         }
     }
-    
+
+    /**
+     * change_level 修改管理员权限
+     * @access public
+     * @param $gid
+     * @param $admin_id
+     * @param $change_id
+     * @param $level
+     * @return int
+     */
     public function change_level($gid,$admin_id,$change_id,$level){
         $admin_info = $this->db->select('*')->get_where($this->db->dbprefix('group_admin'),array('uid'=>$admin_id,'g_id'=>$gid));
         $change_info = $this->db->select('*')->get_where($this->db->dbprefix('group_admin'),array('uid'=>$change_id,'g_id'=>$gid));

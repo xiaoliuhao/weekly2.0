@@ -20,6 +20,7 @@ class Welcome extends CI_Controller {
 	 */
 	public function index(){
 		//判断是否登陆 如果没有  进入登陆页面
-		redirect('Login');
+//		redirect('Login');
+		echo 'hello';
 	}
 }

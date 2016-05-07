@@ -15,19 +15,6 @@ class Login extends CI_Controller{
     }
 
     /**
-     * index    加载登陆界面
-     * @access public
-     */
-    public function index(){
-        //判断是否登录
-        if(){
-
-        }else{
-
-        }
-    }
-
-    /**
      * check_login  登陆
      * @access public
      */
