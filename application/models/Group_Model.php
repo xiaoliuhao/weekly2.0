@@ -12,6 +12,11 @@ class Group_Model extends CI_Model{
         $this->load->model('Base_Model','base');
     }
 
+    /**
+     * get_group_list   获取小组列表
+     * @access public
+     * @return mixed
+     */
     public function get_group_list(){
         $datas = $this->base->select_any('*','group');
         return $datas;
@@ -46,7 +51,8 @@ class Group_Model extends CI_Model{
     }
 
     public function update($uid,$groupInfo){
-        $admin = $this->base->select('*','group_admin','g_id',$groupInfo['g_id']);
+//        $admin = $this->base->select('*','group_admin','g_id',$groupInfo['g_id']);
+        $admin = $this->db->select('*')->get_where($this->db->dbprefix('group_admin'),array('g_id'=>$groupInfo['g_id'],'uid'=>$uid));
         if($admin['level'] >= 2){
             //权限不足
             return 2;
