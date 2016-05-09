@@ -12,5 +12,22 @@ class Login extends CI_Controller{
         $this->load->model('Login_Model','login');
         $this->load->model('Base_Model','base');
     }
+    
+    public function index(){
+        $this->load->view('login');
+    }
+
+    public function check_login(){
+        $name = $this->input->post('name');
+        $password = $this->input->post('password');
+
+        $adminInfo = $this->login->check_login($name,$password);
+        if($adminInfo){
+            $this->session->set_userdata('admin',$adminInfo);
+            $this->base->alert('欢迎你',$name);
+        }else{
+            $this->base->alert('密码错误');
+        }
+    }
 
 }
