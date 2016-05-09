@@ -37,4 +37,9 @@ class Test extends CI_Controller{
         $data = get_cookie('username');
         var_dump($data);
     }
+
+    public function test02(){
+        header('Location: http://localhost/weekly'); 
+        // header('http://172.33.12.161/Stock/index.php?m=Home&c=Index&a=index');
+    }
 }
