@@ -16,4 +16,6 @@ class Member_Model extends CI_Model{
         $data = $this->base->select('*','user','uid',$uid);
         return 1;
     }
+
+
 }

@@ -14,32 +14,25 @@ class Test extends CI_Controller{
         $this->load->helper('cookie');
     }
 
-    public function index(){
-        echo 'hello';
-    }
-
-    public function test(){
+    public function login(){
         $user['uid'] = $this->input->post('uid');
-        $user['password'] = $this->input->post('password');
 
-        if($user['uid']  && $user['password'] ) {
-            set_cookie('username', $user['uid'], 600);
-            set_cookie('password', $user['password'], 600);
-            redirect('test/home');
+
+        if($user) {
+            set_cookie('userid', $user['uid'], 600);
+            $this->session->set_userdata('userid', $user['uid']);
         }
-//
-//        $data = get_cookie('username');
-//
-//        var_dump($data);
-    }
 
-    public function home(){
-        $data = get_cookie('username');
+//        echo 'session';
+//
+        var_dump($this->session->userdata('userid'));
+//
+        $data = get_cookie('userid');
+//
         var_dump($data);
     }
 
-    public function test02(){
-        header('Location: http://localhost/weekly'); 
-        // header('http://172.33.12.161/Stock/index.php?m=Home&c=Index&a=index');
-    }
+
+
+
 }

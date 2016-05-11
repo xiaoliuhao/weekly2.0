@@ -59,6 +59,13 @@ class Login extends CI_Controller{
         }
     }
 
+    public function get_photo(){
+        $uid = $this->input->post('uid');
+        $data = $this->user->info($uid);
+
+        var_dump($data);
+    }
+
     /**
      * logout   用户退出登录
      * @access public

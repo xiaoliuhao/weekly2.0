@@ -27,6 +27,10 @@ class Base_Model extends CI_Model{
         return $data;
     }
 
+    public function select_($needs,$table,$array){
+        $this
+    }
+
     public function select_any($needs,$table){
         $res  = $this->db->select($needs)->from($table)->get();
         $data = $res->result_array();
@@ -83,6 +87,11 @@ class Base_Model extends CI_Model{
     public function delete($table,$where){
         $this->db->delete($table,$where);
         return $this->dn->affected_rows();
+    }
+
+    public function is_log(){
+        $token = $this->input->post('token');
+        $this->select('')
     }
 
     /**

@@ -14,6 +14,9 @@ class Member extends CI_Controller{
     }
 
     public function index(){
+        $res = $this->db->select('*')->from('user')->get();
+        $data = $res->result_array();
+        var_dump($data);
         $this->load->view('contacts');
     }
 

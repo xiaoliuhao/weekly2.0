@@ -24,10 +24,17 @@ class Login extends CI_Controller{
         $adminInfo = $this->login->check_login($name,$password);
         if($adminInfo){
             $this->session->set_userdata('admin',$adminInfo);
-            $this->base->alert('欢迎你',$name);
+            $this->base->alert('欢迎你',$this->session->userdata('admin')['name']);
         }else{
             $this->base->alert('密码错误');
         }
+    }
+
+    public function logout(){
+        $this->session->unset_userdata('admin');
+        $this->session->sess_destroy();
+        $this->base->alert('再见');
+        redirect('');
     }
 
 }

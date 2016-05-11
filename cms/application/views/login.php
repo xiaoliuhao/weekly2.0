@@ -49,6 +49,7 @@
             <div class="form-group">
                 <input type="password" name="password" class="form-control" placeholder="密码" >
             </div>
+            <input type="submit" value="登 录">
             <button type="submit" class="btn btn-primary block full-width m-b">登 录</button>
 
 
