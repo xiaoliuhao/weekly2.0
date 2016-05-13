@@ -9,6 +9,7 @@
 class Ulog_Model extends CI_Model{
     function __construct(){
         parent::__construct();
+        $this->load->model('Base_Model','base');
     }
 
     /**
@@ -23,6 +24,16 @@ class Ulog_Model extends CI_Model{
 
         $this->db->insert('user',$user);
     }
+    
+    public function check_login($uid,$password){
+        $data = $this->base->select('*','user_login','uid',$uid);
+        if($data['password'] != $password){
+            //密码错误 返回2
+            return 2;
+        }else{
+            $token = sha1(uniqid($uid.$password));
+        }
+    }
 
     /**
      * login    用户登录成功。更新数据库信息
@@ -32,6 +43,6 @@ class Ulog_Model extends CI_Model{
     public function login($uid){
         $time = date('Y-m-d H:i:s');
         $ip   = $_SERVER["REMOTE_ADDR"];
-        $this->db->update('user',array('last_time'=>$time),array('last_ip'=>$ip));
+        $this->db->update('user',array('last_time'=>$time,'last_ip'=>$ip),array('uid'=>$uid));
     }
 }

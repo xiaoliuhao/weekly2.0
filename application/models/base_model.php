@@ -27,8 +27,17 @@ class Base_Model extends CI_Model{
         return $data;
     }
 
-    public function select_($needs,$table,$array){
-        $this
+    /**
+     * select_needs
+     * @access public
+     * @param $needs
+     * @param $table
+     * @param $array
+     * @return mixed
+     */
+    public function select_needs($needs,$table,$array){
+        $data = $this->db->select($needs)->get_where($this->db->dbprefix($table),$array)->row_array();
+        return $data;
     }
 
     public function select_any($needs,$table){
@@ -48,6 +57,20 @@ class Base_Model extends CI_Model{
      */
     public function select_array($needs,$table,$key,$value){
         $res  = $this->db->select($needs)->from($table)->where($key,$value)->get();
+        $data = $res->result_array();
+        return $data;
+    }
+
+    /**
+     * select_array_needs
+     * @access public
+     * @param $needs
+     * @param $table
+     * @param $array
+     * @return mixed
+     */
+    public function select_array_needs($needs,$table,$array){
+        $res  = $this->db->select($needs)->from($table)->where($array)->get();
         $data = $res->result_array();
         return $data;
     }
@@ -89,9 +112,15 @@ class Base_Model extends CI_Model{
         return $this->dn->affected_rows();
     }
 
-    public function is_log(){
+    /**
+     * is_login
+     * @access public
+     * @return mixed
+     */
+    public function is_login(){
         $token = $this->input->post('token');
-        $this->select('')
+        $data  = $this->select('uid','user_login','token',$token);
+        return $data['uid'];
     }
 
     /**
@@ -105,7 +134,14 @@ class Base_Model extends CI_Model{
         $ip = $_SERVER["REMOTE_ADDR"];
         $this->db->insert('log',array('uid'=>$uid,'action'=>$action,'ip'=>$ip,'time'=>date('Y-m-d H:i:s')));
     }
-    
+
+    /**
+     * write_group_log 写入群组日志
+     * @access public
+     * @param $gid
+     * @param $uid
+     * @param $action
+     */
     public function write_group_log($gid,$uid,$action){
         $ip = $_SERVER["REMOTE_ADDR"];
         $this->db->insert('group_log',array('g_id'=>$gid,'uid'=>$uid,'action'=>$action,'ip'=>$ip,'time'=>date('Y-m-d H:i:s')));

@@ -21,16 +21,21 @@ class Login extends CI_Controller{
     public function check_login(){
         $uid = $this->input->post('uid');
         $password = $this->input->post('password');
-        $user = $this->user->info($uid);
 
-        if($password == $user['password']){
-            //验证成功密码正确 修改最后一次登录时间 将行为写入日志
-            $this->log->login($uid);
-            $this->base->write_user_log($uid,'login');
-            echo 1;
-        }else{
-            echo 2;
-        }
+        $data = $this->login->check_login($uid,sha1(md5($password)));
+        
+        switch ($data)
+
+//        $user = $this->user->info($uid);
+//
+//        if($password == $user['password']){
+//            //验证成功密码正确 修改最后一次登录时间 将行为写入日志
+//            $this->log->login($uid);
+//            $this->base->write_user_log($uid,'login');
+//            echo 1;
+//        }else{
+//            echo 2;
+//        }
 
     }
 

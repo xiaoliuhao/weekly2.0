@@ -23,4 +23,13 @@ class Welcome extends CI_Controller {
 //		redirect('Login');
 		echo 'hello';
 	}
+	
+	public function add(){
+	    $data = 'liu';
+		$password = '123456';
+		$unique = md5(uniqid($data.$password));
+		var_dump($unique);
+	}
+
+
 }
