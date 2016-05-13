@@ -23,8 +23,18 @@ class Login extends CI_Controller{
         $password = $this->input->post('password');
 
         $data = $this->login->check_login($uid,sha1(md5($password)));
-        
-        switch ($data)
+        if($data == 2){
+            //密码错误
+            echo 2;
+        }else{
+            var_dump($data);
+        }
+
+//        switch ($data){
+//            case 2:
+                //密码错误
+
+//        }
 
 //        $user = $this->user->info($uid);
 //

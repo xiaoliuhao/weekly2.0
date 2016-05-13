@@ -31,7 +31,10 @@ class Ulog_Model extends CI_Model{
             //密码错误 返回2
             return 2;
         }else{
-            $token = sha1(uniqid($uid.$password));
+            $data['token'] = sha1(uniqid($uid.$password));
+            //向数据库中更新token
+            $this->db->update('user_login',$data);
+            retrurn $data;
         }
     }
 
