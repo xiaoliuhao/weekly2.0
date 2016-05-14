@@ -11,8 +11,6 @@ class Member_Model extends CI_Model{
         parent::__construct();
         $this->load->model('Base_Model','base');
     }
-    
-
 
     /**
      * get_member_list 获取成员列表
@@ -21,13 +19,21 @@ class Member_Model extends CI_Model{
      * @return mixed
      */
     public function get_member_list($gid){
+        $datas = $this->base->select_array_needs('uid','jion_group',array('g_id'=>$gid,'level <'=>3));
         $datas = $this->base->select_array('uid','jion_group','g_id',$gid);
+
         $i = 0;
         foreach($datas as $data){
             $member[$i] = $this->base->select('uid,name,photo,register_time,last_time,last_ip','user','uid',$data['uid']);
+            $member[$i]['level'] = $data['level'];
             $i++;
         }
         return $member;
+    }
+
+    public function is_in_group($gid,$uid){
+        $data = $this->base->select_needs('*','jion_group',array('g_id'=>$gid,'uid'=>$uid));
+        return $data?true:flase;
     }
 
     /**
@@ -92,8 +98,8 @@ class Member_Model extends CI_Model{
      * @param $gid
      * @return mixed
      */
-    public function apply($uid,$gid){
-        $this->db->insert('jion_group',array('g_id'=>$gidm,'uid'=>$uid,'status'=>1));
+    public function apply($gid,$uid){
+        $this->db->insert('group_apply',array('g_id'=>$gid,'uid'=>$uid,'status'=>1));
         return $this->db->affected_rows();
     }
 

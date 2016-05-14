@@ -22,6 +22,10 @@ class Group_Model extends CI_Model{
         return $datas;
     }
 
+    public function get_member_numbers($gid){
+        
+    }
+
     public function get_group_detail($gid){
         $data = $this->base->select('*','group','g_id',$gid);
         $data['member'] = $this->base->select_array('uid','jion_group','g_id',$gid);
@@ -31,13 +35,11 @@ class Group_Model extends CI_Model{
     public function add($uid,$g_info){
         $this->db->insert('group',$g_info);
         //先创建组，再获取自增的id
-        $groupdata = $this->base->select('g_id','g_name',$g_info['name']);
-        //向组管理员中加入管理员信息，权限为超级管理员
-        //再向选组(w_jion_group)中加入选组情况
-        $this->db->insert('group_admin',array('g_id'=>$groupdata['g_id'],'uid'=>$uid,'level'=>0));
-        $this->db->insert('jion_group',array('g_id'=>$groupdata['g_id'],'uid'=>$uid));
+        $gid = $this->db->insert_id();
+        //创建小组的人即为管理员
+        $this->db->insert('jion_group',array('g_id'=>$gid,'uid'=>$uid,'level'=>0));
 
-        return $groupdata['g_id'];
+        return $gid;
     }
     
     public function delete($uid,$gid){

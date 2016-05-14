@@ -8,30 +8,33 @@
  */
 header('Access-Control-Allow-Origin:*');
 class Test extends CI_Controller{
+
     function __construct(){
         parent::__construct();
         $this->load->model('Base_Model','base');
         $this->load->helper('cookie');
     }
 
-    public function login(){
-        $user['uid'] = $this->input->post('uid');
+    public function index(){
+        echo 'mmp';
+    }
 
+    public function getName(){
 
-        if($user) {
-            set_cookie('userid', $user['uid'], 600);
-            $this->session->set_userdata('userid', $user['uid']);
-        }
+    }
 
-//        echo 'session';
-//
-        var_dump($this->session->userdata('userid'));
-//
-        $data = get_cookie('userid');
-//
+    public function select(){
+        $res=$this->db->select('*')->from('jion_group')->where(array('level >='=>1,))->get();
+        $data = $res->result();
+        echo $this->db->last_query();
         var_dump($data);
     }
 
+
+    public function insert(){
+        $this->db->insert('group',array('g_name'=>'test','g_introduce'=>'123'));
+        echo $this->db->insert_id();
+    }
 
 
 

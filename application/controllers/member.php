@@ -15,11 +15,11 @@ class Member extends CI_Controller{
         parent::__construct();
         $this->load->model('Base_Model','base');
         $this->load->model('Member_Model','member');
+        $this->load->model('Log_Model','log');
     }
     
     public function index(){
-        $gid = $this->input->post('gid');
-        
+        echo 'member'
     }
 
     /**
@@ -83,9 +83,14 @@ class Member extends CI_Controller{
      * @access public
      */
     public function apply(){
-        $uid = $this->input->post('uid');
-        $gid = $this->input->post('gid');
-        $this->member->apply($uid,$gid);
+//        $apply['uid']    = $this->input->post('uid');
+        $apply['uid']    = $this->log->is_login();
+        $apply['gid']    = $this->input->post('gid');
+        $apply['reason'] = $this->input->post('time');
+        $bool   = $this->member->is_in_group($gid,$uid);
+        if(!$bool){
+            $this->member->apply($uid,$gid);
+        }
     }
 
     /**

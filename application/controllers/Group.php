@@ -21,8 +21,8 @@ class Group extends CI_Controller{
         $uid = $this->input->post('uid');
         $g_info['g_name'] = $this->input->post('name');
         $g_info['g_introduce'] = $this->input->post('introduce');
-        $g_info['g_register_uid'] = $uid;
-        $g_info['g_register_time'] = date('Y-m-d H:i:s');
+        $g_info['g_create_uid'] = $uid;
+        $g_info['g_create_time'] = date('Y-m-d H:i:s');
         $g_id = $this->group->add($uid,$g_info);
 
         //写入日志
