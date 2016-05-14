@@ -11,6 +11,8 @@ class Member_Model extends CI_Model{
         parent::__construct();
         $this->load->model('Base_Model','base');
     }
+    
+
 
     /**
      * get_member_list 获取成员列表

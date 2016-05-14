@@ -16,8 +16,9 @@ class Member extends CI_Controller{
         $this->load->model('Base_Model','base');
         $this->load->model('Member_Model','member');
     }
-
+    
     public function index(){
+        $gid = $this->input->post('gid');
         
     }
 

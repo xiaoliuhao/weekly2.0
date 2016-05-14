@@ -113,17 +113,6 @@ class Base_Model extends CI_Model{
     }
 
     /**
-     * is_login
-     * @access public
-     * @return mixed
-     */
-    public function is_login(){
-        $token = $this->input->post('token');
-        $data  = $this->select('uid','user_login','token',$token);
-        return $data['uid'];
-    }
-
-    /**
      * write_user_log
      * @access public
      * @param $uid

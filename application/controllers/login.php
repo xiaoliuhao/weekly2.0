@@ -29,24 +29,7 @@ class Login extends CI_Controller{
         }else{
             var_dump($data);
         }
-
-//        switch ($data){
-//            case 2:
-                //密码错误
-
-//        }
-
-//        $user = $this->user->info($uid);
-//
-//        if($password == $user['password']){
-//            //验证成功密码正确 修改最后一次登录时间 将行为写入日志
-//            $this->log->login($uid);
-//            $this->base->write_user_log($uid,'login');
-//            echo 1;
-//        }else{
-//            echo 2;
-//        }
-
+        
     }
 
     /**
@@ -56,7 +39,8 @@ class Login extends CI_Controller{
     public function register(){
         $user['uid'] = $this->input->post('uid');
         //先判断是否注册过
-        $data = $this->user->info($user['uid']);
+        $data = $this->log->check_user($user['uid']);
+//        $data = $this->user->info($user['uid']);
         if($data){
             //已经被注册过
             echo 2;
@@ -64,7 +48,6 @@ class Login extends CI_Controller{
         }
         $user['name']     = $this->input->post('name');
         $user['password'] = $this->input->post('password');
-        $user['email']    = $this->input->post('email');
 
         $affect = $this->log->register($user);
         if($affect){
@@ -76,8 +59,8 @@ class Login extends CI_Controller{
 
     public function get_photo(){
         $uid = $this->input->post('uid');
-        $data = $this->user->info($uid);
-
+        $data = $this->log->get_photo($uid);
+        
         var_dump($data);
     }
 
