@@ -26,12 +26,36 @@ class Group_Model extends CI_Model{
         
     }
 
+    /**
+     * get_all_members 获取所有成员
+     * @access public
+     * @param $gid
+     * @return mixed
+     */
+    public function get_all_members($gid){
+        $data = $this->base->select_array('*','v_all_members','g_id',$gid);
+        return $data;
+    }
+
+    /**
+     * get_group_detail  获取小组详细信息
+     * @access public
+     * @param $gid
+     * @return mixed
+     */
     public function get_group_detail($gid){
         $data = $this->base->select('*','group','g_id',$gid);
         $data['member'] = $this->base->select_array('uid','jion_group','g_id',$gid);
         return $data;
     }
-    
+
+    /**
+     * add 创建小组
+     * @access public
+     * @param $uid
+     * @param $g_info
+     * @return mixed
+     */
     public function add($uid,$g_info){
         $this->db->insert('group',$g_info);
         //先创建组，再获取自增的id

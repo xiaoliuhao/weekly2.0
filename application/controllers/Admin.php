@@ -6,6 +6,8 @@
  * Time: 18:39
  * Version: weekly
  */
+require 'my_json.php';
+header('Access-Control-Allow-Origin:*');
 class Admin extends CI_Controller{
     function __construct(){
         parent::__construct();

@@ -46,6 +46,7 @@ class Login extends CI_Controller{
             echo 2;
             exit(0);
         }
+
         $user['name']     = $this->input->post('name');
         $user['password'] = $this->input->post('password');
 
@@ -57,6 +58,10 @@ class Login extends CI_Controller{
         }
     }
 
+    /**
+     * get_photo 获取头像
+     * @access public
+     */
     public function get_photo(){
         $uid = $this->input->post('uid');
         $data = $this->log->get_photo($uid);
@@ -70,7 +75,7 @@ class Login extends CI_Controller{
      */
     public function logout(){
         $uid = $this->input->post('uid');
-        $this->base->write_user_log->($uid,'logout');
+        $this->base->write_user_log($uid,'logout');
     }
 
 }

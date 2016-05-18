@@ -6,6 +6,8 @@
  * Time: 16:02
  * Version: weekly
  */
+require 'my_json.php';
+header('Access-Control-Allow-Origin:*');
 class Group extends CI_Controller{
     function __construct(){
         parent::__construct();
@@ -36,6 +38,12 @@ class Group extends CI_Controller{
     public function invite(){
         //邀请别人应该产生一个随机
         
+    }
+
+    public function members(){
+        $gid = $this->input->get('gid');
+        $data = $this->group->get_all_members($gid);
+        MyJSON::show(200,'ok',$data);
     }
 
     public function getlist(){
