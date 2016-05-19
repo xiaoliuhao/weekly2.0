@@ -72,7 +72,7 @@ class User_Model extends CI_Model{
      * @return mixed
      */
     public function get_notice_list($uid){
-        $res = $this->db->select('*')->from('user_message')->where(array('uid'=>$uid,'status'=>1)))->order_by('id desc')->get();
+        $res = $this->db->select('*')->from('user_message')->where(array('uid'=>$uid,'status'=>1))->order_by('id desc')->get();
         $data = $res->result_array();
 //        $data = $this->base->select_array_needs('*','user_message',array('uid'=>$uid,'status'=>1));
         return $data;
@@ -88,4 +88,11 @@ class User_Model extends CI_Model{
         $data = $res->result_array();
         return $data;
     }
+
+    public function get_group_level($gid,$uid){
+        $data = $this->base->select_needs('level','jion_group',array('g_id'=>$gid,'uid'=>$uid));
+        return $data['level'];
+    }
+
+    
 }

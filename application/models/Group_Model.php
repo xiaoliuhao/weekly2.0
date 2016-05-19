@@ -78,7 +78,7 @@ class Group_Model extends CI_Model{
 
     public function update($uid,$groupInfo){
 //        $admin = $this->base->select('*','group_admin','g_id',$groupInfo['g_id']);
-        $admin = $this->db->select('*')->get_where($this->db->dbprefix('group_admin'),array('g_id'=>$groupInfo['g_id'],'uid'=>$uid));
+        $admin = $this->db->select('*')->get_where($this->db->dbprefix('jion_group'),array('g_id'=>$groupInfo['g_id'],'uid'=>$uid));
         if($admin['level'] >= 2){
             //权限不足
             return 2;

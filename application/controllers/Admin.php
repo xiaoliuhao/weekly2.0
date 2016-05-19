@@ -13,6 +13,8 @@ class Admin extends CI_Controller{
         parent::__construct();
         $this->load->model('Admin_Model','admin');
         $this->load->model('Base_Model','base');
+        $this->load->model('User_Model','user');
+        $this->load->model('Member_Model','member');
     }
 
 
@@ -60,5 +62,27 @@ class Admin extends CI_Controller{
             //权限不足修改失败
         }
     }
+
+    public function check_members(){
+        $user['uid'] = $this->log->is_log();
+        $gid = $this->input->post('gid');
+        $user['level'] = $this->user->get_group_level($gid,$user['uid']);
+
+        if($user['level'] <= 1){
+            $data = $this->admin->get_apply_members($gid);
+            MyJSON::show(200,'ok',$data);
+        }
+    }
+    
+    public function add_member(){
+        $uid = $this->log->is_log();
+        $apply_id = $this->input->post('applyid');
+        $gid = $this->input->post('gid');
+        $level = $this->input->get_group_level($gid,$uid);
+
+        if($level <= 1){
+            $this->admin->add_member($gid,$apply_id);
+        }
+    } 
 
 }

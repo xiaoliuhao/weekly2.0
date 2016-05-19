@@ -70,6 +70,16 @@ class Admin_Model extends CI_Model{
             return 2;   //权限不足
         }
     }
+
+    public function get_apply_members($gid){
+        $data = $this->base->select_array('*','v_apply_members','g_id',$gid);
+        return $data;
+    }
+
+    public function add_member($gid,$uid){
+        $this->db->update('jion_group',array('level'=>2),array('uid'=>$uid,'g_id'=>$gid));
+        return $this->db->affected_rows();
+    }
     
     
 }
