@@ -62,8 +62,8 @@ class Admin_Model extends CI_Model{
     public function change_level($gid,$admin_id,$change_id,$level){
         $admin_info = $this->db->select('*')->get_where($this->db->dbprefix('group_admin'),array('uid'=>$admin_id,'g_id'=>$gid));
         $change_info = $this->db->select('*')->get_where($this->db->dbprefix('group_admin'),array('uid'=>$change_id,'g_id'=>$gid));
-        if($admin_info['level'] < $delete_info['level']){
-            //如果当前管理员权限大于需要被删除的管理员权限
+        if($admin_info['level'] < $change_info['level']){
+            //如果当前管理员权限大于需要被修改的管理员权限
             $this->db->update('group_admin',array('level'=>$level),array('uid'=>$delete_id));
             return 1;
         }else{
@@ -71,13 +71,32 @@ class Admin_Model extends CI_Model{
         }
     }
 
+    /**
+     * get_apply_members
+     * @access public
+     * @param $gid
+     * @return mixed
+     */
     public function get_apply_members($gid){
         $data = $this->base->select_array('*','v_apply_members','g_id',$gid);
         return $data;
     }
 
+    /**
+     * add_member
+     * @access public
+     * @param $gid
+     * @param $uid
+     * @return mixed
+     */
     public function add_member($gid,$uid){
-        $this->db->update('jion_group',array('level'=>2),array('uid'=>$uid,'g_id'=>$gid));
+        $this->db->delete('group_apply',array('uid'=>$uid,'g_id'=>$gid));
+        $this->db->insert('jion_group',array('g_id'=>$gid,'level'=>2,'jion_time'=>date('Y-m-d H:i:s')));
+        return $this->db->affected_rows();
+    }
+
+    public function refuse_member($gid,$uid){
+        $this->db->delete('group_apply',array('uid'=>$uid,'g_id'=>$gid));
         return $this->db->affected_rows();
     }
     

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>接口</title>
+    <title>接口文档</title>
 </head>
 <body>
 一、注册
@@ -31,11 +31,24 @@
 
 
 四、个人详细信息
-
-    昵称
-    头像
-    邮箱
-
+    方法：get
+    url：http://localhost/weekly/index.php/user/detail?uid=user001
+    传值：uid
+        返回：data
+                uid 账号
+                name 昵称
+                photo 头像
+                introduce 简介（个性签名）
+                real_name 真是姓名
+                birthday 生日
+                address 地址
+                tel 电话
+                qq
+                register_time 注册日期
+                last_time 上次登录时间
+                last_ip 上次登录ip
+                label_array(标签 数组)
+                    label 标签
 五、修改个人信息
     上传/修改头像
     修改密码
@@ -99,10 +112,38 @@
 十六、所有小组列表
 
 十七、查看小组详细信息
+    提交方式:get
+    url：http://localhost/weekly/index.php/group/detail?gid=1
+    返回:
+        data
+            g_id 组号
+            g_name 名字
+            g_introduce 小组简介
+            g_creater_uid 创建人uid
+            g_creater_name 创建人的昵称
+            g_creater_photo 创建人的头像
+            g_create_time 创建时间 （注意create 最后没有r）
+            members (小组所有成员 数组)
+              0=>
+                g_id 组号
+                level 等级
+                uid 账号
+                name 昵称
+                photo 头像
+                introduce 自我介绍
+                sex 性别
+                address 地址
+                tel 电话
+                qq
+                jion_time 加入时间
+                last_time 最后一次登录时间
+                last_ip 最后一次登录ip
+              1=>
+                …………
+                …………
 
 
 
-突出一个重点
 
 </body>
 </html>

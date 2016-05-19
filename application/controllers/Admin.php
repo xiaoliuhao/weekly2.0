@@ -73,16 +73,42 @@ class Admin extends CI_Controller{
             MyJSON::show(200,'ok',$data);
         }
     }
-    
-    public function add_member(){
-        $uid = $this->log->is_log();
-        $apply_id = $this->input->post('applyid');
-        $gid = $this->input->post('gid');
-        $level = $this->input->get_group_level($gid,$uid);
 
-        if($level <= 1){
-            $this->admin->add_member($gid,$apply_id);
+    /**
+     * get_apply 获取被操作申请人的信息
+     * @access public
+     * @return int
+     */
+    public function get_apply(){
+        $data['uid']        = $this->log->is_log();
+        $data['apply_id']   = $this->input->post('applyid');
+        $data['gid']        = $this->input->post('gid');
+        $level              = $this->input->get_group_level($gid,$uid);
+
+        if($level <=1 ){
+            return $data;
+        }else{
+            //权限不足，无法审核通过
+            return 2;
         }
-    } 
+    }
+
+    /**
+     * add_member
+     * @access public
+     */
+    public function add_member(){
+        $data = $this->get_apply();
+        $this->admin->add_member($data['gid'],$data['apply_id']);
+//        应在加上通知此人管理员已经同意审核 加入该群
+    }
+    
+    public function refuse(){
+        $data = $this->get_apply();
+        $this->admin->refuse($data['gid'],$data['apply_id']);
+//        通知此人 管理员拒绝其加入
+    }
+    
+    
 
 }

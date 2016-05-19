@@ -18,7 +18,9 @@ class Group_Model extends CI_Model{
      * @return mixed
      */
     public function get_group_list(){
-        $datas = $this->base->select_any('*','group');
+        $res = $this->db->select('*')->from('v_group_detail')->order_by('g_id desc')->get();
+        $datas = $res->result_array();
+//        $datas = $this->base->select_any('*','group');
         return $datas;
     }
 
@@ -43,9 +45,9 @@ class Group_Model extends CI_Model{
      * @param $gid
      * @return mixed
      */
-    public function get_group_detail($gid){
-        $data = $this->base->select('*','group','g_id',$gid);
-        $data['member'] = $this->base->select_array('uid','jion_group','g_id',$gid);
+    public function detail($gid){
+        $data = $this->base->select('*','v_group_detail','g_id',$gid);
+        $data['members'] = $this->get_all_members($gid);
         return $data;
     }
 
@@ -76,15 +78,8 @@ class Group_Model extends CI_Model{
         }
     }
 
-    public function update($uid,$groupInfo){
-//        $admin = $this->base->select('*','group_admin','g_id',$groupInfo['g_id']);
-        $admin = $this->db->select('*')->get_where($this->db->dbprefix('jion_group'),array('g_id'=>$groupInfo['g_id'],'uid'=>$uid));
-        if($admin['level'] >= 2){
-            //权限不足
-            return 2;
-        }else {
-            $this->base->update('group', $groupInfo, array('g_id' => $groupInfo['g_id']));
-            return 1;
-        }
+    public function update($groupInfo){
+        $this->base->update('group', $groupInfo, array('g_id' => $groupInfo['g_id']));
+        return $this->db->affected_rows();
     }
 }

@@ -12,6 +12,7 @@ class Group extends CI_Controller{
     function __construct(){
         parent::__construct();
         $this->load->model('Group_Model','group');
+        $this->load->model('Member_Model','member');
     }
 
     public function index(){
@@ -46,15 +47,15 @@ class Group extends CI_Controller{
         MyJSON::show(200,'ok',$data);
     }
 
-    public function getlist(){
+    public function all(){
         $data = $this->group->get_group_list();
         var_dump($data);
     }
 
     public function detail(){
         $gid  = $this->input->get('gid');
-        $data = $this->group->get_group_detail($gid);
-        var_dump($data);
+        $data = $this->group->detail($gid);
+        MyJSON::show(200,'ok',$data);
     }
 
     public function update(){
@@ -62,16 +63,14 @@ class Group extends CI_Controller{
         $groupInfo['g_id']        = $this->input->post('gid');
         $groupInfo['g_name']      = $this->input->post('name');
         $groupInfo['g_introduce'] = $this->input->post('introduce');
-        
-        $result = $this->group->update($uid,$groupInfo);
-        switch ($result){
-            case 1:
-                //删除成功
-                break;
-            case 2:
-                //权限不足，修改失败
-                break;
+        $level = $this->member->get_level($groupInfo['g_id'],$uid);
+        if($level > 1){
+            //权限不足
+        }else{
+            $rows = $this->group->update($groupInfo);
+            echo $rows==1?true:false;
         }
+
     }
 
     public function delete(){

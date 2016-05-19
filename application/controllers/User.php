@@ -6,6 +6,8 @@
  * Time: 18:56
  * Version: weekly
  */
+require 'my_json.php';
+header('Access-Control-Allow-Origin:*');
 class User extends CI_Controller{
     /**
      * User constructor.
@@ -29,10 +31,9 @@ class User extends CI_Controller{
      * @access public
      */
     public function detail(){
-//        ---------------------------------------session还是post传输
-        $uid = $this->input->post('uid');
+        $uid = $this->input->get('uid');
         $detail = $this->user->info($uid);
-
+        MyJSON::show(200,'ok',$detail);
     }
 
     /**

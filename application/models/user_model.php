@@ -21,7 +21,8 @@ class User_Model extends CI_Model{
      * @return mixed
      */
     public function info($uid){
-        $data = $this->base->select('*','user','uid',$uid);
+        $data = $this->base->select('*','v_user_info','uid',$uid);
+        $data['label'] = $this->base->select_array('label','user_label','uid',$uid);
         return $data;
     }
 
