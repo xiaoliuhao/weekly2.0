@@ -5,6 +5,7 @@
     <title>接口文档</title>
 </head>
 <body>
+<pre>
 一、注册
     post 提交
 
@@ -18,23 +19,44 @@
         3 账号重复
 
 二、登陆
-    post 提交
+    2.1:
+        获取头像
+        方法： post
+        url：
+        返回：
+            data
+                photo 头像的图片链接
 
-    uid 账号
-    password 密码
+    2.2 登陆验证
+        post 提交
+        uid 账号
+        password 密码
 
-    返回
-        1 登陆成功
-        2
+        返回
+            200 登陆成功
+            data
+                uid     账号
+                name    名字
+                photo   头像
+                token   用户令牌
+
+            这三个变量要保存下来，uid和name、photo还好,方便用来显示就不需要做一些请求了
+
+            token一定要保留，很多地方都需要提交token
+
+            203 用户名或者密码错误
 
 三、登出
+
+    前端把cookie销毁就好了吧 应该
 
 
 四、个人详细信息
     方法：get
     url：http://localhost/weekly/index.php/user/detail?uid=user001
     传值：uid
-        返回：data
+
+    返回：data
                 uid 账号
                 name 昵称
                 photo 头像
@@ -55,7 +77,15 @@
 六、修改密码
 
 七、写周报
-    
+    方法:post
+    url: http://localhost/weekly/index.php/weekly/add
+    传值：
+        token   令牌
+        title   主题
+        content 内容
+    返回：
+        200 成功
+
 八、更新周报
 
 九、查看周报
@@ -65,13 +95,14 @@
 
 十、创建小组
     提交方式 post
-    url
+    url:http://localhost/weekly/index.php/group/add
     传值:
-        uid         创建人的账号
+        token         token
         name        小组名称
         introduce   小组简介
     返回：
-        1 创建成功
+        200 创建成功
+
 十一、用户加入小组
     提交方式 post
     url
@@ -110,7 +141,15 @@
 十五、小组其他管理员管理
 
 十六、所有小组列表
-
+    提交方式:无
+    url：http://localhost/weekly/index.php/group/all
+    返回:
+        data (数组)
+            0=>
+                ……………………
+                和下面的一样（十七）
+                ……………………
+            1=>
 十七、查看小组详细信息
     提交方式:get
     url：http://localhost/weekly/index.php/group/detail?gid=1
@@ -119,11 +158,16 @@
             g_id 组号
             g_name 名字
             g_introduce 小组简介
+            members 小组总人数
             g_creater_uid 创建人uid
             g_creater_name 创建人的昵称
             g_creater_photo 创建人的头像
             g_create_time 创建时间 （注意create 最后没有r）
-            members (小组所有成员 数组)
+十八、获取小组全部成员
+    提交方式:get
+    url：http://localhost/weekly/index.php/group/members?gid=1
+    返回:
+            data (小组所有成员 数组)
               0=>
                 g_id 组号
                 level 等级
@@ -144,6 +188,6 @@
 
 
 
-
+</pre>
 </body>
 </html>

@@ -15,7 +15,7 @@ class Member extends CI_Controller{
         parent::__construct();
         $this->load->model('Base_Model','base');
         $this->load->model('Member_Model','member');
-        $this->load->model('Log_Model','log');
+        $this->load->model('Login_Model','login');
     }
 
     /**
@@ -42,7 +42,7 @@ class Member extends CI_Controller{
      * @access public
      */
     public function delete(){
-        $uid  = $this->log->is_log();
+        $uid  = $this->login->is_log();
         $member_id = $this->input->post('member_id');
         $g_id      = $this->input->post('g_id');
         $result = $this->member->delete_member($g_id,$uid,$member_id);
@@ -63,7 +63,7 @@ class Member extends CI_Controller{
      * @access public
      */
     public function jion_group(){
-        $user['uid']      = $this->log->is_log();
+        $user['uid']      = $this->login->is_log();
         $member_id        = $this->input->post('uid');
         $gid              = $this->input->post('gid');
         //判断操作的人是不是管理员
@@ -84,7 +84,7 @@ class Member extends CI_Controller{
      */
     public function apply(){
 //        $apply['uid']    = $this->input->post('uid');
-        $apply['uid']    = $this->log->is_login();
+        $apply['uid']    = $this->login->is_login();
         $apply['gid']    = $this->input->post('gid');
         $apply['reason'] = $this->input->post('time');
         $bool   = $this->member->is_in_group($gid,$uid);

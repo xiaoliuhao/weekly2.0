@@ -24,10 +24,6 @@ class Group_Model extends CI_Model{
         return $datas;
     }
 
-    public function get_member_numbers($gid){
-        
-    }
-
     /**
      * get_all_members 获取所有成员
      * @access public
@@ -47,7 +43,7 @@ class Group_Model extends CI_Model{
      */
     public function detail($gid){
         $data = $this->base->select('*','v_group_detail','g_id',$gid);
-        $data['members'] = $this->get_all_members($gid);
+//        $data['members_info'] = $this->get_all_members($gid);
         return $data;
     }
 
@@ -68,14 +64,9 @@ class Group_Model extends CI_Model{
         return $gid;
     }
     
-    public function delete($uid,$gid){
-        $data = $this->db->select('*')->get_where('group_admin',array('uid'=>$uid,'gid'=>$gid));
-        if($data['level'] != 0){
-            //权限不足删除失败
-            return 2;
-        }else{
-//            $this->base->delete('')
-        }
+    public function delete($gid){
+        $this->db->delete('group',array('g_id'=>$gid));
+        return $this->db->affected_rows();
     }
 
     public function update($groupInfo){

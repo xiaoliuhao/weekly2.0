@@ -11,7 +11,11 @@ class Login extends CI_Controller{
         parent::__construct();
         $this->load->model('User_Model','user');
         $this->load->model('Base_Model','base');
-        $this->load->model('Log_Model','log');
+        $this->load->model('Login_Model','login');
+    }
+
+    public function index(){
+        echo 'login.php';
     }
 
     /**
@@ -21,15 +25,13 @@ class Login extends CI_Controller{
     public function check_login(){
         $uid = $this->input->post('uid');
         $password = $this->input->post('password');
-
         $data = $this->login->check_login($uid,sha1(md5($password)));
         if($data == 2){
-            //密码错误
-            echo 2;
+            //账号或密码错误
+            MyJSON::show(203,'账号或密码错误');
         }else{
-            var_dump($data);
+            MyJSON::show(200,'ok',$data);
         }
-        
     }
 
     /**
@@ -64,9 +66,12 @@ class Login extends CI_Controller{
      */
     public function get_photo(){
         $uid = $this->input->post('uid');
-        $data = $this->log->get_photo($uid);
-        
-        var_dump($data);
+        $data['photo'] = $this->login->get_photo($uid);
+        if($data) {
+            MyJSON::show(200,'ok',$data);
+        }else{
+            MyJSON::show(202,'头像不存在');
+        }
     }
 
     /**

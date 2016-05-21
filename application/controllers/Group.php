@@ -13,15 +13,16 @@ class Group extends CI_Controller{
         parent::__construct();
         $this->load->model('Group_Model','group');
         $this->load->model('Member_Model','member');
+        $this->load->model('Login_Model','login');
     }
 
     public function index(){
-        
+        echo '当前位置：group.php';
     }
 
     public function add(){
         //小组的创建人就是超级管理员
-        $uid = $this->input->post('uid');
+        $uid = $this->login->is_log();
         $g_info['g_name'] = $this->input->post('name');
         $g_info['g_introduce'] = $this->input->post('introduce');
         $g_info['g_create_uid'] = $uid;
@@ -29,18 +30,14 @@ class Group extends CI_Controller{
         $g_id = $this->group->add($uid,$g_info);
 
         //写入日志
-        $this->base->write_user_log($uid,'create a group');
-        $this->base->write_group_log($g_id,$uid,'create');
+        $message = '创建了一个组id:'.$g_id.'name：'.$g_info['g_name'];
+        $this->base->write_user_log($uid,$message);
+        $this->base->write_group_log($g_id,$uid,$message);
 
         //创建小组成功
-        echo 1;
+        MyJSON::show(200,'ok');
     }
     
-    public function invite(){
-        //邀请别人应该产生一个随机
-        
-    }
-
     public function members(){
         $gid = $this->input->get('gid');
         $data = $this->group->get_all_members($gid);
@@ -49,7 +46,7 @@ class Group extends CI_Controller{
 
     public function all(){
         $data = $this->group->get_group_list();
-        var_dump($data);
+        MyJSON::show(200,'ok',$data);
     }
 
     public function detail(){
@@ -68,22 +65,26 @@ class Group extends CI_Controller{
             //权限不足
         }else{
             $rows = $this->group->update($groupInfo);
-            echo $rows==1?true:false;
+            if($rows == 1){
+                //删除成功
+                MyJSON::show(200,'ok');
+            }
         }
 
     }
 
     public function delete(){
-        $uid    = $this->input->post('uid');
+        $uid    = $this->login->is_log();
         $gid    = $this->input->post('gid');
-        $result = $this->group->delete($uid,$gid);
-        switch ($result){
-            case 1:
+        $level  = $this->member->get_level($gid,$uid);
+        if($level > 1){
+            //权限不足
+        }else {
+            $rows = $this->group->delete($gid);
+            if($rows == 1){
                 //删除成功
-                break;
-            case 2:
-                //权限不足 删除失败
-                break;
+                MyJSON::show(200,'ok');
+            }
         }
     }
     

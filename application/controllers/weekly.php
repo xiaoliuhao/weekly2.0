@@ -12,32 +12,45 @@ class Weekly extends CI_Controller{
         $this->load->model('Base_Model','base');
         $this->load->model('Weekly_Mode','weekly');
         $this->load->model('Comment_Model','comment');
+        $this->load->model('Login_Model','login');
     }
     
     public function index(){
         
     }
-    
-    public function add(){
-        $article['uid'] = $this->input->post('uid');
+
+    public function get_weekly(){
+        $article['uid'] = $this->login->is_log();
         $article['title'] = $this->input->post('title');
         $article['content'] = $this->input->post('content');
         $article['update_time'] = date('Y-m-d H:i:s');
-        $this->base->insert('weekly',$article);
+
+        return $article;
+    }
+    
+    public function add(){
+        $article = $this->get_weekly();
+        $rows = $this->base->insert('weekly',$article);
+        if($rows == 1){
+            MyJSON::show(200,'ok');
+        }
     }
     
     public function delete(){
-        $id = $this->input->get('id');
+        $uid = $this->login->is_log();
+        $id = $this->input->post('id');
+
+
         $this->weekly->delete($id);
     }
 
     public function update(){
         $id = $this->input->get('id');
-        $article['title'] = $this->input->post('title');
-        $article['content'] = $this->input->post('content');
-        $article['update_time'] = date('Y-m-d H:i:s');
-
-        $this->base->update('weekly',$article,array('id'=>$id))
+        $article = $this->get_weekly();
+        $rows = $this->base->update('weekly',$article,array('id'=>$id));
+        if ($rows == 1){
+            MyJSON::show(200,'ok');
+        }
     }
 
     public function list(){

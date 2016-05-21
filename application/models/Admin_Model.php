@@ -95,6 +95,13 @@ class Admin_Model extends CI_Model{
         return $this->db->affected_rows();
     }
 
+    /**
+     * refuse_member
+     * @access public
+     * @param $gid
+     * @param $uid
+     * @return mixed
+     */
     public function refuse_member($gid,$uid){
         $this->db->delete('group_apply',array('uid'=>$uid,'g_id'=>$gid));
         return $this->db->affected_rows();

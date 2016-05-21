@@ -6,7 +6,7 @@
  * Time: 13:34
  * Version: weekly
  */
-class Ulog_Model extends CI_Model{
+class Login_Model extends CI_Model{
     function __construct(){
         parent::__construct();
         $this->load->model('Base_Model','base');
@@ -46,8 +46,8 @@ class Ulog_Model extends CI_Model{
      */
     public function check_login($uid,$password){
         $data = $this->base->select('*','user','uid',$uid);
-        if($data['password'] != $password){
-            //密码错误 返回2
+        if( (!$data) || ($data['password'] != $password)){
+            //用户不存在 或者 密码错误 返回2
             return 2;
         }else{
             $data['token'] = sha1(uniqid($uid.$password));
@@ -55,7 +55,8 @@ class Ulog_Model extends CI_Model{
             $data['last_time']  = date('Y-m-d H:i:s');
             $data['last_ip']    = $_SERVER['REMOTE_ADDR'];
             $this->db->update('user_login',$data,array('uid'=>$uid));
-            return $data['token'];
+            $user_info = array('token'=>$data['token'],'uid'=>$uid,'name'=>$data['name'],'photo'=>$data['photo']);
+            return $user_info;
         }
     }
 
@@ -67,7 +68,7 @@ class Ulog_Model extends CI_Model{
      */
     public function get_photo($uid){
         $data = $this->base->select('*','user','uid',$uid);
-        return $data['photo'];
+        return $data?$data['photo']:null;
     }
 
     /**
