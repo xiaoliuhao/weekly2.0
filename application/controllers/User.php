@@ -16,6 +16,7 @@ class User extends CI_Controller{
         parent::__construct();
         $this->load->model('Base_Model','base');
         $this->load->model('User_Model','user'); //引入
+        $this->load->model('Login_Model','login');
     }
 
     /**
@@ -23,7 +24,7 @@ class User extends CI_Controller{
      * @access public
      */
     public function index(){
-//        $data = $this->input->info();
+        echo 'User.php';
     }
 
     /**
@@ -41,7 +42,7 @@ class User extends CI_Controller{
      * @access public
      */
     public function upload_photo(){
-        $uid = $this->input->post('uid');
+        $uid = $this->login->is_log();
 
     }
 
@@ -50,10 +51,17 @@ class User extends CI_Controller{
      * @access public
      */
     public function update(){
-        $uid = $this->input->post('uid');
+        $uid    = $this->login->is_log();
         //需要修改的种类
-        $type = $this->input->post('type');
-        $password = $this->input->psot('password');
+        $type   = $this->input->post('type');
+        $value  = $this->input->post('value');
+
+        $bool = $this->user->update($uid,$type,$value);
+        if($bool){
+            MyJSON::show(200,'ok');
+        }else{
+            MyJSON::show(204,'修改失败');
+        }
     }
 
     /**
@@ -61,15 +69,18 @@ class User extends CI_Controller{
      * @access public
      */
     public function change_pass(){
-        $uid      = $this->input->post('uid');
-        $old_pass = $this->input->post('old_pass');
-        $new_pass = $this->input->post('new_pass');
-        $user     = $this->user->info($uid);
-        if($user['password'] != $old_pass){
-            //旧密码不正确  无法修改密码
-            echo 2;
+        $uid       = $this->login->is_log();
+        $old_pass  = $this->input->post('old_pass');
+        $new_pass  = $this->input->post('new_pass');
+        $real_pass = $this->user->get_password($uid);
+
+        if($real_pass != $old_pass){
+            MyJSON::show(203,'密码不正确');
         }else {
-            $this->user->change_password($uid,$new_pass);
+            $rows = $this->user->change_password($uid,sha1(md5($new_pass)));
+            if($rows == 1){
+                MyJSON::show(200,'ok');
+            }
         }
     }
 

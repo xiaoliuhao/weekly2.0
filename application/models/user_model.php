@@ -9,7 +9,6 @@ class User_Model extends CI_Model{
     function __construct(){
         parent::__construct();
         $this->load->model('Base_Model','base');
-        $this->load->helper('url');
     }
 
     
@@ -35,12 +34,31 @@ class User_Model extends CI_Model{
      * @return mixed
      */
     public function update($uid,$type,$value){
-        $bool = $this->db->update('user',array($type=>$value),array('uid'=>$uid));
+        switch ($type){
+            case 'name':
+            case 'privacy':
+                $table = 'user';
+                break;
+            default:
+                $table = 'user_detail';
+                break;
+        }
+        //先判断是否存在
+        $uid = $this->base->select('uid',$table,'uid',$uid);
+        if(!$uid){
+            $this->db->insert($table,array('uid'=>$uid));
+        }
+        $bool = $this->db->update($table,array($type=>$value),array('uid'=>$uid));
         return $bool;
     }
 
     public function find_password($uid,$email){
         
+    }
+    
+    public function get_password($uid){
+        $data = $this->base->select('password','user','uid',$uid);
+        return $data?$data['password']:null;
     }
 
     /**
@@ -51,6 +69,7 @@ class User_Model extends CI_Model{
      */
     public function change_password($uid,$new_password){
         $this->db->update('user',array('password'=>$new_password),array('uid'=>$uid));
+        return $this->db->affected_rows();
     }
 
     /**
@@ -90,10 +109,4 @@ class User_Model extends CI_Model{
         return $data;
     }
 
-    public function get_group_level($gid,$uid){
-        $data = $this->base->select_needs('level','jion_group',array('g_id'=>$gid,'uid'=>$uid));
-        return $data['level'];
-    }
-
-    
 }
