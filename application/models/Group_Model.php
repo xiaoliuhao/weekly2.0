@@ -23,6 +23,13 @@ class Group_Model extends CI_Model{
 //        $datas = $this->base->select_any('*','group');
         return $datas;
     }
+    
+    public function get_all_admins($gid){
+//        $data = $this->base->select_array_needs('*','v_all_members',array('g_id'=>$gid,'level <='=>1));
+        $res = $this->db->select('*')->from('v_all_members')->where(array('g_id'=>$gid,'level <='=>1))->order_by('level asc')->get();
+        $data =$res->result_array();
+        return $data;
+    }
 
     /**
      * get_all_members 获取所有成员

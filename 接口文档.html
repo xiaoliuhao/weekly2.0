@@ -6,18 +6,19 @@
 </head>
 <body>
 <pre>
-    用户相关接口
+    与用户相关的接口
 一、注册
     post 提交
-
-    uid         账号
-    name        昵称
-    password    密码
-
+    url:http://localhost/weekly/index.php/login/register
+    传值
+        uid         账号
+        name        昵称
+        password    密码
+        password2
     返回
-        1 注册成功
-        2 两次密码不一致
-        3 账号重复
+        200 注册成功
+        202 两次密码不一致
+        203 账号重复
 二、登陆
     2.1:
         获取头像
@@ -71,6 +72,7 @@
             1=>
                 …………
     (查看过详情的消息才算被读过)
+
     3.2 通知详情
     方法:get
     url:http://localhost/weekly/index.php/message/get?id=1
@@ -144,8 +146,9 @@
             token
             old_pass    旧密码
             new_pass    新密码
-
-
+        返回
+            200 成功
+            203 旧密码不正确
 
 六、找回密码
 
@@ -153,19 +156,82 @@
     方法:post
     url: http://localhost/weekly/index.php/weekly/add
     传值：
-        token   令牌
+        token
         title   主题
         content 内容
     返回：
         200 成功
 
-八、更新周报
+八、修改周报
+    方法：post
+    url:http://localhost/weekly/index.php/weekly/update
+    传值
+        token
+        id      周报的id
+        title   主题
+        content 内容
+    返回
+        200 成功
+
 
 九、查看周报
-    9.1 点赞
-    9.2 评论
-    9.3 编辑
+    9.1 查看所有周报
+    方法：get
+    url：http://localhost/weekly/index.php/weekly/all
+    传值：
+        orderby 排序方式
+        uid 用户uid(可有可无， 有的话就是单独这个人的周报 没有就是所有人的)
+    返回：
+        data 数组
+            0=>
+            …………
+            参考9.2
+            …………
 
+
+    9.2 周报详情
+        方法：get
+        url: http://localhost/weekly/index.php/weekly/detail?wid=1
+        传值：
+            wid  周报的id号
+        返回：
+            data
+                id  周报的id
+                uid 用户账号
+                name 昵称
+                photo 头像
+                title 题目
+                content 内容
+                hits 点击量
+                agrees 点赞量
+                update_time 上传时间/最后一次修改时间
+                comments  评论(数组)
+                    0=>
+                    id 评论的id
+                    w_id 周报id
+                    uid 用户名
+                    name 昵称
+                    photo 头像
+                    content 评论内容
+                    time 时间
+                    1=>
+                    …………
+                    …………
+    9.3 点赞
+        方法:post
+        url：http://localhost/weekly/index.php/weekly/agree
+        传值:
+            token
+            wid 周报的id
+        返回
+            199 已经赞过，这次相当于取消赞
+            200 点赞成功
+    9.4 评论
+        方法：post
+        url:
+        传值
+            token
+            c_uid
 十、创建小组
     提交方式 post
     url:http://localhost/weekly/index.php/group/add
@@ -176,42 +242,51 @@
     返回：
         200 创建成功
 
-十一、用户加入小组
+十一、用户申请加入小组
     提交方式 post
-    url
-    传值
-        uid    用户的账号
-        gid    需要加入的小组id
+    url:http://localhost/weekly/index.php/member/apply
+    传值：
+        token
+        gid    申请加入的小组id
+        reason 申请理由 可以不填
     返回
-        1 加入成功
+        200 申请成功
 
 十二、修改小组信息
     提交方式 post
-    url：
-    传值
-        uid         管理员uid
+    url：http://localhost/weekly/index.php/group/update
+    传值:
+        token
         gid         小组id
         name        小组的名字
         introduce   小组简介
     返回
-        1 修改成功
-        2 权限不足 修改失败
+        203 权限不足
+        200 修改成功
 
 十三、删除小组
     提交方式 post
-    url：
-    传值
+    url：http://localhost/weekly/index.php/group/delete
+    传值:
+        token
         gid 小组id
-        uid 要删除的人的id
     返回 ：
-        1 删除成功
-        2 权限不足
+        200 删除成功
+        203 权限不足
 
 十四、小组负责人(超级管理员修改权限)
     14.1 查看所有管理员
+        方法：get
+        url:http://localhost/weekly/index.php/group/admins?gid=1
+        传值：
+            gid 小组的id
+        返回
+            与查看小组全部成员相同 （十八）
     14.2 修改权限
 
 十五、小组其他管理员管理
+    成员相信信息
+
 
 十六、所有小组列表
     提交方式:无
@@ -226,6 +301,8 @@
 十七、查看小组详细信息
     提交方式:get
     url：http://localhost/weekly/index.php/group/detail?gid=1
+    传值:
+        gid 小组id
     返回:
         data
             g_id 组号
@@ -236,6 +313,7 @@
             g_creater_name 创建人的昵称
             g_creater_photo 创建人的头像
             g_create_time 创建时间 （注意create 最后没有r）
+
 十八、获取小组全部成员
     提交方式:get
     url：http://localhost/weekly/index.php/group/members?gid=1

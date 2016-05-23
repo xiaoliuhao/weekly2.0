@@ -50,17 +50,6 @@ class Member_Model extends CI_Model{
     }
 
     /**
-     * member_detail 获取用户的详细信息
-     * @access public
-     * @param $gid
-     * @return mixed
-     */
-    public function member_detail($gid){
-        $member_detail = $this->base->select('*','user','uid',$gid);
-        return $member_detail;
-    }
-
-    /**
      * delete_member    删除组内成员
      * @access public
      * @param $g_id

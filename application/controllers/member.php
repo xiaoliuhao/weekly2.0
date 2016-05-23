@@ -10,6 +10,8 @@
 /**
  * Class Member 小组成员的类
  */
+require 'my_json.php';
+header('Access-Control-Allow-Origin:*');
 class Member extends CI_Controller{
     function __construct(){
         parent::__construct();
@@ -24,17 +26,6 @@ class Member extends CI_Controller{
      */
     public function index(){
         echo 'member';
-    }
-
-    /**
-     * member_detail 获取小组成员的详细信息
-     * @access public
-     */
-    public function detail(){
-        $memberID = $this->input->get('memberid');
-        $member_detail = $this->member->member_detail($memberID);
-
-        var_dump($member_detail);
     }
 
     /**
@@ -86,7 +77,7 @@ class Member extends CI_Controller{
 //        $apply['uid']    = $this->input->post('uid');
         $apply['uid']    = $this->login->is_login();
         $apply['gid']    = $this->input->post('gid');
-        $apply['reason'] = $this->input->post('time');
+        $apply['reason'] = $this->input->post('reason');
         $bool   = $this->member->is_in_group($gid,$uid);
         if(!$bool){
             $this->member->apply($uid,$gid);

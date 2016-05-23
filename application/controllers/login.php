@@ -6,6 +6,8 @@
  * Time: 11:09
  * Version: weekly
  */
+require 'my_json.php';
+header('Access-Control-Allow-Origin:*');
 class Login extends CI_Controller{
     function __construct(){
         parent::__construct();
@@ -45,18 +47,24 @@ class Login extends CI_Controller{
 //        $data = $this->user->info($user['uid']);
         if($data){
             //已经被注册过
-            echo 2;
+            MyJSON::show(203,'此账号已经被注册');
             exit(0);
         }
 
         $user['name']     = $this->input->post('name');
         $user['password'] = $this->input->post('password');
+        $password2        = $this->input->post('password2');
+
+        if($password2 != $user['password']){
+            MyJSON::show(202,'两次密码不一致');
+            exit(0);
+        }
 
         $affect = $this->log->register($user);
         if($affect){
             //注册成功
-            $this->base->write_user_log($user['uid'],'register');
-            echo 1;
+            $this->base->write_user_log($user['uid'],'用户注册');
+            MyJSON::show(200,'ok');
         }
     }
 

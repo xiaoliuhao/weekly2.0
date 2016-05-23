@@ -37,6 +37,13 @@ class Group extends CI_Controller{
         //创建小组成功
         MyJSON::show(200,'ok');
     }
+
+    public function admins(){
+        $gid = $this->input->get('gid');
+        $data = $this->group->get_all_admins($gid);
+
+        MyJSON::show(200,'ok',$data);
+    }
     
     public function members(){
         $gid = $this->input->get('gid');
@@ -55,6 +62,10 @@ class Group extends CI_Controller{
         MyJSON::show(200,'ok',$data);
     }
 
+    /**
+     * update
+     * @access public
+     */
     public function update(){
         $uid = $this->input->post('uid');
         $groupInfo['g_id']        = $this->input->post('gid');
@@ -63,6 +74,7 @@ class Group extends CI_Controller{
         $level = $this->member->get_level($groupInfo['g_id'],$uid);
         if($level > 1){
             //权限不足
+            MyJSON::show(203,'权限不足');
         }else{
             $rows = $this->group->update($groupInfo);
             if($rows == 1){
@@ -70,15 +82,16 @@ class Group extends CI_Controller{
                 MyJSON::show(200,'ok');
             }
         }
-
     }
 
     public function delete(){
         $uid    = $this->login->is_log();
         $gid    = $this->input->post('gid');
         $level  = $this->member->get_level($gid,$uid);
-        if($level > 1){
+        //只有创建人才可以删除小组
+        if($level != 0){
             //权限不足
+            MyJSON::show(203,'权限不足');
         }else {
             $rows = $this->group->delete($gid);
             if($rows == 1){
