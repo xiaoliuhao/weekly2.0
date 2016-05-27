@@ -50,7 +50,7 @@ class Login_Model extends CI_Model{
             //用户不存在 或者 密码错误 返回2
             return 2;
         }else{
-            $data['token'] = sha1(uniqid($uid.$password));
+            $data['token'] = sha1(md5($uid.$password.time()));
             //向数据库中更新token
             $data['last_time']  = date('Y-m-d H:i:s');
             $data['last_ip']    = $_SERVER['REMOTE_ADDR'];

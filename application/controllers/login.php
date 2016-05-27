@@ -50,8 +50,8 @@ class Login extends CI_Controller{
             MyJSON::show(203,'此账号已经被注册');
             exit(0);
         }
-
-        $user['name']     = $this->input->post('name');
+        //随机生成一个用户名
+        $user['name']     = mb_substr('用户'.md5(uniqid(time())), 0, 8);
         $user['password'] = $this->input->post('password');
         $password2        = $this->input->post('password2');
 
