@@ -85,6 +85,21 @@ class User extends CI_Controller{
     }
 
     /**
+     * add_label    添加用户标签
+     * @access public
+     */
+    public function add_label(){
+        $uid    = $this->input->post('uid');
+        $label  = $this->input->post('label');
+        $rows   = $this->user->add_label($uid,$label);
+        if($rows==1){
+            MyJSON::show(200,'ok');
+        }else{
+            MyJSON::show(203,'添加标签失败');
+        }
+    }
+
+    /**
      * find_password    找回密码
      * @access public
      */

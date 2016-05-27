@@ -20,6 +20,10 @@ class Group extends CI_Controller{
         echo '当前位置：group.php';
     }
 
+    /**
+     * add  创建一个小组
+     * @access public
+     */
     public function add(){
         //小组的创建人就是超级管理员
         $uid = $this->login->is_log();
@@ -38,24 +42,40 @@ class Group extends CI_Controller{
         MyJSON::show(200,'ok');
     }
 
+    /**
+     * admins   获取小组内全部管理员
+     * @access public
+     */
     public function admins(){
         $gid = $this->input->get('gid');
         $data = $this->group->get_all_admins($gid);
 
         MyJSON::show(200,'ok',$data);
     }
-    
+
+    /**
+     * members  获取小组内所有成员
+     * @access public
+     */
     public function members(){
         $gid = $this->input->get('gid');
         $data = $this->group->get_all_members($gid);
         MyJSON::show(200,'ok',$data);
     }
 
+    /**
+     * all  获取所有小组列表
+     * @access public
+     */
     public function all(){
         $data = $this->group->get_group_list();
         MyJSON::show(200,'ok',$data);
     }
 
+    /**
+     * detail   获取小组详细信息
+     * @access public
+     */
     public function detail(){
         $gid  = $this->input->get('gid');
         $data = $this->group->detail($gid);
@@ -63,7 +83,7 @@ class Group extends CI_Controller{
     }
 
     /**
-     * update
+     * update 修改小组信息
      * @access public
      */
     public function update(){
@@ -84,6 +104,10 @@ class Group extends CI_Controller{
         }
     }
 
+    /**
+     * delete   删除小组
+     * @access public
+     */
     public function delete(){
         $uid    = $this->login->is_log();
         $gid    = $this->input->post('gid');

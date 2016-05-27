@@ -16,6 +16,10 @@ class Message extends CI_Controller{
         $this->load->model('Message_Model','message');
     }
 
+    /**
+     * get
+     * @access public
+     */
     public function get(){
         $uid  = $this->login->is_log();
         $type = $this->input->post('type');
@@ -23,10 +27,54 @@ class Message extends CI_Controller{
         $data = $this->message->get($arr);
         MyJSON::show(200,'ok',$data);
     }
-    
+
+    /**
+     * detail
+     * @access public
+     */
     public function detail(){
         $id = $this->input->get('id');
         $data = $this->message->detail($id);
         MyJSON::show(200,'ok',$data);
+    }
+
+    /**
+     * add  添加新消息
+     * @access public
+     */
+    public function add(){
+        $uid = $this->input->post('uid');
+        $message = $this->input->post('message');
+        $this->message->add($uid,$message);
+    }
+
+    /**
+     * delete   删除消息
+     * @access public
+     */
+    public function delete(){
+        $id     = $this->input->post('id');
+        $uid    = $this->login->is_log();
+
+        $rows   = $this->message->delete($id,$uid);
+        if($rows){
+            MyJSON::show(200,'ok');
+        }else{
+            MyJSON::show(203,'删除失败');
+        }
+    }
+
+    /**
+     * update   标记消息为已读
+     * @access public
+     */
+    public function update(){
+        $id     = $this->input->get('id');
+        $rows   = $this->message->update($id);
+        if($rows) {
+            MyJSON::show(200, 'ok');
+        }else{
+            MyJSON::show(203,'标记已读失败');
+        }
     }
 }

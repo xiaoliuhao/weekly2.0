@@ -18,6 +18,7 @@ class Member extends CI_Controller{
         $this->load->model('Base_Model','base');
         $this->load->model('Member_Model','member');
         $this->load->model('Login_Model','login');
+        $this->load->model('Message_Model','message');
     }
 
     /**
@@ -62,7 +63,10 @@ class Member extends CI_Controller{
         if($user['level'] < 2) {
             $result = $this->member->jion_group($gid, $member_id);
             if ($result) {
-                //讲行为写入日志
+                $group_info = $this->group->detail($gid);
+                //通知该成员
+                $this->message->add($member_id,'你申请的 '.$group_info['g_name'].' 已经通过管理员的审核,欢迎您的加入！');
+                //将行为写入日志
                 $this->base->write_user_log($uid, 'jion a group which id is ' . $gid);
                 $this->base->write_group_log($gid, $uid, 'jion in the group');
             }

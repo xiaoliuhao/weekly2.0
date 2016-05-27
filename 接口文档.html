@@ -86,6 +86,25 @@
             time 时间
             status 是否阅读过 1未读，2已读
 
+    3.3 标记通知为已读
+    方法：get
+    url：http://localhost/weekly/index.php/message/update?id=1
+    传值：
+        id  消息id
+    返回
+        200 成功
+        203 标记已读失败
+
+    3.4 删除通知消息
+    方法：post
+    url：http://localhost/weekly/index.php/message/delete
+    传值
+        token
+        id  消息id
+    返回
+        200 成功
+        203 删除通知失败
+
 四、个人详细信息
     方法：get
     url：http://localhost/weekly/index.php/user/detail?uid=user001
@@ -111,6 +130,15 @@
                 label_array(标签 数组)
                     label 标签
     (Ps:没必要全都显示出来 比如说注册日期和上次登录时间之类没用的东西)
+
+    添加标签
+    方法 post
+    url：http://localhost/weekly/index.php/user/add_label
+    传值:
+        uid 被评价人的uid
+        label 标签
+    返回
+        200 ok
 
 五、修改个人信息
     5.1:基本信息修改
@@ -284,9 +312,50 @@
             与查看小组全部成员相同 （十八）
     14.2 修改权限
 
-十五、小组其他管理员管理
-    成员相信信息
+十五、审核待加入成员
+    15.1 查看所有申请的人员列表
+        方法：post
+        url:http://localhost/weekly/index.php/admin/check_members
+        传值：
+            token
+            gid 小组id
+        返回：
+        data 数组
+            0=>
+            g_id    小组id
+            uid     用户账号
+            name    用户昵称
+            photo   头像
+            introduce 简介(个性签名)
+            sex     性别
+            reason  申请理由
+            time    时间
+            1=>
+                …………
+                同上
+                …………
+    15.2 获取申请人的详情 就是看用户详情 参考四
+    15.3 通过审核 允许加入
+        方法：post
+        url：http://localhost/weekly/index.php/admin/add_member
+        传值：
+            token
+            applyid 申请人的uid
+            gid 申请加入的小组号
+        返回：
+            200 ok
+            203 权限不足
 
+    15.4 拒绝加入
+        方法： post
+        url：http://localhost/weekly/index.php/admin/refuse
+        传值：
+            token
+            applyid 申请人的uid
+            gid 申请加入的小组号
+        返回：
+            200 ok
+            203 权限不足
 
 十六、所有小组列表
     提交方式:无
@@ -305,14 +374,14 @@
         gid 小组id
     返回:
         data
-            g_id 组号
-            g_name 名字
-            g_introduce 小组简介
-            members 小组总人数
-            g_creater_uid 创建人uid
-            g_creater_name 创建人的昵称
+            g_id            组号
+            g_name          名字
+            g_introduce     小组简介
+            members         小组总人数
+            g_creater_uid   创建人uid
+            g_creater_name  创建人的昵称
             g_creater_photo 创建人的头像
-            g_create_time 创建时间 （注意create 最后没有r）
+            g_create_time   创建时间 （注意create 最后没有r）
 
 十八、获取小组全部成员
     提交方式:get

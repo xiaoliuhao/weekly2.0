@@ -86,6 +86,18 @@ class User_Model extends CI_Model{
     }
 
     /**
+     * add_label
+     * @access public
+     * @param $uid
+     * @param $label
+     * @return mixed
+     */
+    public function add_label($uid,$label){
+        $this->db->insert('user_label',array('uid'=>$uid,'label'=>$label));
+        return $this->db->affected_rows();
+    }
+
+    /**
      * get_notice_list  获取未读信息
      * @access public
      * @param $uid
