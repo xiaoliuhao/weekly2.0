@@ -19,17 +19,6 @@ class Admin extends CI_Controller{
         $this->load->model('Message_Model','group');
     }
 
-
-    /**
-     * get_admin_list 获取管理员列表
-     * @access public
-     */
-    public function get_admin_list(){
-        $this->input->get('gid');
-        $admins = $this->admin->get_admin_list($gid);
-        var_dump($admins);
-    }
-
     /**
      * delete_admin 删除管理员
      * @access public
@@ -43,6 +32,20 @@ class Admin extends CI_Controller{
             //删除成功
         }else{
             //权限不足删除失败
+        }
+    }
+
+    /**
+     * delete   取消管理员身份
+     * @access public
+     */
+    public function delete(){
+        $uid  = $this->login->is_log();
+        $g_id = $this->input->post('gid');
+        $admin_id = $this->input->post('admin_id');
+        $u_level = $this->member->get_level($g_id,$uid);
+        if($u_level == 0 ){
+            $this->admin->delete($g_id,$admin_id);
         }
     }
 
@@ -86,25 +89,6 @@ class Admin extends CI_Controller{
     }
 
     /**
-     * get_apply 获取被操作申请人的信息
-     * @access public
-     * @return int
-     */
-    public function get_apply(){
-        $data['uid']        = $this->log->is_log();
-        $data['apply_id']   = $this->input->post('applyid');
-        $data['gid']        = $this->input->post('gid');
-        $level              = $this->input->get_group_level($gid,$uid);
-
-        if($level <=1 ){
-            return $data;
-        }else{
-            //权限不足，无法审核通过
-            return 2;
-        }
-    }
-
-    /**
      * add_member
      * @access public
      */
@@ -114,11 +98,11 @@ class Admin extends CI_Controller{
             MyJSON::show(203,'权限不足');
         }
         $this->admin->add_member($data['gid'],$data['apply_id']);
-//        应在加上通知此人管理员已经同意审核 加入该群
+        //应在加上通知此人管理员已经同意审核 加入该群
         $group_info = $this->group->detail($data['gid']);
-        $this->message->add($member_id,'您申请的 '.$group_info['g_name'].' 已经通过管理员的审核,欢迎您的加入！');
-//        管理员操作写入日志
-        $this->base->write_group_log($data['gid'],$data['uid'],'同意 '.$data['apply_id'].' 加入'));
+        $this->message->add($data['apply_id'],'您申请的 '.$group_info['g_name'].' 已经通过管理员的审核,欢迎您的加入！');
+        //管理员操作写入日志
+        $this->base->write_group_log($data['gid'],$data['uid'],'同意 '.$data['apply_id'].' 加入');
         $this->base->write_user_log($data['uid'],'同意'.$group_info['g_name'].'中'.$data['apply_id'].'加入');
         MyJSON::show(200,'ok');
     }
@@ -126,11 +110,11 @@ class Admin extends CI_Controller{
     public function refuse(){
         $data = $this->get_apply();
         $this->admin->refuse($data['gid'],$data['apply_id']);
-//        通知此人 管理员拒绝其加入
+        //通知此人 管理员拒绝其加入
         $group_info = $this->group->detail($data['gid']);
-        $this->message->add($member_id,'管理员拒绝您加入 '.$group_info['g_name']);
-        //        管理员操作写入日志
-        $this->base->write_group_log($data['gid'],$data['uid'],'拒绝 '.$data['apply_id'].' 加入'));
+        $this->message->add($data['apply_id'],'管理员拒绝您加入 '.$group_info['g_name']);
+        //管理员操作写入日志
+        $this->base->write_group_log($data['gid'],$data['uid'],'拒绝 '.$data['apply_id'].' 加入');
         $this->base->write_user_log($data['uid'],'拒绝'.$group_info['g_name'].'中'.$data['apply_id'].'加入');
         MyJSON::show(200,'ok');
     }

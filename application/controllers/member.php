@@ -26,7 +26,7 @@ class Member extends CI_Controller{
      * @access public
      */
     public function index(){
-        echo 'member';
+        echo 'member.php';
     }
 
     /**
