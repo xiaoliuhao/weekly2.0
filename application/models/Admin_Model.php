@@ -12,8 +12,27 @@ class Admin_Model extends CI_Model{
         $this->load->model('Base_Model','base');
     }
 
+    /**
+     * add  设置管理员
+     * @access public
+     * @param $gid
+     * @param $uid
+     * @return mixed
+     */
+    public function add($gid,$uid){
+        $this->db->update('jion_group',array('level'=>1),array('g_id'=>$gid,'uid'=>$uid));
+        return $this->db->affected_rows();
+    }
+
+    /**
+     * delete
+     * @access public
+     * @param $gid
+     * @param $uid
+     * @return mixed
+     */
     public function delete($gid,$uid){
-        $this->db->update('jion_group',array('g_id'=>$gid,'uid'=>$uid));
+        $this->db->update('jion_group',array('level'=>2),array('g_id'=>$gid,'uid'=>$uid));
         return $this->db->affected_rows();
     }
 

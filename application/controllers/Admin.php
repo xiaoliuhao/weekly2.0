@@ -19,20 +19,23 @@ class Admin extends CI_Controller{
         $this->load->model('Message_Model','group');
     }
 
-    /**
-     * delete_admin 删除管理员
-     * @access public
-     */
-    public function delete_admin(){
-        $g_id     = $this->inpit->post('gid');
-        $admin_id = $this->input->post('admin_id');  //当前管理员id
-        $delete_id= $this->input->post('delete_id'); //需要被删除的管理员id
-        $result   = $this->admin->delete_admin($g_id,$admin_id,$delete_id);
-        if($result == 1){
-            //删除成功
+    public function get_message(){
+        $data['uid'] = $this->login->is_log();
+        $data['gid'] = $this->input->post('gid');
+        $level = $this->member->get_level($data['gid'],$data['uid']);
+        if($level != 0 ) {
+            //权限不足
+            MyJSON::show(203, '权限不足');
+            exit(0);
         }else{
-            //权限不足删除失败
+            return $data;
         }
+    }
+
+    public function add(){
+        $data = $this->get_message();
+        $uid  = $this->input->post('member_id');
+        $this->admin->add($data['gid'],$uid);
     }
 
     /**
@@ -40,32 +43,9 @@ class Admin extends CI_Controller{
      * @access public
      */
     public function delete(){
-        $uid  = $this->login->is_log();
-        $g_id = $this->input->post('gid');
+        $data = $this->get_message();
         $admin_id = $this->input->post('admin_id');
-        $u_level = $this->member->get_level($g_id,$uid);
-        if($u_level == 0 ){
-            $this->admin->delete($g_id,$admin_id);
-        }
-    }
-
-    /**
-     * change_level 更改管理员权限
-     * @access public
-     */
-    public function change_level(){
-        $g_id     = $this->input->post('gid');
-        $admin_id = $this->input->post('admin_id'); //当前管理员uid
-        $change_id= $this->input->post('uid');
-        $new_level= $this->input->post('level');
-
-        $result   = $this->admin->change_level($g_id,$admin_id,$change_id,$new_level);
-        if($result == 1){
-            //修改成功 将行为写入日志
-            $this->base->write_group_log($g_id,$admin_id,'change'.$change_id.'level as'.$new_level);
-        }else{
-            //权限不足修改失败
-        }
+        $this->admin->delete($data['gid'],$admin_id);
     }
 
     /**
@@ -106,7 +86,11 @@ class Admin extends CI_Controller{
         $this->base->write_user_log($data['uid'],'同意'.$group_info['g_name'].'中'.$data['apply_id'].'加入');
         MyJSON::show(200,'ok');
     }
-    
+
+    /**
+     * refuse
+     * @access public
+     */
     public function refuse(){
         $data = $this->get_apply();
         $this->admin->refuse($data['gid'],$data['apply_id']);
