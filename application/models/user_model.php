@@ -52,6 +52,11 @@ class User_Model extends CI_Model{
         return $bool;
     }
 
+    public function upload_photo($uid,$path){
+        $this->db->update('user',array('photo'=>$path),array('uid'=>$uid));
+        return $this->db->affected_rows();
+    }
+
     public function find_password($uid,$email){
         
     }
@@ -93,6 +98,10 @@ class User_Model extends CI_Model{
      * @return mixed
      */
     public function add_label($uid,$label){
+        $data = $this->base->select_needs('*','user_label',array('uid'=>$uid,'label'=>$label));
+        if($data){
+            return 1;
+        }
         $this->db->insert('user_label',array('uid'=>$uid,'label'=>$label));
         return $this->db->affected_rows();
     }
@@ -106,7 +115,6 @@ class User_Model extends CI_Model{
     public function get_notice_list($uid){
         $res = $this->db->select('*')->from('user_message')->where(array('uid'=>$uid,'status'=>1))->order_by('id desc')->get();
         $data = $res->result_array();
-//        $data = $this->base->select_array_needs('*','user_message',array('uid'=>$uid,'status'=>1));
         return $data;
     }
 

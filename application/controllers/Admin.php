@@ -19,6 +19,11 @@ class Admin extends CI_Controller{
         $this->load->model('Message_Model','group');
     }
 
+    /**
+     * get_message 给下面add和delete两个方法 获取post数据调用
+     * @access public
+     * @return mixed
+     */
     public function get_message(){
         $data['uid'] = $this->login->is_log();
         $data['gid'] = $this->input->post('gid');
@@ -32,10 +37,20 @@ class Admin extends CI_Controller{
         }
     }
 
+    /**
+     * add  添加管理员
+     * @access public
+     */
     public function add(){
         $data = $this->get_message();
         $uid  = $this->input->post('member_id');
         $this->admin->add($data['gid'],$uid);
+        //写入日志
+        $this->base->write_group_log($data['gid'],$data['uid'],'设置'.$uid.'为管理员');
+        $this->base->write_group_log($data['uid'],'把'.$data['gid'].'组中'.$uid.'设为管理员');
+        //通知
+        $group_info = $this->group->detail($data['gid']);
+        $this->message->add($uid,'您被任命为'.$group_info.'中的管理员');
     }
 
     /**
@@ -46,6 +61,12 @@ class Admin extends CI_Controller{
         $data = $this->get_message();
         $admin_id = $this->input->post('admin_id');
         $this->admin->delete($data['gid'],$admin_id);
+        //写入日志
+        $this->base->write_group_log($data['gid'],$data['uid'],'取消'.$uid.'管理员身份');
+        $this->base->write_group_log($data['uid'],'取消'.$data['gid'].'组中'.$uid.'的管理员管理员身份');
+        //通知
+        $group_info = $this->group->detail($data['gid']);
+        $this->message->add($uid,'您在'.$group_info.'中的管理员身份被取消');
     }
 
     /**

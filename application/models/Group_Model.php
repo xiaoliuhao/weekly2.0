@@ -23,9 +23,14 @@ class Group_Model extends CI_Model{
 //        $datas = $this->base->select_any('*','group');
         return $datas;
     }
-    
+
+    /**
+     * get_all_admins   获取全部管理员
+     * @access public
+     * @param $gid
+     * @return mixed
+     */
     public function get_all_admins($gid){
-//        $data = $this->base->select_array_needs('*','v_all_members',array('g_id'=>$gid,'level <='=>1));
         $res = $this->db->select('*')->from('v_all_members')->where(array('g_id'=>$gid,'level <='=>1))->order_by('level asc')->get();
         $data =$res->result_array();
         return $data;
@@ -70,7 +75,13 @@ class Group_Model extends CI_Model{
 
         return $gid;
     }
-    
+
+    /**
+     * delete   删除小组
+     * @access public
+     * @param $gid
+     * @return mixed
+     */
     public function delete($gid){
         $this->db->delete('group',array('g_id'=>$gid));
         return $this->db->affected_rows();
