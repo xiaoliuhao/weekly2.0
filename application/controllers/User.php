@@ -42,23 +42,26 @@ class User extends CI_Controller{
      * @access public
      */
     public function upload_photo(){
-        $config = array(
-            'upload_path'=>'./photos',
-            'allowed_types'=>'gif|png|jpeg',
-            //生成新的文件名
-            'file_name'=>uniqid(),
-            'max_size'=>'1000000',
-        );
+        // 上传目录需要手工创建
+        $config['upload_path']='./photos';
+        //允许上传的文件种类
+        $config['allowed_types']='gif|png|jpg|jpeg';
+        //生成新文件名
+        $config['file_name']=uniqid();
+        $config['max_size']='1000000';
+
         //装载文件上传类
         $this->load->library('upload',$config);
         $bool = $this->upload->do_upload('pic');
-        $uid  = $this->login->is_log();
+//        $uid  = $this->login->is_log();
         if($bool){
             $data = $this->upload->data();
             $rows = $this->user->upload_photo($uid,'photos/'.$data['orig_name']);
             if($rows){
                 MyJSON::show(200,'ok');
             }
+        }else{
+            $this->load->view('upload');
         }
     }
 

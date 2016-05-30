@@ -32,6 +32,7 @@ class Login extends CI_Controller{
             //账号或密码错误
             MyJSON::show(203,'账号或密码错误');
         }else{
+            $data['flag'] = '登录';
             MyJSON::show(200,'ok',$data);
         }
     }
@@ -64,7 +65,7 @@ class Login extends CI_Controller{
         if($affect){
             //注册成功
             $this->base->write_user_log($user['uid'],'用户注册');
-            MyJSON::show(200,'ok');
+            MyJSON::show(200,'ok',array('flag'=>'注册'));
         }
     }
 
@@ -76,6 +77,7 @@ class Login extends CI_Controller{
         $uid = $this->input->post('uid');
         $data['photo'] = $this->login->get_photo($uid);
         if($data) {
+            $data['flag'] = '获取头像';
             MyJSON::show(200,'ok',$data);
         }else{
             MyJSON::show(202,'头像不存在');

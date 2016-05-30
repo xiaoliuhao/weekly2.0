@@ -87,6 +87,12 @@ class Group_Model extends CI_Model{
         return $this->db->affected_rows();
     }
 
+    /**
+     * update
+     * @access public
+     * @param $groupInfo
+     * @return mixed
+     */
     public function update($groupInfo){
         $this->base->update('group', $groupInfo, array('g_id' => $groupInfo['g_id']));
         return $this->db->affected_rows();
