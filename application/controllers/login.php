@@ -7,7 +7,7 @@
  * Version: weekly
  */
 require 'my_json.php';
-header('Access-Control-Allow-Origin:*');
+//header('Access-Control-Allow-Origin:*');
 class Login extends CI_Controller{
     function __construct(){
         parent::__construct();

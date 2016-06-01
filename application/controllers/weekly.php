@@ -88,7 +88,8 @@ class Weekly extends CI_Controller{
         $data = $this->base->select_needs('*','weekly_agree',array('w_id'=>$w_id,'uid'=>$uid));
         if($data){
             //已经赞过 不能再赞
-            MyJSON::show(199,'已经赞过');
+            MyJSON::show(199,'取消赞');
+            $this->weekly->disagree($uid,$w_id);
         }else{
             $rows = $this->weekly->agree($uid,$w_id);
             if($rows){
@@ -105,15 +106,17 @@ class Weekly extends CI_Controller{
     }
     
     public function comment(){
-        $comment['uid']     = $this->input->post('w_id');
-        $comment['c_uid']   = $this->input->post('c_uid');
+        $comment['c_uid']     = $this->login->is_log();
         //这个可以通过 w_id 然后再数据库中查询得到
+        $comment['w_id']      = $this->input->post('wid');
 //        $comment['o_uid']   = $this->input->psot('o_uid');
         $comment['content'] = $this->input->post('content');
         $comment['time']    = date('Y-m-d H:i:s');
         $rows = $this->comment->add($comment);
         if($rows){
             MyJSON::show(200,'ok');
+        }else{
+            MyJSON::show(203,'添加评论失败');
         }
     }
 

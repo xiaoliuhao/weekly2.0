@@ -53,12 +53,15 @@ class User extends CI_Controller{
         //装载文件上传类
         $this->load->library('upload',$config);
         $bool = $this->upload->do_upload('pic');
-//        $uid  = $this->login->is_log();
+        $uid  = $this->login->is_log();
         if($bool){
             $data = $this->upload->data();
-            $rows = $this->user->upload_photo($uid,'photos/'.$data['orig_name']);
+            $rows = $this->user->upload_photo($uid,base_url().'photos/'.$data['orig_name']);
             if($rows){
                 MyJSON::show(200,'ok');
+                $this->base->write_user_log($uid,'上传新头像');
+            }else{
+                MyJSON::show(203,'上传头像失败');
             }
         }else{
             $this->load->view('upload');
