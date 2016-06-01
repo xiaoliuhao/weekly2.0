@@ -34,7 +34,7 @@ class User extends CI_Controller{
     public function detail(){
         $uid = $this->input->get('uid');
         $detail = $this->user->info($uid);
-        MyJSON::show(200,'ok',$detail);
+        MyJSON::show(200,'ok',$detail,'用户详情');
     }
 
     /**
@@ -58,7 +58,7 @@ class User extends CI_Controller{
             $data = $this->upload->data();
             $rows = $this->user->upload_photo($uid,base_url().'photos/'.$data['orig_name']);
             if($rows){
-                MyJSON::show(200,'ok');
+                MyJSON::show(200,'ok','','上传头像');
                 $this->base->write_user_log($uid,'上传新头像');
             }else{
                 MyJSON::show(203,'上传头像失败');
@@ -80,9 +80,9 @@ class User extends CI_Controller{
 
         $bool = $this->user->update($uid,$type,$value);
         if($bool){
-            MyJSON::show(200,'ok');
+            MyJSON::show(200,'ok','','修改个人信息');
         }else{
-            MyJSON::show(204,'修改失败');
+            MyJSON::show(204,'修改失败','','修改个人信息');
         }
     }
 
@@ -97,11 +97,11 @@ class User extends CI_Controller{
         $real_pass = $this->user->get_password($uid);
 
         if($real_pass != $old_pass){
-            MyJSON::show(203,'密码不正确');
+            MyJSON::show(203,'密码不正确','','修改密码');
         }else {
             $rows = $this->user->change_password($uid,sha1(md5($new_pass)));
             if($rows == 1){
-                MyJSON::show(200,'ok');
+                MyJSON::show(200,'ok','','修改密码');
             }
         }
     }
@@ -115,9 +115,9 @@ class User extends CI_Controller{
         $label  = $this->input->post('label');
         $rows   = $this->user->add_label($uid,$label);
         if($rows==1){
-            MyJSON::show(200,'ok');
+            MyJSON::show(200,'ok','','添加用户标签');
         }else{
-            MyJSON::show(203,'添加标签失败');
+            MyJSON::show(203,'添加标签失败','','添加用户标签');
         }
     }
 
