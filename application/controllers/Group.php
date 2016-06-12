@@ -124,5 +124,33 @@ class Group extends CI_Controller{
             }
         }
     }
+
+    /**
+     * comment  给小组留言
+     * @access public
+     */
+    public function comment(){
+        $g_id       = $this->input->post('gid');
+        $uid        = $this->login->is_log();
+        $content    = $this->input->post('content');
+        $time       = date('Y-m-d H:i:s');
+
+        $row = $this->group->add_comment($g_id,$uid,$content,$time);
+        if($row == 1){
+            MyJSON::show(200,'ok');
+        }else{
+            MyJSON::show(203,'错误');
+        }
+    }
+
+    /**
+     * get_comment  获取小组内的全部留言内容
+     * @access public
+     */
+    public function get_comment(){
+        $g_id = $this->input->get('gid');
+        $data = $this->group->get_comments($g_id);
+        MyJSON::show(200,'ok',$data);
+    }
     
 }
