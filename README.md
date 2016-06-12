@@ -1,6 +1,510 @@
-# weekly 周报
+# 与用户相关的接口
 
+## 一、注册
 
-记录上周所做的事情
-#
-计划下周将要做的事情
+    post 提交
+    url:http://localhost/weekly/index.php/login/register
+    传值
+        uid         账号
+        name        昵称
+        password    密码
+        password2
+    返回
+        200 注册成功
+        202 两次密码不一致
+        203 账号重复
+    
+
+    ## 二、登陆
+
+    ### 2.1:获取头像
+
+        方法： post
+        url：http://localhost/weekly/index.php/login/get_photo
+        传值：
+            uid 账号
+        返回：
+            data
+                photo 头像的图片链接
+    
+
+    ### 2.2 登陆验证
+
+        方法：post
+        url：http://localhost/weekly/index.php/login/check_login
+        传值：
+            uid 账号
+            password 密码
+        返回：
+            200 登陆成功
+            data
+                uid     账号
+                name    名字
+                photo   头像
+                token   用户令牌
+
+            这三个变量要保存下来，uid和name、photo还好,方便用来显示就不需要做一些请求了
+
+            token一定要保留，很多地方都需要提交token
+
+            203 用户名或者密码错误
+    
+
+    ## 三、通知
+
+    ### 3.1 新消息(未读通知)
+
+    方法:post
+    url:http://localhost/weekly/index.php/message/get
+    传值:
+        token  token
+        type
+            unread 仅获取未读消息
+            all    获取全部消息
+    返回：
+        data 数组
+            0=>
+            id  消息id
+            uid 收消息的人
+            message 消息内容
+            time 时间
+            status 是否阅读过 1未读，2已读
+            1=>
+                …………
+    (查看过详情的消息才算被读过)
+    
+
+    ### 3.2 通知详情
+
+    方法:get
+    url:http://localhost/weekly/index.php/message/get?id=1
+    传值：
+        id
+    返回
+        data
+            id  消息id
+            uid 收消息的人
+            message 消息内容
+            time 时间
+            status 是否阅读过 1未读，2已读
+    
+
+    ### 3.3 标记通知为已读
+
+    方法：get
+    url：http://localhost/weekly/index.php/message/update?id=1
+    传值：
+        id  消息id
+    返回
+        200 成功
+        203 标记已读失败
+    
+
+    ### 3.4 删除通知消息
+
+    方法：post
+    url：http://localhost/weekly/index.php/message/delete
+    传值
+        token
+        id  消息id
+    返回
+        200 成功
+        203 删除通知失败
+    
+
+    ## 四、个人详细信息
+
+    方法：get
+    url：http://localhost/weekly/index.php/user/detail?uid=user001
+    传值：
+        uid 账号
+    返回：data
+                uid         账号
+                name        昵称
+                photo       头像
+                introduce   简介（个性签名）
+                real_name   真是姓名
+                birthday    生日
+                address     地址
+                tel         电话
+                qq          qq
+                email       邮箱
+
+                register_time   注册日期
+                last_time       上次登录时间
+                last_ip         上次登录ip
+
+                label_array(标签 数组)
+                    label 标签
+    (Ps:没必要全都显示出来 比如说注册日期和上次登录时间之类没用的东西)
+
+    添加标签
+    方法 post
+    url：http://localhost/weekly/index.php/user/add_label
+    传值:
+        uid 被评价人的uid
+        label 标签
+    返回
+        200 ok
+    
+
+    ## 五、修改个人信息
+
+    ### 5.1:基本信息修改
+
+        方法：post
+        url：http://localhost/weekly/index.php/user/update
+        传值：
+            token
+            type 修改的信息种类
+            value 修改的信息的值
+
+    -------------(Ps:type的规定如下)--------------
+    |    name    昵称
+    |    privacy 周报可见性
+    |            1 所有人可见
+    |            2 仅组内成员可见
+    |            3 仅自己可见
+    |
+    |    real_name 真实名字
+    |    sex       性别
+    |    introduce 简介(个性签名)
+    |    birthday  生日
+    |    address   地址
+    |    tel       电话号码
+    |    qq        qq
+    |    email     邮箱
+    ----------------------------------------------
+    
+
+    ### 5.2:上传/修改头像
+        方法:post
+        url:http://localhost/weekly/index.php/user/update_photo
+        传值:
+            token
+            pic 图片格式的文件
+            形容不上来 ， 贴出测试代码吧
+            <form action="http://115.159.54.210/weekly/index.php/user/upload_photo" method="post" enctype="multipart/form-data">
+            <input type="file" name="pic">
+            <br>
+            <input type="submit" name="submit" value="上传">
+            </form>
+        返回：
+            200 ok
+
+    ### 5.3:修改密码
+
+        方法:post
+        url:http://localhost/weekly/index.php/user/change_pass
+        传值：
+            token
+            old_pass    旧密码
+            new_pass    新密码
+        返回
+            200 成功
+            203 旧密码不正确
+    
+
+    ### 5.4给某人添加标签
+
+        方法：post
+        url:http://localhost/weekly/index.php/user/add_label
+        传值：
+            uid  被评论的人的账号
+            label 添加内容
+        返回：
+            200 ok
+            203 添加标签失败
+    
+
+    ## 六、找回密码
+
+    ## 七、写周报
+
+    方法:post
+    url: http://localhost/weekly/index.php/weekly/add
+    传值：
+        token
+        title   主题
+        content 内容
+    返回：
+        200 成功
+    
+
+    ## 八、修改周报
+
+    方法：post
+    url:http://localhost/weekly/index.php/weekly/update
+    传值
+        token
+        id      周报的id
+        title   主题
+        content 内容
+    返回
+        200 成功
+    
+
+    ## 九、查看周报
+
+    ### 9.1 查看所有周报
+
+    方法：get
+    url：http://localhost/weekly/index.php/weekly/all
+    传值：
+        orderby 排序方式
+        uid 用户(可有可无， 有的话就是单独这个人的周报 没有就是所有人的)
+    返回：
+        data 数组
+            0=>
+            …………
+            参考9.2
+            …………
+    
+
+    ### 9.2 周报详情
+
+        方法：get
+        url: http://localhost/weekly/index.php/weekly/detail?wid=1
+        传值：
+            wid  周报的id号
+        返回：
+            data
+                id  周报的id
+                uid 用户账号
+                name 昵称
+                photo 头像
+                title 题目
+                content 内容
+                hits 点击量
+                agrees 点赞量
+                update_time 上传时间/最后一次修改时间
+                comments  评论(数组)
+                    0=>
+                    id 评论的id
+                    w_id 周报id
+                    uid 用户名
+                    name 昵称
+                    photo 头像
+                    content 评论内容
+                    time 时间
+                    1=>
+                    …………
+                    …………
+    
+
+    ### 9.3 点赞
+
+        方法:post
+        url：http://localhost/weekly/index.php/weekly/agree
+        传值:
+            token
+            wid 周报的id
+        返回
+            199 已经赞过，这次相当于取消赞
+            200 点赞成功
+    
+
+    ### 9.4 评论
+
+        方法：post
+        url:http://localhost/weekly/index.php/weekly/comment
+        传值:
+            token 
+            w_id 周报的id
+            content 周报内容
+        返回:
+            200 ok
+            
+    
+
+    ## 十、创建小组
+
+    提交方式 post
+    url:http://localhost/weekly/index.php/group/add
+    传值:
+        token         token
+        name        小组名称
+        introduce   小组简介
+    返回：
+        200 创建成功
+    
+
+    ## 十一、用户申请加入小组
+
+    提交方式 post
+    url:http://localhost/weekly/index.php/member/apply
+    传值：
+        token
+        gid    申请加入的小组id
+        reason 申请理由 可以不填
+    返回
+        200 申请成功
+    
+
+    ## 十二、修改小组信息
+
+    提交方式 post
+    url：http://localhost/weekly/index.php/group/update
+    传值:
+        token
+        gid         小组id
+        name        小组的名字
+        introduce   小组简介
+    返回
+        203 权限不足
+        200 修改成功
+    
+
+    ## 十三、删除小组
+
+    提交方式 post
+    url：http://localhost/weekly/index.php/group/delete
+    传值:
+        token
+        gid 小组id
+    返回 ：
+        200 删除成功
+        203 权限不足
+    
+
+    ## 十四、小组负责人(超级管理员修改权限)
+
+    ### 14.1 查看所有管理员
+
+        方法：get
+        url:http://localhost/weekly/index.php/group/admins?gid=1
+        传值：
+            gid 小组的id
+        返回
+            与查看小组全部成员相同 （十八）
+    
+
+    ### 14.2 撤销管理员权限 只有 超级管理员才可以
+
+        方法：post
+        url:http://localhost/weekly/index.php/admin/delete
+        传值
+            token
+            gid         小组id
+            admin_id    要取消的管理员的uid
+    
+
+    ### 14.3 设置管理员
+
+        方法：post
+        url:http://localhost/weekly/index.php/admin/add
+        传值
+            token
+            gid         小组id
+            admin_id    要取消的管理员的uid
+    
+
+    ## 十五、审核待加入成员
+
+    ### 15.1 查看所有申请的人员列表
+
+        方法：post
+        url:http://localhost/weekly/index.php/admin/check_members
+        传值：
+            token
+            gid 小组id
+        返回：
+        data 数组
+            0=>
+            g_id    小组id
+            uid     用户账号
+            name    用户昵称
+            photo   头像
+            introduce 简介(个性签名)
+            sex     性别
+            reason  申请理由
+            time    时间
+            1=>
+                …………
+                同上
+                …………
+    
+
+    ### 15.2 获取申请人的详情 就是看用户详情 参考四
+
+    ### 15.3 通过审核 允许加入
+
+        方法：post
+        url：http://localhost/weekly/index.php/admin/add_member
+        传值：
+            token
+            applyid 申请人的uid
+            gid 申请加入的小组号
+        返回：
+            200 ok
+            203 权限不足
+    
+
+    ### 15.4 拒绝加入
+
+        方法： post
+        url：http://localhost/weekly/index.php/admin/refuse
+        传值：
+            token
+            applyid 申请人的uid
+            gid 申请加入的小组号
+        返回：
+            200 ok
+            203 权限不足
+    
+
+    ## 十六、所有小组列表
+
+    提交方式:无
+    url：http://localhost/weekly/index.php/group/all
+    返回:
+        data (数组)
+            0=>
+                ……………………
+                和下面的一样（十七）
+                ……………………
+            1=>
+    
+
+    ## 十七、查看小组详细信息
+
+    提交方式:get
+    url：http://localhost/weekly/index.php/group/detail?gid=1
+    传值:
+        gid 小组id
+    返回:
+        data
+            g_id            组号
+            g_name          名字
+            g_introduce     小组简介
+            members         小组总人数
+            g_creater_uid   创建人uid
+            g_creater_name  创建人的昵称
+            g_creater_photo 创建人的头像
+            g_create_time   创建时间 （注意create 最后没有r）
+    
+
+    ## 十八、获取小组全部成员
+
+    提交方式:get
+    url：http://localhost/weekly/index.php/group/members?gid=1
+    返回:
+            data (小组所有成员 数组)
+              0=>
+                g_id 组号
+                level 等级
+                uid 账号
+                name 昵称
+                photo 头像
+                introduce 自我介绍
+                sex 性别
+                address 地址
+                tel 电话
+                qq
+                jion_time 加入时间
+                last_time 最后一次登录时间
+                last_ip 最后一次登录ip
+              1=>
+                …………
+                …………
+    
