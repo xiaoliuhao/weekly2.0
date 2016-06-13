@@ -46,11 +46,6 @@ class Weekly_Model extends CI_Model{
         return $data;
     }
 
-    public function disagree($uid,$wid){
-        $this->db->delete('weekly_agree',array('w_id'=>$wid,'uid'=>$uid));
-        return $this->db->affected_rows();
-    }
-
     public function agree($uid,$wid){
         $this->db->insert('weekly_agree',array('w_id'=>$wid,'uid'=>$uid,'time'=>date('Y-m-d H:i:s')));
         return $this->db->affected_rows();

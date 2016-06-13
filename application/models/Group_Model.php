@@ -87,39 +87,8 @@ class Group_Model extends CI_Model{
         return $this->db->affected_rows();
     }
 
-    /**
-     * update
-     * @access public
-     * @param $groupInfo
-     * @return mixed
-     */
     public function update($groupInfo){
         $this->base->update('group', $groupInfo, array('g_id' => $groupInfo['g_id']));
         return $this->db->affected_rows();
-    }
-
-    /**
-     * add_comment  像小组添加留言
-     * @access public
-     * @param $g_id
-     * @param $uid
-     * @param $content
-     * @param $time
-     * @return mixed
-     */
-    public function add_comment($g_id,$uid,$content,$time){
-        $this->db->insert('group_comment',array('g_id'=>$g_id,'uid'=>$uid,'content'=>$content,'time'=>$time));
-        return $this->db->affected_rows();
-    }
-
-    /**
-     * get_comments 获取小组全部的留言内容
-     * @access public
-     * @param $g_id
-     * @return mixed
-     */
-    public function get_comments($g_id){
-        $data = $this->base->select('*','group_comment','g_id',$g_id);
-        return $data;
     }
 }

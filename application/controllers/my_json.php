@@ -21,15 +21,14 @@ class MyJSON{
             echo $json;
         }
     }
-    public static function show($code,$message='',$data=array(),$str=''){
+    public static function show($code,$message='',$data=array()){
         if(!is_numeric($code)){
             return "";
         }
         $result=array(
             'status'=>$code,
             'message'=>$message,
-            'data'=>$data,
-            'flag'=>$str
+            'data'=>$data
         );
         self::json_encode_ex($result);
     }

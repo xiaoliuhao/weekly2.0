@@ -54,7 +54,7 @@ class Login_Model extends CI_Model{
             //向数据库中更新token
             $data['last_time']  = date('Y-m-d H:i:s');
             $data['last_ip']    = $_SERVER['REMOTE_ADDR'];
-            $this->db->update('user_login',$data,array('uid'=>$uid));
+            $this->db->update('user',array('token'=>$data['token'],'last_time'=>$data['last_time'],'last_ip'=>$data['last_ip']),array('uid'=>$uid));
             $user_info = array('token'=>$data['token'],'uid'=>$uid,'name'=>$data['name'],'photo'=>$data['photo']);
             return $user_info;
         }
@@ -72,13 +72,13 @@ class Login_Model extends CI_Model{
     }
 
     /**
-     * is_login 判断用户是否登录 获取用户名信息
+     * is_log 判断用户是否登录 获取用户名信息
      * @access public
      * @return mixed
      */
-    public function is_login(){
+    public function is_log(){
         $token = $this->input->post('token');
-        $data  = $this->select('uid','user','token',$token);
+        $data  = $this->base->select('uid','user','token',$token);
         return $data['uid'];
     }
 

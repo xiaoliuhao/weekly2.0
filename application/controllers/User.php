@@ -34,7 +34,7 @@ class User extends CI_Controller{
     public function detail(){
         $uid = $this->input->get('uid');
         $detail = $this->user->info($uid);
-        MyJSON::show(200,'ok',$detail,'用户详情');
+        MyJSON::show(200,'ok',$detail);
     }
 
     /**
@@ -42,29 +42,23 @@ class User extends CI_Controller{
      * @access public
      */
     public function upload_photo(){
-        // 上传目录需要手工创建
-        $config['upload_path']='./photos';
-        //允许上传的文件种类
-        $config['allowed_types']='gif|png|jpg|jpeg';
-        //生成新文件名
-        $config['file_name']=uniqid();
-        $config['max_size']='1000000';
-
+        $config = array(
+            'upload_path'=>'./photos',
+            'allowed_types'=>'gif|png|jpeg',
+            //生成新的文件名
+            'file_name'=>uniqid(),
+            'max_size'=>'1000000',
+        );
         //装载文件上传类
         $this->load->library('upload',$config);
         $bool = $this->upload->do_upload('pic');
         $uid  = $this->login->is_log();
         if($bool){
             $data = $this->upload->data();
-            $rows = $this->user->upload_photo($uid,base_url().'photos/'.$data['orig_name']);
+            $rows = $this->user->upload_photo($uid,'photos/'.$data['orig_name']);
             if($rows){
-                MyJSON::show(200,'ok','','上传头像');
-                $this->base->write_user_log($uid,'上传新头像');
-            }else{
-                MyJSON::show(203,'上传头像失败');
+                MyJSON::show(200,'ok');
             }
-        }else{
-            $this->load->view('upload');
         }
     }
 
@@ -80,9 +74,9 @@ class User extends CI_Controller{
 
         $bool = $this->user->update($uid,$type,$value);
         if($bool){
-            MyJSON::show(200,'ok','','修改个人信息');
+            MyJSON::show(200,'ok');
         }else{
-            MyJSON::show(204,'修改失败','','修改个人信息');
+            MyJSON::show(204,'修改失败');
         }
     }
 
@@ -91,17 +85,19 @@ class User extends CI_Controller{
      * @access public
      */
     public function change_pass(){
+        // $data['uid']= '12';
+        // echo json_encode($data);
         $uid       = $this->login->is_log();
         $old_pass  = $this->input->post('old_pass');
         $new_pass  = $this->input->post('new_pass');
         $real_pass = $this->user->get_password($uid);
 
         if($real_pass != $old_pass){
-            MyJSON::show(203,'密码不正确','','修改密码');
+            MyJSON::show(203,'密码不正确');
         }else {
             $rows = $this->user->change_password($uid,sha1(md5($new_pass)));
             if($rows == 1){
-                MyJSON::show(200,'ok','','修改密码');
+                MyJSON::show(200,'ok');
             }
         }
     }
@@ -115,9 +111,9 @@ class User extends CI_Controller{
         $label  = $this->input->post('label');
         $rows   = $this->user->add_label($uid,$label);
         if($rows==1){
-            MyJSON::show(200,'ok','','添加用户标签');
+            MyJSON::show(200,'ok');
         }else{
-            MyJSON::show(203,'添加标签失败','','添加用户标签');
+            MyJSON::show(203,'添加标签失败');
         }
     }
 

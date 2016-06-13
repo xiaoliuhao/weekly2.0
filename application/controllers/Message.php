@@ -14,6 +14,7 @@ class Message extends CI_Controller{
         $this->load->model('Base_Model','base');
         $this->load->model('Login_Model','login');
         $this->load->model('Message_Model','message');
+        $this->load->model('Login_Model','login');
     }
 
     /**
@@ -23,7 +24,9 @@ class Message extends CI_Controller{
     public function get(){
         $uid  = $this->login->is_log();
         $type = $this->input->post('type');
-        $arr = $type == 'all'?array('uid'=>$uid):array('uid'=>$uid,'status'=>1);
+        // $uid  = $this->input->get('uid');
+        // $type = $this->input->get('type');
+        $arr  = $type == 'all'?array('uid'=>$uid):array('uid'=>$uid,'status'=>1);
         $data = $this->message->get($arr);
         MyJSON::show(200,'ok',$data);
     }

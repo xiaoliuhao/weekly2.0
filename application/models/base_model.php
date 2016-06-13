@@ -122,7 +122,7 @@ class Base_Model extends CI_Model{
      */
     public function write_user_log($uid,$action){
         $ip = $_SERVER["REMOTE_ADDR"];
-        $this->db->insert('log',array('uid'=>$uid,'action'=>$action,'ip'=>$ip,'time'=>date('Y-m-d H:i:s')));
+        $this->db->insert('user_log',array('uid'=>$uid,'action'=>$action,'ip'=>$ip,'time'=>date('Y-m-d H:i:s')));
     }
 
     /**

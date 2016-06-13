@@ -7,7 +7,7 @@
  * Version: weekly
  */
 require 'my_json.php';
-//header('Access-Control-Allow-Origin:*');
+header('Access-Control-Allow-Origin:*');
 class Login extends CI_Controller{
     function __construct(){
         parent::__construct();
@@ -21,18 +21,19 @@ class Login extends CI_Controller{
     }
 
     /**
-     * check_login  登陆
+     * check_login  登录
      * @access public
      */
     public function check_login(){
         $uid = $this->input->post('uid');
         $password = $this->input->post('password');
-        $data = $this->login->check_login($uid,sha1(md5($password)));
+        $data = $this->login->check_login($uid,$password);
         if($data == 2){
             //账号或密码错误
-            MyJSON::show(203,'账号或密码错误');
+            MyJSON::show(203,'账号或密码错误',array('flag'=>'登录'));
         }else{
             $data['flag'] = '登录';
+            $this->base->write_user_log($uid,'登录');
             MyJSON::show(200,'ok',$data);
         }
     }
@@ -44,7 +45,7 @@ class Login extends CI_Controller{
     public function register(){
         $user['uid'] = $this->input->post('uid');
         //先判断是否注册过
-        $data = $this->log->check_user($user['uid']);
+        $data = $this->login->check_user($user['uid']);
 //        $data = $this->user->info($user['uid']);
         if($data){
             //已经被注册过
@@ -55,17 +56,24 @@ class Login extends CI_Controller{
         $user['name']     = mb_substr('用户'.md5(uniqid(time())), 0, 8);
         $user['password'] = $this->input->post('password');
         $password2        = $this->input->post('password2');
-
-        if($password2 != $user['password']){
-            MyJSON::show(202,'两次密码不一致');
+        //判断参数
+        if( (!$user['uid'])||(!$user['name'])||(!$user['password'])||(!$password2)){
+            MyJSON::show(400,'请求参数错误');
             exit(0);
         }
 
-        $affect = $this->log->register($user);
+        if($password2 != $user['password']){
+            MyJSON::show(202,'两次密码不一致',array('flag'=>'注册'));
+            exit(0);
+        }
+
+        $affect = $this->login->register($user);
         if($affect){
             //注册成功
             $this->base->write_user_log($user['uid'],'用户注册');
             MyJSON::show(200,'ok',array('flag'=>'注册'));
+        }else{
+            MyJSON::show(203,'注册失败',array('flag'=>'注册'));
         }
     }
 
@@ -80,7 +88,7 @@ class Login extends CI_Controller{
             $data['flag'] = '获取头像';
             MyJSON::show(200,'ok',$data);
         }else{
-            MyJSON::show(202,'头像不存在');
+            MyJSON::show(202,'头像不存在',$data);
         }
     }
 

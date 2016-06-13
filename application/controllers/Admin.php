@@ -16,7 +16,8 @@ class Admin extends CI_Controller{
         $this->load->model('User_Model','user');
         $this->load->model('Member_Model','member');
         $this->load->model('Group_Model','group');
-        $this->load->model('Message_Model','group');
+        $this->load->model('Message_Model','message');
+        $this->load->model('Login_Model','login')
     }
 
     /**
@@ -27,10 +28,11 @@ class Admin extends CI_Controller{
     public function get_message(){
         $data['uid'] = $this->login->is_log();
         $data['gid'] = $this->input->post('gid');
+        $data['applyid'] = $this->input->post('applyid');
         $level = $this->member->get_level($data['gid'],$data['uid']);
         if($level != 0 ) {
             //权限不足
-            MyJSON::show(203, '权限不足','','添加/删除管理员');
+            MyJSON::show(203, '权限不足');
             exit(0);
         }else{
             return $data;
@@ -54,7 +56,7 @@ class Admin extends CI_Controller{
     }
 
     /**
-     * delete
+     * delete   取消管理员身份
      * @access public
      */
     public function delete(){
@@ -83,9 +85,23 @@ class Admin extends CI_Controller{
 //            写入日志
             $this->base->write_group_log($gid,$user['uid'],'查看所有申请加入的成员列表');
             $this->base->write_user_log($user['uid'],'查看'.$gid.'所有申请加入的成员列表');
-            MyJSON::show(200,'ok',$data,'获取申请成员列表');
+            MyJSON::show(200,'ok',$data);
         }else{
-            MyJSON::show(203,'权限不足','','获取申请成员列表');
+            MyJSON::show(203,'权限不足');
+        }
+    }
+
+    public function get_apply(){
+        $data['uid'] = $this->login->is_log();
+        $data['gid'] = $this->input->post('gid');
+        $data['apply_id'] = $this->input->post('apply_id');
+        $level = $this->member->get_level($data['gid'],$data['uid']);
+        if($level > 1 ) {
+            //权限不足
+            MyJSON::show(203, '权限不足');
+            exit(0);
+        }else{
+            return $data;
         }
     }
 
@@ -95,9 +111,7 @@ class Admin extends CI_Controller{
      */
     public function add_member(){
         $data = $this->get_apply();
-        if($data == 2) {
-            MyJSON::show(203,'权限不足');
-        }
+        
         $this->admin->add_member($data['gid'],$data['apply_id']);
         //应在加上通知此人管理员已经同意审核 加入该群
         $group_info = $this->group->detail($data['gid']);
@@ -105,7 +119,7 @@ class Admin extends CI_Controller{
         //管理员操作写入日志
         $this->base->write_group_log($data['gid'],$data['uid'],'同意 '.$data['apply_id'].' 加入');
         $this->base->write_user_log($data['uid'],'同意'.$group_info['g_name'].'中'.$data['apply_id'].'加入');
-        MyJSON::show(200,'ok','','添加小组管理员');
+        MyJSON::show(200,'ok');
     }
 
     /**
@@ -121,7 +135,7 @@ class Admin extends CI_Controller{
         //管理员操作写入日志
         $this->base->write_group_log($data['gid'],$data['uid'],'拒绝 '.$data['apply_id'].' 加入');
         $this->base->write_user_log($data['uid'],'拒绝'.$group_info['g_name'].'中'.$data['apply_id'].'加入');
-        MyJSON::show(200,'ok','','拒绝申请人加入小组');
+        MyJSON::show(200,'ok');
     }
     
     

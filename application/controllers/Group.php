@@ -39,7 +39,7 @@ class Group extends CI_Controller{
         $this->base->write_group_log($g_id,$uid,$message);
 
         //创建小组成功
-        MyJSON::show(200,'ok','','创建小组');
+        MyJSON::show(200,'ok');
     }
 
     /**
@@ -50,7 +50,7 @@ class Group extends CI_Controller{
         $gid = $this->input->get('gid');
         $data = $this->group->get_all_admins($gid);
 
-        MyJSON::show(200,'ok',$data,'','获取小组内全部管理员');
+        MyJSON::show(200,'ok',$data);
     }
 
     /**
@@ -60,7 +60,7 @@ class Group extends CI_Controller{
     public function members(){
         $gid = $this->input->get('gid');
         $data = $this->group->get_all_members($gid);
-        MyJSON::show(200,'ok',$data,'获取小组内所有成员');
+        MyJSON::show(200,'ok',$data);
     }
 
     /**
@@ -69,7 +69,7 @@ class Group extends CI_Controller{
      */
     public function all(){
         $data = $this->group->get_group_list();
-        MyJSON::show(200,'ok',$data,'获取所有小组列表');
+        MyJSON::show(200,'ok',$data);
     }
 
     /**
@@ -79,7 +79,7 @@ class Group extends CI_Controller{
     public function detail(){
         $gid  = $this->input->get('gid');
         $data = $this->group->detail($gid);
-        MyJSON::show(200,'ok',$data,'获取小组详细信息');
+        MyJSON::show(200,'ok',$data);
     }
 
     /**
@@ -94,12 +94,12 @@ class Group extends CI_Controller{
         $level = $this->member->get_level($groupInfo['g_id'],$uid);
         if($level > 1){
             //权限不足
-            MyJSON::show(203,'权限不足','','修改小组信息');
+            MyJSON::show(203,'权限不足');
         }else{
             $rows = $this->group->update($groupInfo);
             if($rows == 1){
-                //修改成功
-                MyJSON::show(200,'ok','','修改小组信息');
+                //删除成功
+                MyJSON::show(200,'ok');
             }
         }
     }
@@ -115,42 +115,14 @@ class Group extends CI_Controller{
         //只有创建人才可以删除小组
         if($level != 0){
             //权限不足
-            MyJSON::show(203,'权限不足','','删除小组');
+            MyJSON::show(203,'权限不足');
         }else {
             $rows = $this->group->delete($gid);
             if($rows == 1){
                 //删除成功
-                MyJSON::show(200,'ok','','删除小组');
+                MyJSON::show(200,'ok');
             }
         }
-    }
-
-    /**
-     * comment  给小组留言
-     * @access public
-     */
-    public function comment(){
-        $g_id       = $this->input->post('gid');
-        $uid        = $this->login->is_log();
-        $content    = $this->input->post('content');
-        $time       = date('Y-m-d H:i:s');
-
-        $row = $this->group->add_comment($g_id,$uid,$content,$time);
-        if($row == 1){
-            MyJSON::show(200,'ok');
-        }else{
-            MyJSON::show(203,'错误');
-        }
-    }
-
-    /**
-     * get_comment  获取小组内的全部留言内容
-     * @access public
-     */
-    public function get_comment(){
-        $g_id = $this->input->get('gid');
-        $data = $this->group->get_comments($g_id);
-        MyJSON::show(200,'ok',$data);
     }
     
 }

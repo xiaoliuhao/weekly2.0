@@ -79,7 +79,7 @@ class Member extends CI_Controller{
      */
     public function apply(){
 //        $apply['uid']    = $this->input->post('uid');
-        $apply['uid']    = $this->login->is_login();
+        $apply['uid']    = $this->login->is_log();
         $apply['gid']    = $this->input->post('gid');
         $apply['reason'] = $this->input->post('reason');
         $bool   = $this->member->is_in_group($gid,$uid);

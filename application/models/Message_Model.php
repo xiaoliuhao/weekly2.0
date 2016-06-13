@@ -13,7 +13,8 @@ class Message_Model extends CI_Model{
     }
     
     public function get($arr){
-        $data = $this->select_array_needs('*','user_message',$arr);
+        $data = $this->base->select_array_needs('*','user_message',$arr);
+        // echo $this->db->last_query();
         return $data;
     }
 
