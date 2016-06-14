@@ -17,7 +17,7 @@ class Admin extends CI_Controller{
         $this->load->model('Member_Model','member');
         $this->load->model('Group_Model','group');
         $this->load->model('Message_Model','message');
-        $this->load->model('Login_Model','login')
+        $this->load->model('Login_Model','login');
     }
 
     /**
@@ -76,9 +76,11 @@ class Admin extends CI_Controller{
      * @access public
      */
     public function check_members(){
-        $user['uid'] = $this->log->is_log();
+        $user['uid'] = $this->login->is_log();
         $gid = $this->input->post('gid');
-        $user['level'] = $this->user->get_group_level($gid,$user['uid']);
+
+
+        $user['level'] = $this->admin->get_group_level($gid,$user['uid']);
 
         if($user['level'] <= 1){
             $data = $this->admin->get_apply_members($gid);
@@ -94,7 +96,7 @@ class Admin extends CI_Controller{
     public function get_apply(){
         $data['uid'] = $this->login->is_log();
         $data['gid'] = $this->input->post('gid');
-        $data['apply_id'] = $this->input->post('apply_id');
+        $data['apply_id'] = $this->input->post('applyid');
         $level = $this->member->get_level($data['gid'],$data['uid']);
         if($level > 1 ) {
             //权限不足

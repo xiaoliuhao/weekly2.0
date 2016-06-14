@@ -87,6 +87,21 @@ class Group_Model extends CI_Model{
         return $this->db->affected_rows();
     }
 
+    /**
+     * search
+     * @access public
+     * @param $key
+     * @param $value
+     * @return mixed
+     */
+    public function search($key,$value){
+        $sql = "select * from v_w_group_detail where $key REGEXP ? ";
+        $res = $this->db->query($sql,$value);
+        $data= $res->result_array();
+
+        return $data;
+    }
+
     public function update($groupInfo){
         $this->base->update('group', $groupInfo, array('g_id' => $groupInfo['g_id']));
         return $this->db->affected_rows();

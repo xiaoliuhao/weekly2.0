@@ -36,6 +36,11 @@ class Admin_Model extends CI_Model{
         return $this->db->affected_rows();
     }
 
+    public function get_group_level($gid,$uid){
+        $data = $this->base->select_needs('*','jion_group',array('g_id'=>$gid,'uid'=>$uid));
+        return $data['level'];
+    }
+
     /**
      * get_apply_members
      * @access public
@@ -56,7 +61,7 @@ class Admin_Model extends CI_Model{
      */
     public function add_member($gid,$uid){
         $this->db->delete('group_apply',array('uid'=>$uid,'g_id'=>$gid));
-        $this->db->insert('jion_group',array('g_id'=>$gid,'level'=>2,'jion_time'=>date('Y-m-d H:i:s')));
+        $this->db->insert('jion_group',array('g_id'=>$gid,'uid'=>$uid,'level'=>2,'jion_time'=>date('Y-m-d H:i:s')));
         return $this->db->affected_rows();
     }
 

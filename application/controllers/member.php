@@ -50,6 +50,8 @@ class Member extends CI_Controller{
         }
     }
 
+    
+
     /**
      * jion_group 加入小组
      * @access public

@@ -29,12 +29,12 @@ class Group extends CI_Controller{
         $uid = $this->login->is_log();
         $g_info['g_name'] = $this->input->post('name');
         $g_info['g_introduce'] = $this->input->post('introduce');
+
         $g_info['g_create_uid'] = $uid;
         $g_info['g_create_time'] = date('Y-m-d H:i:s');
         $g_id = $this->group->add($uid,$g_info);
-
         //写入日志
-        $message = '创建了一个组id:'.$g_id.'name：'.$g_info['g_name'];
+        $message = '创建了一个组id:'.$g_id.'name:'.$g_info['g_name'];
         $this->base->write_user_log($uid,$message);
         $this->base->write_group_log($g_id,$uid,$message);
 
@@ -101,6 +101,30 @@ class Group extends CI_Controller{
                 //删除成功
                 MyJSON::show(200,'ok');
             }
+        }
+    }
+
+    public function search(){
+        $name = $this->input->post('name');
+        $gid  = $this->input->post('gid');
+        if(!$name && !gid ){
+            MyJSON::show(400,'参数错误');
+            exit(0);
+        }
+
+        if($name){
+            $key = 'g_name';
+            $value = $name;
+        }elseif($gid){
+            $key = 'g_id';
+            $value = $gid;
+        }
+
+        $data = $this->group->search($key,$value);
+        if($data){
+            MyJSON::show(200,'ok',$data);
+        }else{
+            MyJSON::show(203,'暂无记录');
         }
     }
 
