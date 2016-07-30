@@ -105,8 +105,8 @@ class Weekly extends CI_Controller{
     }
     
     public function comment(){
-        $comment['uid']     = $this->input->post('w_id');
-        $comment['c_uid']   = $this->input->post('c_uid');
+        $comment['w_id']     = $this->input->post('w_id');
+        $comment['c_uid']   = $this->login->is_log();
         //这个可以通过 w_id 然后再数据库中查询得到
 //        $comment['o_uid']   = $this->input->psot('o_uid');
         $comment['content'] = $this->input->post('content');

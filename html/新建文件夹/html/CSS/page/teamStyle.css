@@ -1,0 +1,174 @@
+img{
+	max-width: 100%;
+}
+.clearFloat{
+	clear: both;
+}
+.exam{
+	margin-top: 25px;
+}
+
+.ePho{
+	height: 50px;
+	width: 50px;
+	border-radius: 50%;
+}
+.examMask{
+	display: none;
+	position: fixed;
+	width: 100%;
+	top: 0;
+	left: 0;
+	background-color: rgba(0,0,0,0.5);
+	height: 500px;
+	z-index: 9999;
+}
+.ePanel{
+	position: relative;
+	width: 50%;
+	margin: 0 auto;
+	background-color: #FFF;
+	border-radius: 5px;
+	padding: 15px;
+	top: 100px;
+}
+.back{
+	position: absolute;
+	right: 15px;
+	width: 25px;
+	height: 25px;
+	top: 15px;
+	z-index: 99999;
+}
+.allowBtn{
+	width: 30%;
+	background-color: #43d967;
+	border-radius: 3px;
+	color: #fff;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	text-align: center;
+	margin: 0 auto;
+	cursor: pointer;
+}
+.pd{
+	/*position: absolute;*/
+	float: left;
+	margin-left: 80px;
+	margin-top: 30px;
+	margin-bottom: 30px;
+}
+.pd span{
+	display: inline-block;
+	margin-top: 10px;
+}
+.pdtitle{
+	display: block;
+}
+.ephoto{
+	width: 200px;
+	height: 200px;
+	float: left;
+	margin-top: 50px;
+	border-radius: 50%;
+}
+.tdataMask{
+	display: none;
+	position: fixed;
+	width: 100%;
+	top: 0;
+	left: 0;
+	background-color: rgba(0,0,0,0.5);
+	height: 500px;
+	z-index: 9999;
+}
+/*.tdPanel{
+
+	position: relative;
+	width: 50%;
+	margin: 0 auto;
+	background-color: #FFF;
+	border-radius: 5px;
+	padding: 15px;
+	top: 100px;
+}*/
+.backBtn{
+	position: absolute;
+	right: 15px;
+	
+	width: 25px;
+	height: 25px;
+	top: 15px;
+	cursor: pointer;
+}
+.photo{
+	display: block;
+	height: 100px;
+	width: 100px;
+	border-radius: 50%;
+	margin: 0 auto;
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+.tdPanel{
+	background-color: #fff;
+	padding: 15px;
+
+}
+
+.BTN{
+	display: inline-block;
+	width: 30%;
+	padding-left: 8px;
+	padding-right: 8px;
+	padding-top: 5px;
+	padding-bottom: 5px; 
+	background-color: #1ab394;
+	border-radius: 3px;
+	color: #fff;
+	text-align: center;
+	
+	margin: 0 auto;
+	margin-top: 15px;
+	margin-left: 45px;
+	cursor: pointer;
+
+}
+.cmana,.ctdataBtn{
+	width: 30%;
+	padding-left: 8px;
+	padding-right: 8px;
+	padding-top: 5px;
+	padding-bottom: 5px; 
+	background-color: #1ab394;
+	border-radius: 3px;
+	color: #fff;
+	text-align: center;
+	
+	margin: 0 auto;
+	margin-top: 15px;
+	cursor: pointer;
+}
+
+
+.line{
+	height: 1px;
+	background-color: #eee;
+	width: 90%;
+	margin: 0 auto;
+	margin-top: 25px;
+	margin-bottom: 25px;
+}
+.panelBox{
+	margin: 0 auto;
+	text-align: center;
+	width: 50%;
+
+}
+.box{
+	display: none;
+}
+.ap{
+	display: block;
+}
+

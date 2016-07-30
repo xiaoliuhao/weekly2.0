@@ -1,0 +1,240 @@
+
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: #fff;  
+}
+
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: #fff;
+}
+
+input:-ms-input-placeholder,
+textarea:-ms-input-placeholder {
+    color: #fff;
+}
+
+input::-webkit-input-placeholder {
+    color: #fff;
+}
+/* Header */
+.large-header {
+	position: relative;
+	width: 100%;
+	background: #333;
+	overflow: hidden;
+	background-size: cover;
+	background-position: center center;
+	z-index: 1;
+}
+
+.demo-1 .large-header {
+	background-color: #f6fafd;
+}
+.demo-1 .main-title  {
+	text-transform: uppercase;
+	font-size: 4.2em;
+	letter-spacing: 0.1em;
+}
+
+.main-title .thin {
+	font-weight: 200;
+}
+
+@media only screen and (max-width : 768px) {
+	.demo-1 .main-title{
+		font-size: 3em;
+	}
+}
+
+/*样式*/
+.clear{
+	clear: both;
+}
+
+.signBox{
+	width: 100%;
+	position: absolute;
+	top: 100px;
+}
+.imgBox{
+	width: 150px;
+	height: 150px;
+	border-radius: 50%;
+	margin: 0 auto;
+	overflow: hidden;
+}
+.headPic{
+	width: 100%;
+
+}
+.tab{
+	width: 8%;
+	margin: 0 auto;
+	text-align: center;
+	margin-top: 50px;
+}
+.tab p{
+	border-bottom: 2px solid #999999;
+	padding-bottom: 3px;
+	color: #999999;
+	cursor: pointer;
+}
+.in{
+	float: left;
+}
+.up{
+	float: right;
+}
+.login{
+	width: 75%;
+	margin: 0 auto;
+}
+.signIn,.signUp{
+	margin: 0 auto;
+	text-align: center;
+}
+.form{
+	width: 100%;
+	position: relative;
+	text-align: center;
+}
+.form>input{
+	width: 30.5%;
+	
+}
+.form>button{
+	width: 25%;
+	
+}
+.tipIn,.tipUp{
+	display: block;
+	margin-top: 15px;
+	color: red;
+}
+.form .point{
+	width: 25%;
+	margin: 0 auto;
+}
+.form span,.form span a{
+	margin-top: 10px;
+	color: #999999;
+	margin-top: 15px;
+}
+.form span:first-child{
+	float: left;
+}
+.form span:last-child{
+	float: right;
+}
+.button{
+	width: 70%;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	background-color: #aad8e3;
+	border: none;
+	border-radius: 4px;
+	color: #ffffff;
+	margin-top: 15px;
+	display: block;
+	margin: 0 auto;
+}
+.signUp{
+	display: none;
+}
+/*input样式*/
+.input{
+	width: 100%;
+	border: 1px solid #cccccc;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 5px;
+	border-radius: 4px;
+	margin-top: 15px;
+}
+.input{
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance:none;
+	outline: 0;
+	border: 1px solid rgba(204,204,204,0.4);
+	background-color: rgba(91,184,254,0.2);
+	width: 80%;
+	border-radius: 4px;
+	padding: 10px 15px;
+	margin: 0 auto 10px auto;
+	display: block;
+	text-align: center;
+	font-size: 18px;
+	color: #ffffff;
+	-webkit-transition-duration: 0.25s;
+			transition-duration: 0.25s;
+	font-weight: 300;
+}
+.input:hover{
+	background-color: rgb(91,184,254,0.4);
+}
+.input:focus{
+	background-color: #aad8e3;
+	width: 39.5%;
+	color: #ffffff;
+}
+form button{
+	-webkit-appearance: none;
+	   -moz-appearance: none;
+	   appearance: none;
+	   outline: 0;
+	   background: #aad8e3;/*gai*/
+	   border: 0;
+	   padding: 10px 15px;/*gai*/
+	   border-radius: 4px;
+	   width: 70%;
+	   cursor: pointer;
+	   font-size: 18px;
+	   -webkit-transition-duration: 0.25s;
+	   		   transition-duration: 0.25s;
+}
+form button:hover{
+	background-color: #5bb8fe;/*gai*/
+}
+
+.sign.form-success .imgBox{
+	-webkit-transform: translateY(85px);
+		-ms-transform: translateY(85px);
+			transform: translateY(85px);
+}
+.imgBox{
+	-webkit-transition-duration: 1s;
+			transition-duration: 1s;
+	-webkit-transition-timing-function: ease-in-put;
+			transition-timing-function: ease-in-put;
+}
+.concern{
+	position: absolute;
+	top: 25px;
+	border-radius: 4px;
+	padding: 5px 15px;
+	border: 1px solid #ccc;
+	width: 12.2794%;
+	right: 50px;
+}
+.lead{
+	background: url(../../images/QR_icon.png) no-repeat;
+	background-position: left center;
+	background-size: 15.375%;
+	text-align: center;
+}
+.QR_icon{
+	width: 15.375%;
+	line-height: 25px;
+
+}
+.lead span{
+	font-size: 0.8em;
+	margin-left: 10px;
+	text-align: center;
+	color: #999;
+	line-height: 25px;
+
+}
+.tipIn,.tipUp{
+	display: none;
+}

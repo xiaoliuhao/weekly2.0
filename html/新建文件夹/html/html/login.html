@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+<meta name="viewport" content="width=device-width, initial-scale=1"> 
+<title>Animated Background Headers | Demo 1</title>
+<link rel="stylesheet" type="text/css" href="../CSS/lib/normalize.css" />
+<link rel="stylesheet" type="text/css" href="../CSS/common/demo.css" />
+
+<!--必要样式-->
+<link rel="stylesheet" type="text/css" href="../CSS/page/login.css" />
+
+<!--[if IE]>
+<script src="js/html5.js"></script>
+<![endif]-->
+
+</head>
+<body>
+		<div class="container demo-1">
+			<div class="content">
+				<div id="large-header" class="large-header">
+					<canvas id="demo-canvas"></canvas>
+					<div class="concern">
+						<div class="lead">
+							<!-- <img class="QR_icon" src="../images/QR_icon.png"> -->
+							<span>关注微信公众号</span>
+						</div>
+						<div style="display:none;" class="QR_code">
+							<p>扫一扫二维码关注</p>
+							<div class="imgBox">
+								<img class="img" src="../images/QR_icon.png">
+							</div>
+						</div>
+					</div>
+					<div class="signBox">
+						<div class="sign">
+							<div class="imgBox">
+								<img class="headPic" src="../images/headPic.jpg">
+							</div>
+							<div class="tab">
+								<p class="in"><strong>登录</strong></p>
+								<p class="up"><strong>注册</strong></p>
+								<div class="clear"></div>
+							</div>
+							<div class="login">
+								<div class="signIn">
+									<form class="form">
+										<input class="username input" type="text" name="uid" placeholder="用户名(不少于6位)">
+										<input type="password" class="password input" placeholder="密码(不少于6位)">
+										<button class="button" id="login-button">登录</button>
+										<div class="point">
+											<span><input class="check" type="checkbox" checked="checked"> 记住我</span>
+											<span><a href="#">无法登录？</a></span>
+										</div>
+										<div class="clear"></div>
+									</form>
+									<span class="tipIn"></span>
+								</div>
+								<div class="signUp">
+									<form class="form">
+										<input type="text" class="newUsername input" placeholder="用户名(不少于6位)">
+										<input type="password" class="newPassword_1 newPass input" placeholder="密码(不少于6位)">
+										<input type="password" class="newPassword_2 newPass input" placeholder="确认密码(不少于6位)">
+										<button class="button" id="new-login">注册</button>
+									</form>
+									<span class="tipUp">注册失败</span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<div class="footer"><div>
+			</div>
+		</div><!-- /container -->
+
+		<script src="../JavaScript/lib/jquery.js"></script>
+		<script src="../JavaScript/lib/TweenLite.min.js"></script>
+		<script src="../JavaScript/lib/EasePack.min.js"></script>
+		<script src="../JavaScript/util/rAF.js"></script>
+		<script src="../JavaScript/util/md5.js"></script>
+		<script src="../JavaScript/util/sha1.js"></script>
+		<script src="../JavaScript/page/login.js"></script>
+		
+	</body>
+</html>

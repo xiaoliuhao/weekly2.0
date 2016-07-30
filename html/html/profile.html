@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+
+    <title>群资料</title>
+
+    <link rel="shortcut icon" href="favicon.ico"> <link href="../CSS/lib/bootstrap.min.css?v=3.3.5" rel="stylesheet">
+    <link href="../CSS/lib/font-awesome.min.css?v=4.4.0" rel="stylesheet">
+    <link href="../CSS/lib/animate.min.css" rel="stylesheet">
+    <link href="../CSS/lib/style.min.css?v=4.0.0" rel="stylesheet">
+    <link rel="stylesheet" href="../CSS/page/teamStyle.css">
+    <link rel="stylesheet" href="../CSS/page/main.css">
+
+
+</head>
+
+<body class="gray-bg">
+
+
+<div id="nav">
+        <ul class="nav-menu clearfix unstyled ">
+            <li class="tp">
+                <a href="#" class="three-d nav active">
+                    群主页
+                    <span class="three-d-box"><span class="front">群主页</span><span class="back">群主页</span></span>
+                </a>
+            </li>
+            <li  class="tp">
+                <a href="#" class="three-d nav">
+                    修改群信息
+                    <span class="three-d-box"><span class="front">修改群信息</span><span class="back">修改群信息</span></span>
+                </a>
+            </li>
+            <li  class="tp">
+                <a href="#" class="three-d nav">
+                    管理员设置
+                    <span class="three-d-box"><span class="front">管理员设置</span><span class="back">管理员设置</span></span>
+                </a>
+            </li>
+            
+            
+            
+            <li>
+                <a href="#" class="three-d tmateBtn">
+                    所有成员
+                    <span class="three-d-box"><span class="front">所有成员</span><span class="back">所有成员</span></span>
+                </a>
+            </li>
+            <li>
+                <a href="basic_gallery.html" class="three-d">
+                    相册
+                    <span class="three-d-box"><span class="front">相册</span><span class="back">相册</span></span>
+                </a>
+            </li>
+            <li  class="tp">
+                <a href="#" class="three-d nav">
+                    审核待加入成员
+                    <span class="three-d-box"><span class="front">审核待加入成员</span><span class="back">审核待加入成员</span></span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+
+    
+
+    <div class="wrapper wrapper-content">
+        <div class="row animated fadeInRight">
+            <div class="col-sm-4">
+                <div class="ibox box float-e-margins ap">
+                    <div class="ibox-title">
+                        <h5>周报群资料</h5>
+                    </div>
+                    <div id="teamDetail">
+                        <div class="ibox-content no-padding border-left-right">
+                            <img class="img-responsive" src="img/profile_big.jpg">
+                        </div>
+                        
+
+
+                    </div>
+
+                </div>
+                <div class="ibox box">
+                    <div class="ibox-title">
+                        <h5>群资料</h5>
+                    </div>
+
+                    <div class="tdPanel" id="gdataList">
+                                            
+
+
+                    </div>
+                </div>
+
+                <div class="ibox box">
+                    <div class="ibox-title">
+                        <h5>管理员设置</h5>
+                    </div>
+                    <div class="tdPanel" id="mList">
+                        
+
+
+                    </div>
+                </div>
+
+                <div class="ibox box">
+                    <div class="ibox-title">
+                        <h5>审核待加入成员</h5>
+                        
+                    </div>
+                    <div class="eList" id="eList">
+                                
+
+                        
+                    </div>
+                    <div class="tdPanel" id="applyList">
+                        
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>最新动态</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+
+                        <div>
+                            <div class="feed-activity-list" id="TMWList">
+
+                                
+                                
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    
+    <div class="examMask">
+        <div class="ePanel" id="ePanel">
+            
+            
+
+        </div>
+    </div>
+
+    <div class="tdataMask">
+        <div class="tdPanel" id="tdPanel">
+            
+            
+        </div>
+    </div>
+
+
+
+    <script src="../JavaScript/lib/jquery.js"></script>
+    <script src="../JavaScript/lib/handlebars.js"></script>
+    <script id="team-template" type="text/x-handlebars-template">
+        {{#with data}}
+            <div class="ibox-content profile-content">
+                <h4><strong>{{g_name}}</strong></h4>
+                <p><i class="fa fa-map-marker"></i> {{g_create_time}}</p>
+                <h5>
+                        关于群
+                    </h5>
+                <p>
+                    {{g_introduce}}
+                </p>
+                <div class="row m-t-lg">
+                    <div class="col-sm-4">
+                        
+                        <h5><strong>{{members}}</strong> 个群成员</h5>
+                    </div>
+                </div>
+                <div class="user-button">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <a href="#">
+                                <button type="button" class="btn btn-primary btn-sm btn-block"><i class="fa fa-envelope"></i> 群资料</button>
+                            </a>
+                        </div>
+                        <div class="col-sm-4">
+                            <a class="tmateURL" href="contacts.html?gid={{g_id}}">
+                                <button type="button" class="btn btn-primary btn-sm btn-block"><i class="fa fa-coffee"></i> 查看群成员</button>
+                            </a>
+                        </div>
+                        <div class="col-sm-4">
+                            <a href="basic_gallery.html">
+                                <button type="button" class="btn btn-primary btn-sm btn-block"><i class="fa fa-envelope"></i> 群相册</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {{/with}}
+    </script>
+
+    
+
+    <script id="ED-template" type="texx/x-handlebars-template">
+        {{#each this}}
+            <span class="pdtitle"><strong>审核待加入成员</strong></span>
+            <div class="backBtn">
+              <img src="../images/icon/delete.png">
+            </div>
+
+            <div>
+              <img class="ephoto" src="{{photo}}">
+            </div>
+            <div class="pd">
+                <span>申请加入组号：</span><span class="pduid">{{g_id}}</span><br>
+                <span>用户账号：</span><span class="pdname">{{uid}}</span><br>
+                <span>用户昵称：</span><span class="pdintro">{{name}}</span><br>
+                <span>简介：</span><span class="pdrealNme">{{introduce}}</span><br>
+                <span>性别：</span><span class="pdbirth">{{sex}}</span><br>
+                <span>申请理由：</span><span class="pdad">{{reason}}</span><br>
+                <span>时间：</span><span class="pdtel">{{time}}</span><br>
+            </div>
+            <div class="clearFloat"></div>
+            <div class="allowBtn" uid="{{uid}}" gid="{{g_id}}">通过审核</div>
+        {{/each}}
+    </script>
+
+    <script id="TMW-template" type="text/x-handlebars-template">
+        {{#each this}}
+            <div class="feed-element">
+                <a href="profile.html#" class="pull-left">
+                    <img alt="image" class="img-circle" src="{{photo}}">
+                </a>
+                <div class="media-body ">
+                    <small class="pull-right">{{update_time}}</small>
+                    <strong>{{name}}</strong>
+                    <br>
+                    <small class="text-muted">{{title}}</small>
+                    <div class="well WL">
+                        
+                    </div>
+                    <div class="pull-right">
+                        <a class="btn btn-xs btn-white"><i class="fa fa-thumbs-up"></i> 赞({{g_id}}) </a>
+                        
+                        <a class="btn btn-xs btn-primary"><i class="fa fa-pencil"></i> 评论({{hits}})</a>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+    </script>
+
+
+    <script id="apply-template" type="text/x-handlebars-template">
+        {{#each this}}
+            <div class="photo">
+                <img class="photo" src="{{photo}}" alt="">
+            </div>
+            <div class="panelBox">
+                <span>用户账号：</span><span>{{uid}}</span><br>
+                <span>用户昵称：</span><span>{{name}}</span><br>
+                <span>简介：</span><span>{{introduce}}</span><br>
+                <span>性别：</span><span>{{sex}}</span><br>
+                <span>申请理由：</span><span>{{reason}}</span><br>
+                <span>申请时间：</span><span>{{time}}</span><br>
+               
+            </div>
+             <div class="agress BTN" myattr={{uid}}>同意加入</div>
+             <div class="refuse BTN" myattr={{uid}}>拒绝加入</div>
+            <div class="line"></div>
+        {{/each}}
+    </script>
+
+    <script id="m-template" type="texx/x-handlebars-template">
+        {{#each this}}
+            <div class="photo">
+                <img class="photo" src="{{photo}}" alt="">
+            </div>
+            <div class="panelBox">
+                <span>账号：</span><span>{{uid}}</span><br>
+                <span>等级：</span><span>{{level}}</span><br>
+                <span>昵称：</span><span>{{name}}</span><br>
+                <span>自我介绍：</span><span>{{introduce}}</span><br>
+                <span>性别：</span><span>{{sex}}</span><br>
+                <span>QQ：</span><span>{{qq}}</span><br>
+                <span>电话：</span><span>{{tel}}</span><br>
+                <span>地址：</span><span>{{address}}</span>
+                
+            </div>
+            <div class="cmana" myattr="{{uid}}">撤销管理员</div>
+            <div class="line"></div>
+        {{/each}}
+    </script>
+
+    <script id="gdata-template" type="text/x-handlebars-template">
+        {{#with data}}
+            
+            <div class="photo">
+                <img class="photo" title="创建人" src="{{g_creater_photo}}" alt="">
+            </div>
+            <div class="panelBox">
+                <span>组名：</span><span>{{g_id}}</span><br>
+                <span>名字：</span><span>{{g_name}}</span><br>
+                <span>小组简介：</span><span>{{g_introduce}}</span><br>
+                <span>小组总人数：</span><span>{{members}}</span><br>
+                <span>创建人：</span><span class="creater">{{g_creater_uid}}</span><br>
+                <span>创建人昵称：</span><span>{{g_creater_name}}</span><br>
+                <span>创建时间：</span><span>{{g_create_time}}</span>
+            </div>
+            <div class="ctdataBtn">修改群信息</div>
+        {{/with}}
+    </script>
+
+
+    <script src="../JavaScript/lib/bootstrap.min.js?v=3.3.5"></script>
+    <script src="../JavaScript/lib/content.min.js?v=1.0.0"></script>
+    <script src="../JavaScript/lib/plugins/peity/jquery.peity.min.js"></script>
+    <script src="../JavaScript/lib/demo/peity-demo.min.js"></script>
+    <script src="../JavaScript/page/teamDetail.js"></script>
+    <script src="../JavaScript/page/style.js"></script>
+</body>
+
+</html>

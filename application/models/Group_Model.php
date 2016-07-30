@@ -95,7 +95,7 @@ class Group_Model extends CI_Model{
      * @return mixed
      */
     public function search($key,$value){
-        $sql = "select * from v_w_group_detail where $key REGEXP ? ";
+        $sql = "select * from w_v_group_detail where $key REGEXP ? ";
         $res = $this->db->query($sql,$value);
         $data= $res->result_array();
 

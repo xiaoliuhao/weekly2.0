@@ -107,7 +107,7 @@ class Group extends CI_Controller{
     public function search(){
         $name = $this->input->post('name');
         $gid  = $this->input->post('gid');
-        if(!$name && !gid ){
+        if(!$name && !$gid ){
             MyJSON::show(400,'参数错误');
             exit(0);
         }

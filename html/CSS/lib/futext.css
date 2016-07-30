@@ -1,0 +1,76 @@
+
+/* fontawesome */
+
+ul li{
+  list-style: none;
+}
+img{
+  width: 100%;
+}
+/*首页和周报列表的样式*/
+.listBox{
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 8px;
+  margin-top: 10px;
+  padding: 20px 20px 0px 20px;
+}
+.weeklyTop{
+  width: 100%;
+}
+.imgBox{
+  width: 65px;
+  height: 65px;
+  border-radius: 32.5px;
+  overflow: hidden;
+  float: left;
+}
+.infor{
+  margin-left: 85px;
+  padding-top: 15px;
+}
+.name{
+  font-size: 0.8em;
+}
+.time{
+  font-size: 0.6em;
+}
+.weekly{
+  margin-left: 65px;
+  margin-top: 20px;
+  padding-bottom: 20px;
+}
+.weeklyFooter{
+  border-top: 1px solid #eee;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.weeklyFooter ul li{
+  width: 50%;
+  float: left;
+  text-align: center;
+}
+.imgicon{
+  width: 20px;
+}
+/*富文本编辑的样式*/
+
+
+.detail{
+  font-size:1.5em;
+  margin-bottom: 30px;
+}
+.detail p{
+  float: left;
+  margin-left: 20px;
+  margin-top: 15px;
+  padding: 5px 15px;
+  cursor: pointer;
+}
+.clearflo{
+  clear: both;
+}
+.simditor-toolbar{
+  width: 100%;
+
+}

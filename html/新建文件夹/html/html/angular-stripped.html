@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>周报WEEKLY</title>
+  <meta name="description" content="app, web app, responsive, responsive layout, admin, admin panel, admin dashboard, flat, flat ui, ui kit, AngularJS, ui route, charts, widgets, components" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+  <link rel="stylesheet" href="../CSS/lib/bootstrap.min.css" type="text/css" />
+  <link rel="stylesheet" href="../CSS/lib/animate.min.css" type="text/css"/>
+  <link rel="stylesheet" href="../CSS/lib/simple-line-icons.css" type="text/css" />
+  <link rel="stylesheet" href="../CSS/lib/futext.css" type="text/css"/>
+  <link rel="stylesheet" href="../CSS/lib/font-awesome.min.css" type="text/css" />
+  <link rel="stylesheet" href="../CSS/lib/simditor.css" type="text/css">
+  <link rel="stylesheet" href="../CSS/lib/font.css" type="text/css" />
+  <link rel="stylesheet" href="../CSS/lib/app.css" type="text/css" />
+  <link rel="stylesheet" href="../CSS/page/calendar.css">
+  <link rel="stylesheet" href="../CSS/lib/module.css" type="text/css" />
+  <link rel="stylesheet" href="../CSS/page/style.css">
+</head>
+<body>
+  <div class="app app-header-fixed" id="app">
+    <!-- navbar -->
+    <div class="app-header navbar">
+      <!-- navbar header -->
+      <div class="navbar-header bg-dark">
+        <button class="pull-right visible-xs dk" data-toggle="class:show" data-target=".navbar-collapse">
+          <i class="glyphicon glyphicon-cog"></i>
+        </button>
+        <button class="pull-right visible-xs" data-toggle="class:off-screen" data-target=".app-aside" ui-scroll="app">
+          <i class="glyphicon glyphicon-align-justify"></i>
+        </button>
+        <!-- brand -->
+        <a href="#/" class="navbar-brand text-lt">
+          <i class="fa fa-btc"></i>
+          <img src="img/logo.png" alt="." class="hide">
+          <span class="hidden-folded m-l-xs">WEEKLY</span>
+        </a>
+        <!-- / brand -->
+      </div>
+      <!-- / navbar header -->
+
+      <!-- navbar collapse -->
+      <div class="collapse pos-rlt navbar-collapse box-shadow bg-white-only">
+        <!-- buttons -->
+        <div class="nav navbar-nav hidden-xs">
+          <a href="#" class="btn no-shadow navbar-btn" data-toggle="class:app-aside-folded" data-target=".app">
+            <i class="fa fa-dedent fa-fw text"></i>
+            <i class="fa fa-indent fa-fw text-active"></i>
+          </a>
+          <a href class="btn no-shadow navbar-btn" data-toggle="class:show" data-target="#aside-user">
+            <i class="icon-user fa-fw"></i>
+          </a>
+        </div>
+        <!-- / buttons -->
+
+        <!-- link and dropdown -->
+        <ul class="nav navbar-nav hidden-sm">
+          
+          <li class="dropdown">
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle">
+              <i class="fa fa-fw fa-plus visible-xs-inline-block"></i>
+              <span translate="header.navbar.new.NEW">个人中心</span> <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+              <li><a class="passBtn">修改密码</a></li>
+              <li>
+                <a class="pdbtn">
+                  <span>个人信息</span>
+                </a>
+              </li>
+              <li><a href translate="header.navbar.new.USER">消息</a></li>
+              <li class="divider"></li>
+              <li>
+                <a href>
+              
+                  <span translate="header.navbar.new.EMAIL">帮助中心</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <!-- / link and dropdown -->
+
+        <!-- search form -->
+        <form class="navbar-form navbar-form-sm navbar-left shift" ui-shift="prependTo" data-target=".navbar-collapse" role="search" ng-controller="TypeaheadDemoCtrl">
+          <div class="form-group">
+            <div class="input-group">
+              <input type="text"  class="stname form-control input-sm bg-light no-border rounded padder " placeholder="查找周报群">
+              <span class="input-group-btn dropdown searchBtn">
+                <button type="submit"  data-toggle="dropdown" class="btn btn-sm bg-light rounded dropdown-toggle"><i class="fa fa-search"></i></button>
+              </span>
+            </div>
+
+          </div>
+        </form>
+        <!-- / search form -->
+
+        <!-- nabar right -->
+        <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown unreadTip">
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle">
+              <i class="icon-bell fa-fw"></i>
+              <!-- <span class="visible-xs-inline">Notifications</span> -->
+              <span class="badge badge-sm up bg-danger pull-right-xs unreadNum">2</span><!--消息通知-->
+            </a>
+            <!-- dropdown -->
+            <div class="dropdown-menu w-xl animated fadeInUp">
+              <div class="panel bg-white">
+                <div class="panel-heading b-light bg-light">
+                  <strong>你有 <span class="unreadNum">2</span> 未读信息</strong>
+                </div>
+                <div class="list-group" id="unreadList">
+                  
+                 
+                </div>
+                <div class="panel-footer text-sm allInform">
+                  <a class="pull-right"><i class="fa fa-cog"></i></a>
+                  <a>查看消息详情</a>
+                </div>
+              </div>
+            </div>
+            <!-- / dropdown -->
+          </li>
+          <li class="dropdown">
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle clear" data-toggle="dropdown">
+              <span class="thumb-sm avatar pull-right m-t-n-sm m-b-n-sm m-l-sm">
+                <img class="myPhoto" src="img/a0.jpg" alt="...">
+                <i class="on md b-white bottom"></i>
+              </span>
+              <span class="hidden-sm hidden-md myName">小耗子</span> <b class="caret"></b>
+            </a>
+            <!-- dropdown -->
+            <ul class="dropdown-menu animated fadeInRight w">
+              <li class="wrapper b-b m-b-sm bg-light m-t-n-xs">
+                <div>
+                  <p>面对阳光，要幸福得微笑</p>
+                </div>
+                <progressbar value="60" class="progress-xs m-b-none bg-white"></progressbar>
+              </li>
+              <li>
+                <a>
+                  <span>我的动态</span>
+                </a>
+              </li>
+              <li>
+                <a href="teams_board.html">我的群</a>
+              </li>
+              <li>
+                <a  class="pdbtn">个人资料</a>
+              </li>
+              <li class="divider"></li>
+              <li>
+                <a ui-sref="access.signin">退出</a>
+              </li>
+            </ul>
+            <!-- / dropdown -->
+          </li>
+        </ul>
+        <!-- / navbar right -->
+
+      </div>
+      <!-- / navbar collapse -->
+    </div>
+    <!-- / navbar -->
+
+    <!-- menu -->
+    <div class="app-aside hidden-xs bg-dark">
+      <div class="aside-wrap">
+        <div class="navi-wrap">
+          <!-- user -->
+          <div class="clearfix hidden-xs text-center hide" id="aside-user">
+            <div class="dropdown wrapper">
+              <a ui-sref="app.page.profile">
+                <span class="thumb-lg w-auto-folded avatar m-t-sm">
+                  <img class="myPhoto" src="img/a0.jpg" class="img-full" alt="...">
+                </span>
+              </a>
+              <a href="#" data-toggle="dropdown" class="dropdown-toggle hidden-folded">
+                <span class="clear">
+                  <span class="block m-t-sm">
+                    <strong class="font-bold text-lt myName">小耗子</strong> 
+                    <b class="caret"></b>
+                  </span>
+                  <span class="text-muted text-xs block">学生</span>
+                </span>
+              </a>
+              <!-- dropdown -->
+              <ul class="dropdown-menu animated fadeInRight w hidden-folded">
+                <li class="wrapper b-b m-b-sm bg-info m-t-n-xs">
+                  <span class="arrow top hidden-folded arrow-info"></span>
+                  <div>
+                    <p>面对阳光，要幸福得微笑</p>
+                  </div>
+                  <progressbar value="60" type="white" class="progress-xs m-b-none dker"></progressbar>
+                </li>
+                <li>
+                  <a href>我的动态</a>
+                </li>
+                <li>
+                  <a ui-sref="app.page.profile">我的群</a>
+                </li>
+                <li>
+                  <a class="pdbtn">个人资料</a>
+                </li>
+                <li class="divider"></li>
+                <li>
+                  <a>退出</a>
+                </li>
+              </ul>
+              <!-- / dropdown -->
+            </div>
+            <div class="line dk hidden-folded"></div>
+          </div>
+          <!-- / user -->
+
+          <!-- nav -->
+          <nav ui-nav class="navi">
+            <ul class="nav">
+
+              <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">          
+                <span translate="aside.nav.your_stuff.YOUR_STUFF">大厅</span>
+              </li>  
+              <li id="mainBtn" class="moduleBtn">
+                <a ui-sref="app.page.profile">
+                  <i class="icon-user icon text-success-lter"></i>
+            
+                  <span>首页</span>
+                </a>  
+              </li>
+              <li  id="weeklyBtn" class="moduleBtn" ng-class="{active:$state.includes('app.form')}">
+                <a class="auto">
+                  
+                  <i class="glyphicon glyphicon-edit"></i>
+                  <span>写周报</span>
+                </a>
+                
+              </li>
+
+              <li id="myWeeklyBtn" class="moduleBtn">
+                <a class="auto">      
+                  
+                  <i class="glyphicon glyphicon-th"></i>
+                  <span>我的周报</span>
+                </a>
+              </li>
+
+              <li class="line dk hidden-folded"></li>
+
+              <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+                <span translate="aside.nav.HEADER">周报群</span>
+              </li>
+              <li>
+                <a href="teams_board.html" class="auto">      
+                  
+                  <i class="glyphicon glyphicon-stats icon text-primary-dker"></i>
+                  <span class="font-bold" translate="aside.nav.DASHBOARD">周报群</span>
+                </a>
+                
+              </li>
+              <!-- <li ui-sref-active="active">
+                <a ui-sref="app.calendar">
+                  <i class="glyphicon glyphicon-calendar icon text-info-dker"></i>
+                  <span class="font-bold" translate="aside.nav.CALENDAR">群相册</span>
+                </a>
+              </li> -->
+              <li class="moduleBtn">
+                <a> 
+                  <i class="glyphicon glyphicon-envelope icon text-info-lter"></i>
+                  <span class="font-bold" translate="aside.nav.EMAIL">消息</span>
+                </a>
+              </li>
+              
+
+              <li class="line dk"></li>
+
+              <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+                <span translate="aside.nav.components.COMPONENTS">相关</span>
+              </li>
+              <li>
+                <a href class="auto">      
+                  <span class="pull-right text-muted">
+                    <i class="fa fa-fw fa-angle-right text"></i>
+                    <i class="fa fa-fw fa-angle-down text-active"></i>
+                  </span>
+             
+                  <i class="glyphicon glyphicon-th"></i>
+                  <span>设置</span>
+                </a>
+                <ul class="nav nav-sub dk">
+                  <li class="nav-sub-header">
+                    <a href>
+                      <span>设置</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a  class="pdbtn">
+                      <span>我的资料</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="cbtn">
+                      <span>创建周报群</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a  class="passBtn">
+                      <span>修改密码</span><!--此处显示个性签名的时间轴-->
+                    </a>
+                  </li>      
+                </ul>
+              </li>
+             
+              <li ng-class="{active:$state.includes('app.page')}">
+                <a href class="auto">
+                  
+                  <i class="glyphicon glyphicon-file icon"></i>
+                  <span translate="aside.nav.components.pages.PAGES">版本介绍</span>
+                </a>
+               
+              </li>
+
+              
+
+              
+            </ul>
+          </nav>
+          <!-- nav -->
+
+          <!-- aside footer -->
+          
+          <!-- / aside footer -->
+        </div>
+      </div>
+    </div>
+    <!-- / menu -->
+
+    <!-- content -->
+    <div class="app-content">
+      <div ui-butterbar></div>
+      <a href class="off-screen-toggle hide" data-toggle="class:off-screen" data-target=".app-aside" ></a>
+      <div class="app-content-body fade-in-up">
+        <!-- COPY the content from "tpl/" -->
+          <div class="hbox hbox-auto-xs hbox-auto-sm">
+            <div class="col"><!--width:74.2410%;-->
+              <div style="background:url(img/c4.jpg) center center; background-size:cover">
+                <div class="wrapper-lg bg-white-opacity">
+                  <div class="row m-t">
+                    <div class="col-sm-7">
+                      <a href class="thumb-lg pull-left m-r">
+                        <img src="img/a0.jpg" class="img-circle myPhoto">
+                      </a>
+                      <div class="clear m-b" id="banner">
+                        <div class="m-b m-t-sm">
+                          <span class="h3 text-black myName">小耗子</span>
+                          <small class="m-l">重庆邮电大学</small>
+                        </div>
+                        <p class="m-b">
+                          <a href class="btn btn-sm btn-bg btn-rounded btn-default btn-icon"><i class="fa fa-twitter"></i></a>
+                          <a href class="btn btn-sm btn-bg btn-rounded btn-default btn-icon"><i class="fa fa-facebook"></i></a>
+                          <a href class="btn btn-sm btn-bg btn-rounded btn-default btn-icon"><i class="fa fa-google-plus"></i></a>
+                        </p>
+                      
+                      </div>
+                    </div>
+                    <div class="col-sm-5">
+                      <div class="pull-right pull-none-xs text-center">
+                        <a href class="m-b-md inline m">
+                          <span class="h3 block font-bold">2k</span>
+                          <small>我的群</small>
+                        </a>
+                        <a href class="m-b-md inline m">
+                          <span class="h3 block font-bold">250</span>
+                          <small>我的周报</small>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="wrapper bg-white b-b">
+                <ul class="nav nav-pills nav-sm">
+                  
+               
+                </ul>
+              </div>
+              <div class="padder" id="padder">  
+                <!--周报首页列表-->
+                <div class=" bg-white b-b">
+                </div>
+
+
+                <div id="main" class="main module now">
+                  
+                </div>
+
+                <!--以上周报首页列表栏-->
+                <div id="weeklyWri" class="weeklyWri module">
+                  <div class="detail">
+                    <strong>周报主题</strong>
+                    <div class="select">
+                      <p class="title tit_weekly">读书计划</p>
+                      <p class="title">项目计划</p>
+                      <p class="title">学习路线</p>
+                    </div>
+                    <div class="clearflo"></div>
+                  </div>
+                  <div class="textContent">
+                    <div class="box">
+                        <textarea id="editor" placeholder="点击此处开始周报吧..." autofocus></textarea>
+                    </div>
+                  </div>
+                  <button class="subWeekly">提交周报</button>
+                </div>
+                <!--以上是写周报中间的栏-->
+
+                
+
+
+
+                <div id="allWeekly" class="streamline b-l b-info m-l-lg m-b padder-v module">
+                  
+                  <!-- / .comment-reply -->
+                </div>
+
+
+                
+                <div id="informList" class="module">
+                  
+        
+                </div>
+
+
+
+
+              </div><!--padder-->
+
+
+            </div>
+            <div class="col w-lg bg-light lter b-l bg-auto">
+              <div>
+                  <div id="CalendarMain">
+                    <div id="title">
+                      <a class="selectBtn month" href="javascript:" onClick="CalendarHandler.CalculateLastMonthDays();"><</a>
+                      <a class="selectBtn selectYear" href="javascript:" onClick="CalendarHandler.CreateSelectYear(CalendarHandler.showYearStart);">2014年</a>
+                      <a class="selectBtn selectMonth" onClick="CalendarHandler.CreateSelectMonth()">6月</a>
+                      <a class="selectBtn nextMonth" href="javascript:" onClick="CalendarHandler.CalculateNextMonthDays();">></a>
+                    </div>
+                    <div id="context">
+                      <div class="week">
+                        <h3> 一 </h3>
+                        <h3> 二 </h3>
+                        <h3> 三 </h3>
+                        <h3> 四 </h3>
+                        <h3> 五 </h3>
+                        <h3> 六 </h3>
+                        <h3> 日 </h3>
+                      </div>
+                      <div id="center">
+                        <div id="centerMain">
+                          <div id="selectYearDiv"></div>
+                          <div id="centerCalendarMain">
+                            <div id="Container"></div>
+                          </div>
+                          <div id="selectMonthDiv"></div>
+                        </div>
+                      </div>
+                      <div id="foots"><a id="footNow">19:14:34</a></div>
+                    </div>
+                  </div>
+
+                   <!-- 查询群的栏 -->
+
+                  <div class="searchT" id="searchT">
+                      <p><strong>查询群结果</strong></p>
+      
+                  </div>
+              </div>
+          </div>
+        <!-- PASTE above -->
+      </div>
+    </div>
+    <!-- /content -->
+
+    <!-- aside right -->
+   
+    <!-- / aside right -->
+    
+
+    <div class="mask">
+      <div class="pdPanel" id="pdPanel">
+        <span class="pdtitle"><strong>个人资料</strong></span><span class="pdtab">修改个人资料</span>
+        <div class="clearFloat"></div>
+          
+      </div>
+      <div class="changePd"  id="changePd">
+        <span class="pdtitle"><strong>修改个人资料</strong></span>
+        <div class="back">
+          <img src="../images/icon/delete.png">
+        </div>
+        <div class="clearFloat"></div>
+        <div class="cpdphoto">
+              <img src="">
+        </div>
+        
+        
+      </div>
+
+    </div>
+
+    <div class="creTeamMask">
+      <div class="crePanel" id="crePanel">
+        <span class="pdtitle"><strong>创建周报群</strong></span>
+        <div class="back">
+          <img src="../images/icon/delete.png">
+        </div>
+        <div class="clearFloat"></div>
+        <span class="creTName">小组名称：</span><input class="cTname" type="text" ><br>
+        <span class="creTIntro">小组简介：</span><textarea class="cTIntro"></textarea>
+        <div class="creBtn">创建周报群</div>
+      </div>
+
+    </div>
+
+    <div class="passMask">
+      <div class="passPanel">
+        <span class="pdtitle"><strong>修改密码</strong></span>
+        <div class="clearFloat"></div>
+        <div class="back">
+          <img src="../images/icon/delete.png">
+        </div>
+        <span class="old">旧密码：</span><input class="oldpass" type="text" ><br>
+        <span class="new">新密码：</span><input class="newpass" type="text"><span class="passtip"></span>
+        <div class="savePass">
+          保存新密码
+        </div>
+      </div>
+    </div>
+
+    <div class="comMask">
+      <div class="comPanel">
+        <span class="pdtitle"><strong>评论列表</strong></span>
+        <div class="clearFloat"></div>
+        <div class="back">
+          <img src="../images/icon/delete.png">
+        </div>
+
+        <div class="comList" id="comList">
+          
+
+        </div>
+        <div class="myCom">
+          <input type="text" class="myComCon" placeholder="我也来说一句">
+          <input type="button" class="subCom" value="评论">
+        </div>
+        <div class="clearFloat"></div>
+      </div>
+    </div>
+
+    <!-- footer -->
+    <div class="app-footer wrapper b-t bg-light">
+      &copy; 2016 Copyright <a target="_blank" title="blues.stutio">蓝山工作室</a>
+    </div>
+    <!-- / footer -->
+  </div>
+  
+  <script src="../JavaScript/lib/jquery.js"></script>
+  <script src="../JavaScript/lib/handlebars.js"></script>
+
+  <script id="unread-template" type="text/x-handlebars-template">
+    {{#each this}}
+        <a myattr="{{id}}" class="media list-group-item">
+          <span class="media-body block m-b-none">
+            {{message}}<br>
+            <small class="text-muted">{{time}}</small>
+          </span>
+        </a>
+      {{/each}}
+  </script>
+
+  <script id="label-template" type="text/x-handlebars-template">
+    {{#each this}}
+      <a href class="btn btn-sm btn-success btn-rounded">{{label}}</a>
+    {{/each}}
+  </script>
+
+  <script id="pd-template" type="text/x-handlebars-template">
+    {{#with data}}
+      <div class="back">
+          <img src="../images/icon/delete.png">
+      </div>
+      <div class="pdphoto">
+              <img src="{{photo}}">
+      </div>
+      
+      <div class="pd">
+        <span>账号：</span><span class="pduid">{{uid}}</span><br>
+        <span>昵称：</span><span class="pdname">{{name}}</span><br>
+        <span>简介：</span><span class="pdintro">{{introduce}}</span><br>
+        <span >真实姓名：</span><span class="pdrealNme">{{real_name}}</span><br>
+        <span >生日：</span><span class="pdbirth">{{birthday}}</span><br>
+        <span >地址：</span><span class="pdad">{{address}}</span><br>
+        <span >电话：</span><span class="pdtel">{{tel}}</span><br>
+        <span >QQ：</span><span class="pdqq">{{qq}}</span><br>
+        <span >邮箱：</span><span class="pdemail">{{email}}</span><br>
+        <span >标签：</span>
+        {{#with label}}
+          {{#each this}}
+            <span class="pdlabel">{{label}}  </span>
+          {{/each}}
+        {{/with}}
+      </div>
+      <div class="clearFloat"></div>
+    {{/with}}
+  </script>
+
+  <script id="cpd-template" type="text/x-handlebars-template">
+    {{#with data}}
+      <div class="pd">
+        <span>昵称：</span><input class="cpdname" type="text" value="{{name}}"><br>
+        <span>周报可见权限：</span>
+        <select class="cpdprivacy" >
+          <option>所有人可见</option>
+          <option>紧组内成员可见</option>
+          <option>仅自己可见</option>
+        </select><br>
+        <span>真实名字：</span><input class="cpdrealName" type="text" value="{{real_name}}"><br>
+        <span >性别：</span>
+        <select class="cpdsex" >
+          <option>男</option>
+          <option>女</option>
+        </select><br>
+        <span >简介：</span><input class="cpdbirth" type="text" value="{{introduce}}"><br>
+        <span >生日：</span><input class="cpdintro" type="text" value="{{birthday}}"><br>
+        <span >QQ：</span><input class="cpdtel" type="text" value="{{qq}}"><br>
+        <span >邮箱：</span><input class="cpdqq" type="text" value="{{email}}"><br>
+        <span >地址：</span><input class="cpdemail" type="text" value="{{address}}">
+      </div>
+
+      <div class="clearFloat"></div>
+      <div class="savepd">保存修改</div>
+    {{/with}}
+  </script>
+
+  <script id="all-template" type="text/x-handlebars-template">
+    {{#each this}}
+      <div class="readList" id="readList">
+      {{#if type}}
+          <div class="unread" tid="{{id}}">
+            <img title="标记为已读" src="../images/icon/read.png">
+          </div>
+        {{/if}}
+        <div class="delete" myAttr="{{id}}">
+          <img src="../images/icon/delete.png">
+        </div>
+        <div class="informBox">
+
+          <p class="sendName"><strong>{{uid}}</strong></p>
+          <p class="time">{{time}}</p>
+
+          <div class="informContent">
+              <p>{{message}}</p>
+          </div>
+        </div>
+      </div>
+
+    {{/each}}
+
+  </script>
+  <script id="main-template" type="text/x-handlebars-template">
+    {{#each this}}
+      
+      <div class="listBox">
+        <div class="weeklyTop">
+          <div class="imgBox">
+            <img src="{{photo}}" class="myImg">
+          </div>
+          <div class="infor">
+            <p class="name"><strong>{{name}}</strong></p>
+            <p class="time">{{update_time}}</p>
+          </div>
+          <div class="weekly">
+              {{content}}
+          </div>
+        </div>
+        
+        <div class="weeklyFooter" myattr="{{id}}">
+          <ul>
+            <li><a class="comment" w_id="{{id}}"><img class="imgicon" src="iconfont/summary_1.png"><span>  评论</span></a></li>
+            <li><a class="ZAN"><img class="imgicon" src="iconfont/zan_1.png"><span>  点赞(<span class="ZANnum">{{agrees}}</span>)</span></a></li>
+          </ul>
+          <div class="clearflo"></div>
+        </div>
+      </div>
+    {{/each}}
+  </script>
+
+  <script id="com-template" type="text/x-handlebars-template">
+    {{#each this}}
+ 
+        <div class="percom">
+          <div class="comImgBox">
+            <img src="{{photo}}">
+          </div>
+          <div class="comBox">
+            <p class="name"><strong>{{name}}</strong></p>
+            <p class="time">{{time}}</p>
+            <div class="comCon">
+              <p>{{c_content}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="line"></div>
+
+    {{/each}}
+  </script>
+
+  <script id="my-template" type="text/x-handlebars-template">
+    {{#each this}}
+      <div>
+        <a class="pull-left thumb-sm avatar m-l-n-md">
+          <img src="{{photo}}" class="img-circle">
+        </a>
+        <div class="m-l-lg">
+          <div class="m-b-xs">
+            <a class="h4">{{name}}</a>
+            <span class="text-muted m-l-sm pull-right">
+              {{update_time}}
+            </span>
+          </div>
+          <div class="m-b myweekly">
+            <div> </div>
+          </div>
+        </div>
+      </div>
+      {{#with comments}}
+        {{#each this}}
+          <div class="m-l-lg">
+            <a class="pull-left thumb-sm avatar">
+              <img src="{{photo}}">
+            </a>          
+            <div class="m-l-xxl panel b-a">
+              <div class="panel-heading pos-rlt">
+                <span class="arrow left pull-up"></span>
+                <span class="text-muted m-l-sm pull-right">
+                  {{time}}
+                </span>
+                <a>{{name}}</a>
+                {{c_content}}                          
+              </div>
+            </div>
+          </div> 
+        {{/each}}
+      {{/with}}
+    {{/each}}
+
+
+  </script>
+
+  <script id="st-template" type="text/x-handlebars-template">
+    {{#each this}}        
+      <div class="TG">
+        <div class="ctPhoto">
+          <img class="ctPhoto" src="{{g_creater_photo}}" title="创建人">
+        </div>
+        <span>群号：</span><span class="pduid">{{g_id}}</span><br>
+        <span>群名称：</span><span class="pdname">{{g_name}}</span><br>
+        <span>群简介：</span><span class="pdintro">{{g_introduce}}</span><br>
+        <span >群人数：</span><span class="pdrealNme">{{members}}</span><br>
+        <span >创建人id：</span><span class="pdbirth">{{g_creater_uid}}</span><br>
+        <span >创建人昵称：</span><span class="pdad">{{g_creater_name}}</span><br>
+        <span >创建时间：</span><span class="pdqq">{{g_create_time}}</span>
+
+        <div class="applyBtn" myattr="{{g_id}}">申请加入</div>
+      </div>
+    {{/each}}
+  </script>
+
+
+  <!-- jQuery -->
+  <script src="../JavaScript/lib/bootstrap.min.js"></script>
+  <script src="../JavaScript/lib/plugins/prefixfree.min.js"></script>
+  <script src="../JavaScript/lib/module.js"></script>
+  <script src="../JavaScript/lib/module_2.js"></script>
+  <script src="../JavaScript/lib/uploader.js"></script>
+  
+  <script src="../JavaScript/page/calendar.js"></script>
+  <script src="../JavaScript/page/loadData.js"></script>
+  <script src="../JavaScript/page/style.js"></script>
+  <script src="../JavaScript/lib/simditor.js"></script>
+
+  <script type="text/javascript">
+    +function ($) {
+      $(function(){
+        // class
+
+        var editor = new Simditor({
+            textarea: $('#editor')
+        });
+
+        $(document).on('click', '[data-toggle^="class"]', function(e){
+          e && e.preventDefault();
+          console.log('abc');
+          var $this = $(e.target), $class , $target, $tmp, $classes, $targets;
+          !$this.data('toggle') && ($this = $this.closest('[data-toggle^="class"]'));
+          $class = $this.data()['toggle'];
+          $target = $this.data('target') || $this.attr('href');
+          $class && ($tmp = $class.split(':')[1]) && ($classes = $tmp.split(','));
+          $target && ($targets = $target.split(','));
+          $classes && $classes.length && $.each($targets, function( index, value ) {
+            if ( $classes[index].indexOf( '*' ) !== -1 ) {
+              var patt = new RegExp( '\\s' + 
+                  $classes[index].
+                    replace( /\*/g, '[A-Za-z0-9-_]+' ).
+                    split( ' ' ).
+                    join( '\\s|\\s' ) + 
+                  '\\s', 'g' );
+              $($this).each( function ( i, it ) {
+                var cn = ' ' + it.className + ' ';
+                while ( patt.test( cn ) ) {
+                  cn = cn.replace( patt, ' ' );
+                }
+                it.className = $.trim( cn );
+              });
+            }
+            ($targets[index] !='#') && $($targets[index]).toggleClass($classes[index]) || $this.toggleClass($classes[index]);
+          });
+          $this.toggleClass('active');
+        });
+
+        // collapse nav
+        $(document).on('click', 'nav a', function (e) {
+          var $this = $(e.target), $active;
+          $this.is('a') || ($this = $this.closest('a'));
+          
+          $active = $this.parent().siblings( ".active" );
+          $active && $active.toggleClass('active').find('> ul:visible').slideUp(200);
+          
+          ($this.parent().hasClass('active') && $this.next().slideUp(200)) || $this.next().slideDown(200);
+          $this.parent().toggleClass('active');
+          
+          $this.next().is('ul') && e.preventDefault();
+
+          setTimeout(function(){ $(document).trigger('updateNav'); }, 300);      
+        });
+
+        $(".simditor-toolbar").css("width","100%");
+
+      });
+    }(jQuery);
+  </script>
+</body>
+</html>
